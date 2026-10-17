@@ -4,7 +4,7 @@
   "description": "One grocery list, three apps, the cheapest real basket — a TinyFish personal agent",
   "main": "index.js",
   "scripts": {
-    "test": "node --test test/",
+    "test": "node --test",
     "start": "node server.js"
   },
   "keywords": [],
