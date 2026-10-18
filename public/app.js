@@ -612,7 +612,14 @@ function updateCompareCard(job) {
         </td>
       </tr>
     `;
-  }).join('');
+  }).join('') + (!finished ? `
+    <tr class="pending-scan-row" style="background: rgba(248, 250, 252, 0.85); border-top: 1px dashed #cbd5e1;">
+      <td colspan="7" style="text-align: center; padding: 16px 16px; color: #475569; font-size: 13px; font-weight: 500;">
+        <span class="pulse-dot" style="display:inline-block; vertical-align:middle; margin-right:8px;"></span>
+        <span>Hunting prices across remaining stores live... offers update automatically</span>
+      </td>
+    </tr>
+  ` : '');
 
   // Show excluded / unavailable stores notice
   if (exclEl) {
