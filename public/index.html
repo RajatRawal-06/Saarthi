@@ -12,49 +12,232 @@
 </head>
 <body>
   <header class="top">
-    <a class="brand" href="#price">
+    <a class="brand" href="#jhola">
       <img class="brand-logo-img" src="/assets/saarthi-icon-trimmed.png" alt="Saarthi Logo" />
-      <span class="name">Saarthi</span>
+      <div class="brand-text-col">
+        <span class="name">saarthi</span>
+        <span class="brand-sub">Your personal web agent</span>
+      </div>
     </a>
     <nav class="tabs" id="tabs">
-      <button data-tab="jhola">Basket</button>
+      <button data-tab="jhola" class="active">Basket</button>
       <button data-tab="order">Order</button>
-      <button data-tab="price" class="active adv">Compare</button>
+      <button data-tab="price" class="adv">Compare</button>
       <button data-tab="form" class="adv">Forms</button>
       <button data-tab="history">History</button>
       <button data-tab="setup">Setup</button>
-      <button data-tab="me">Me</button>
+      <button data-tab="me">Profile</button>
     </nav>
-    <div class="status ok" id="status" title="TinyFish connection">
-      <span class="dot"></span>
-      <span class="status-label">TinyFish connected</span>
-      <span class="status-chevron">⌄</span>
+    <div class="top-nav-right">
+      <div class="status ok" id="status" title="TinyFish connection">
+        <span class="dot"></span>
+        <span class="status-label">TinyFish connected</span>
+      </div>
+      <div class="top-nav-divider"></div>
+      <a href="#me" class="top-profile-badge" id="topProfileBadge" title="Personal Vault &amp; Profile">
+        <span class="top-avatar-txt" id="topAvatarTxt">RR</span>
+        <span class="top-avatar-chevron">⌄</span>
+      </a>
     </div>
   </header>
 
   <main>
-    <!-- ORDER (home) -->
-    <!-- JHOLA (home) -->
-    <section class="panel" id="tab-jhola">
-      <div class="hero">
-        <h1>One list. Three apps.<br><span class="hl">The cheapest real basket.</span></h1>
-        <p class="lede">Type your list the way you'd say it. I check Blinkit, Zepto and Instamart live, add up delivery, small-cart and handling fees, and find the cheapest way to buy it all. Nothing goes in a cart until you approve, and you pay yourself.</p>
-      </div>
-      <div class="banner hidden" id="jNeedSetup">🔑 Connect your apps in <a href="#setup">Setup</a> once so I can see your prices and fill your carts. Without it I use your PIN code and can only compare.</div>
-      <form id="jForm" class="ask">
-        <textarea name="text" rows="3" maxlength="2000" placeholder="doodh 2 packet, atta 5kg, maggi 4, dhaniya"></textarea>
-        <div id="jItems"></div>
-        <div class="ask-foot">
-          <div class="plan" id="jApps"></div>
-          <button class="primary big" type="submit">Find cheapest basket →</button>
+    <!-- BASKET: JHOLA (SMART GROCERY OPTIMIZATION) -->
+    <section class="panel active" id="tab-jhola">
+      <!-- HERO BANNER WITH GENERATED KITCHEN GROCERY ART -->
+      <div class="basket-hero">
+        <div class="basket-hero-content">
+          <div class="basket-kicker">SMART GROCERY PLANNING</div>
+          <h1 class="basket-headline">Your weekly basket, <span class="hl-orange">optimised.</span></h1>
+          <p class="basket-subhead">One list. Three stores. The lowest real total — including delivery and handling.</p>
         </div>
-      </form>
-      <div class="chips" id="jExamples">
-        <button type="button">doodh 2 packet, atta 5kg, maggi 4, dhaniya</button>
-        <button type="button">amul butter 100g, 1 dozen ande, pyaz 2 kg, tamatar 1kg</button>
-        <button type="button">sirf aashirvaad atta 10 kg, cheeni 1kg, chai patti 250g</button>
+
+        <div class="basket-hero-side">
+          <div class="basket-delivery-pill" id="basketDeliveryPill">
+            <div class="delivery-pin-icon">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            </div>
+            <div class="delivery-text-wrap">
+              <span class="delivery-label">DELIVERY TO</span>
+              <span class="delivery-val" id="basketDeliveryLoc">110001 · Delhi <span class="loc-caret">⌄</span></span>
+            </div>
+            <a href="#me" class="delivery-edit-btn">Edit</a>
+          </div>
+        </div>
       </div>
-      <div id="jRun"></div>
+
+      <div class="banner hidden" id="jNeedSetup">🔑 Connect your apps in <a href="#setup">Setup</a> once so I can see your prices and fill your carts. Without it I use your PIN code and can only compare.</div>
+
+      <!-- 2-COLUMN MAIN CONTENT GRID -->
+      <div class="basket-main-grid">
+        <!-- LEFT COLUMN: MAIN CARD & TRY A LIST -->
+        <div class="basket-left-col">
+          <!-- MAIN SEARCH CARD -->
+          <form id="jForm" class="basket-card-main">
+            <div class="basket-card-header">
+              <h2 class="basket-card-title">What's on your list?</h2>
+              <span class="basket-hinglish-hint" title="You can type in everyday Hinglish like 'doodh 2 packet, 1kg pyaz, bread'">
+                Hinglish is completely fine
+                <span class="hint-info-circle">ⓘ</span>
+              </span>
+            </div>
+
+            <div class="basket-input-container">
+              <textarea name="text" id="jText" rows="4" maxlength="500" placeholder="doodh 2 packet, atta 5kg, maggi 4, dhaniya">doodh 2 packet, atta 5kg, maggi 4, dhaniya</textarea>
+              <div class="basket-char-counter" id="jCharCount">41 / 500</div>
+            </div>
+
+            <div id="jItems"></div>
+
+            <div class="basket-stores-section">
+              <span class="basket-stores-label">Compare prices from</span>
+              <div class="basket-stores-row" id="jApps">
+                <!-- Rendered dynamically by renderAppToggles() -->
+              </div>
+            </div>
+
+            <div class="basket-card-footer">
+              <div class="basket-meta-hint">
+                <span>Up to 25 items</span>
+                <span class="dot-sep">·</span>
+                <span>Hinglish supported</span>
+              </div>
+              <button class="primary big btn-find-basket" type="submit">
+                Find cheapest basket
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+              </button>
+            </div>
+          </form>
+
+          <!-- TRY A LIST SECTION -->
+          <div class="basket-try-section">
+            <div class="basket-try-head">
+              <h3>Try a list</h3>
+              <button type="button" class="btn-use-example-link" id="btnUseExample">Use example</button>
+            </div>
+
+            <div class="basket-presets-grid" id="jExamples">
+              <button type="button" class="basket-preset-tile" data-list="doodh 2 packet, bread 1 packet, 1 dozen ande, aashirvaad atta 5kg, basmati chawal 2kg, tamatar 1kg, pyaz 2kg">
+                <div class="preset-icon-box orange">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                </div>
+                <div class="preset-text-wrap">
+                  <div class="preset-title">Weekly essentials</div>
+                  <div class="preset-items">doodh, bread, anda, atta, chawal, sabzi...</div>
+                </div>
+                <span class="preset-arrow">›</span>
+              </button>
+
+              <button type="button" class="basket-preset-tile" data-list="doodh 2 packet, quaker oats 1kg, brown bread, amul butter 100g, 6 kela, seb 1kg">
+                <div class="preset-icon-box amber">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18 8h1a4 4 0 0 1 0 8h-1"></path><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path><line x1="6" y1="1" x2="6" y2="4"></line><line x1="10" y1="1" x2="10" y2="4"></line><line x1="14" y1="1" x2="14" y2="4"></line></svg>
+                </div>
+                <div class="preset-text-wrap">
+                  <div class="preset-title">Breakfast restock</div>
+                  <div class="preset-items">doodh, oats, bread, butter, fruits...</div>
+                </div>
+                <span class="preset-arrow">›</span>
+              </button>
+
+              <button type="button" class="basket-preset-tile" data-list="sirf aashirvaad atta 10 kg, fortune oil 1L, toor dal 1kg, cheeni 1kg, tata salt 1kg, chai patti 250g, maggi 4">
+                <div class="preset-icon-box red">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                </div>
+                <div class="preset-text-wrap">
+                  <div class="preset-title">Monthly pantry</div>
+                  <div class="preset-items">atta, chawal, dal, oil, masale, chai...</div>
+                </div>
+                <span class="preset-arrow">›</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT COLUMN: SAVINGS SNAPSHOT & HOW IT WORKS -->
+        <div class="basket-right-col">
+          <!-- SAVINGS SNAPSHOT CARD -->
+          <div class="savings-snapshot-card">
+            <div class="savings-card-head">
+              <h3>Your savings snapshot</h3>
+              <span class="info-tip-circle" title="Calculated from real multi-store price spreads across Blinkit, Zepto and Instamart in your history.">ⓘ</span>
+            </div>
+
+            <div class="savings-stat-row">
+              <div class="savings-donut-chart">
+                <svg viewBox="0 0 80 80" width="76" height="76">
+                  <circle class="donut-track" cx="40" cy="40" r="32" stroke-width="7.5" fill="none" />
+                  <circle class="donut-fill" id="savingsDonutCircle" cx="40" cy="40" r="32" stroke-width="7.5" stroke-dasharray="201.06" stroke-dashoffset="65" fill="none" stroke-linecap="round" />
+                </svg>
+                <span class="donut-symbol">₹</span>
+              </div>
+              <div class="savings-text-col">
+                <span class="savings-tag">Typical savings</span>
+                <div class="savings-num" id="basketSavingsAmount">₹80 – ₹150</div>
+                <span class="savings-sub" id="basketSavingsSub">by comparing all three stores</span>
+              </div>
+            </div>
+
+            <div class="savings-verified-pill">
+              <span class="signal-icon">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M18 20V10"></path><path d="M12 20V4"></path><path d="M6 20v-6"></path></svg>
+              </span>
+              <span>Real prices, delivery fees and handling charges included.</span>
+            </div>
+          </div>
+
+          <!-- HOW IT WORKS CARD -->
+          <div class="how-it-works-card">
+            <h3 class="how-card-title">How Saarthi works</h3>
+
+            <div class="how-steps-list">
+              <div class="how-step-item">
+                <div class="how-step-num orange">1</div>
+                <div class="how-step-body">
+                  <b>Compare live prices</b>
+                  <p>We check Blinkit, Zepto and Instamart in real time.</p>
+                </div>
+              </div>
+
+              <div class="how-step-item">
+                <div class="how-step-num green">2</div>
+                <div class="how-step-body">
+                  <b>Calculate all fees</b>
+                  <p>Includes item price, delivery fee and handling charges.</p>
+                </div>
+              </div>
+
+              <div class="how-step-item">
+                <div class="how-step-num amber">3</div>
+                <div class="how-step-body">
+                  <b>Prepare your best basket</b>
+                  <p>We find the cheapest complete basket across stores.</p>
+                </div>
+              </div>
+
+              <div class="how-step-item">
+                <div class="how-step-num blue">4</div>
+                <div class="how-step-body">
+                  <b>You approve before cart changes</b>
+                  <p>Nothing is added to any cart until you confirm.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="how-security-banner">
+              <div class="sec-banner-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><polyline points="9 12 11 14 15 10"></polyline></svg>
+              </div>
+              <div class="sec-banner-text">
+                <b>No cart changes without your approval.</b>
+                <span>You always pay yourself.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ACTIVE RUN / LIVE AGENT EXECUTION SLOTS -->
+      <div id="jRun" class="basket-run-slot"></div>
     </section>
 
     <!-- ORDER -->
