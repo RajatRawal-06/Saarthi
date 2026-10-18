@@ -30,7 +30,7 @@ code { background: var(--cream); padding: 1px 6px; border-radius: 6px; font-size
 .small { font-size: .85em; color: var(--ink-2); }
 
 /* Header */
-.top { position: sticky; top: 0; z-index: 10; background: rgba(255, 255, 255, .96); backdrop-filter: blur(8px); display: flex; align-items: center; gap: 18px; padding: 12px clamp(16px, 4vw, 40px); border-bottom: 1px solid #f0f0f0; flex-wrap: wrap; }
+.top { position: sticky; top: 0; z-index: 10; background: rgba(255, 255, 255, .96); backdrop-filter: blur(8px); display: flex; align-items: center; gap: 18px; padding: 12px clamp(16px, 2vw, 36px); border-bottom: 1px solid #f0f0f0; flex-wrap: wrap; width: 100%; box-sizing: border-box; }
 .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); }
 .brand-logo-img { height: 36px; width: auto; object-fit: contain; display: block; border-radius: 8px; }
 .name { font-size: 24px; font-weight: 800; color: #181e28; letter-spacing: -.03em; font-family: 'Plus Jakarta Sans', 'Inter', sans-serif; }
@@ -46,7 +46,7 @@ body.simple .tabs .adv { display: none; }
 .status.bad .dot { background: var(--bad); }
 .status .status-chevron { font-size: 11px; color: #6b7280; font-weight: 700; margin-left: 1px; }
 
-main { max-width: 1440px; margin: 0 auto; padding: 24px clamp(20px, 3.5vw, 48px) 60px; }
+main { width: 100%; max-width: 100%; margin: 0; padding: 20px clamp(16px, 2vw, 36px) 60px; box-sizing: border-box; }
 .panel { display: none; animation: fade .25s ease; }
 .panel.active { display: block; }
 @keyframes fade { from { opacity: 0; transform: translateY(4px); } }
@@ -3110,19 +3110,20 @@ main { overflow-x: clip; }
    BASKET / JHOLA: SMART GROCERY PLANNING TAB
    ======================================================== */
 #tab-jhola {
-  max-width: 1400px;
-  margin: 0 auto;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
 }
 
 /* HERO BANNER WITH GENERATED KITCHEN GROCERY ART */
 .basket-hero {
   position: relative;
-  background-color: #ffffff;
+  background-color: #fcfbfa;
   background-image:
-    linear-gradient(to right, #ffffff 42%, rgba(255, 255, 255, 0.95) 54%, rgba(255, 255, 255, 0.08) 78%, transparent 100%),
+    linear-gradient(to right, #ffffff 0%, #ffffff 34%, rgba(255, 255, 255, 0.94) 48%, rgba(255, 255, 255, 0.15) 70%, rgba(255, 255, 255, 0) 100%),
     url('/assets/grocery-hero.jpg');
-  background-position: 74% 38%;
-  background-size: 880px auto;
+  background-position: right 36%;
+  background-size: cover;
   background-repeat: no-repeat;
   border-radius: 20px;
   padding: 42px 38px;
@@ -3131,7 +3132,7 @@ main { overflow-x: clip; }
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  min-height: 215px;
+  min-height: 220px;
   box-shadow: 0 4px 24px -2px rgba(15, 23, 42, 0.04);
 }
 
@@ -3182,12 +3183,13 @@ main { overflow-x: clip; }
   display: inline-flex;
   align-items: center;
   gap: 12px;
-  background: rgba(255, 255, 255, 0.96);
-  backdrop-filter: blur(12px);
-  border: 1px solid #e2e8f0;
-  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-radius: 14px;
   padding: 10px 16px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 6px 20px rgba(15, 23, 42, 0.08);
 }
 
 .delivery-pin-icon {
@@ -4146,7 +4148,7 @@ main { overflow-x: clip; }
 /* SECTION 2: ARBITRAGE GRID */
 .arbitrage-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 18px;
 }
 
@@ -4546,6 +4548,9 @@ main { overflow-x: clip; }
 
 /* ADDITIONAL RESPONSIVE BREAKPOINTS */
 @media (max-width: 1200px) {
+  .arbitrage-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
   .dark-store-grid, .capabilities-grid {
     grid-template-columns: repeat(2, 1fr);
   }

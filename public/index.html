@@ -23,7 +23,6 @@
       <button data-tab="jhola" class="active">Basket</button>
       <button data-tab="order">Order</button>
       <button data-tab="price" class="adv">Compare</button>
-      <button data-tab="form" class="adv">Forms</button>
       <button data-tab="history">History</button>
       <button data-tab="setup">Setup</button>
       <button data-tab="me">Profile</button>
@@ -1072,19 +1071,6 @@
       <div id="priceRun"></div>
     </section>
 
-    <!-- FORM FILL -->
-    <section class="panel" id="tab-form">
-      <div class="hero"><h1>Fill a form</h1>
-        <p class="lede">I read the form first <b>without typing anything</b>, fill it from your details in <a href="#me">Me</a>, and submit only after you approve. I never fill passwords, OTPs, card or ID numbers.</p></div>
-      <form class="card form" id="formForm">
-        <label class="grow">Form URL <input name="url" placeholder="https://forms.gle/…" required /></label>
-        <label class="grow">Anything I should know? <span class="opt">optional</span><input name="instructions" placeholder="Saturday slot, T-shirt size M" /></label>
-        <div class="actions"><span class="estimate">Usually under $0.40</span><button class="primary" type="submit">Read the form →</button></div>
-        <div class="chips"><button type="button" data-fill-form='{"url":"https://httpbin.org/forms/post","instructions":"Large pizza with bacon and extra cheese, deliver at 19:30, ring the bell twice"}'>Test pizza form</button></div>
-      </form>
-      <div id="formRun"></div>
-    </section>
-
     <!-- HISTORY: AGENT AUDIT LOG & MISSION CONTROL -->
     <section class="panel" id="tab-history">
       <!-- HERO -->
@@ -1135,7 +1121,6 @@
           <button type="button" class="hist-filter-btn active" data-type="all">All Jobs</button>
           <button type="button" class="hist-filter-btn" data-type="price_hunt">🏷️ Price Hunts</button>
           <button type="button" class="hist-filter-btn" data-type="order">🛍️ Orders</button>
-          <button type="button" class="hist-filter-btn" data-type="form_fill">📝 Form Fills</button>
           <button type="button" class="hist-filter-btn" data-type="jhola">🛒 Jhola</button>
         </div>
 

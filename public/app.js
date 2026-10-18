@@ -28,7 +28,7 @@ const formData = (f) => Object.fromEntries(new FormData(f).entries());
 
 // ---------- tabs ----------
 function show(tab) {
-  if (document.body.classList.contains('simple') && ['price', 'form', 'order'].includes(tab)) tab = 'order';
+  if (document.body.classList.contains('simple') && ['price', 'order'].includes(tab)) tab = 'order';
   $$('#tabs button').forEach((b) => b.classList.toggle('active', b.dataset.tab === tab));
   $$('.panel').forEach((p) => p.classList.toggle('active', p.id === `tab-${tab}`));
   if (tab === 'history') loadHistory();
@@ -789,17 +789,6 @@ $('#proofModalClose')?.addEventListener('click', () => $('#proofModal')?.close()
 $('#proofModal')?.addEventListener('click', (e) => {
   if (e.target === $('#proofModal')) $('#proofModal').close();
 });
-
-// ---------- Form Fill ----------
-const formForm = $('#formForm');
-formForm.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  try { const { id } = await api('/api/form-fill', { method: 'POST', body: formData(formForm) }); mountRun($('#formRun'), id); }
-  catch (err) { toast(err.message); }
-});
-$$('[data-fill-form]').forEach((b) => b.addEventListener('click', () => {
-  const v = JSON.parse(b.dataset.fillForm); for (const [k, val] of Object.entries(v)) formForm[k].value = val;
-}));
 
 // ---------- History: Autonomous Agent Mission Control & Audit Ledger ----------
 let historyCachedJobs = [];
