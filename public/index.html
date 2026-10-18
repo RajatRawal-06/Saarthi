@@ -83,7 +83,7 @@
     <section class="panel active" id="tab-price">
       <div class="compare-hero">
         <h1>Compare live prices</h1>
-        <p class="lede">Check availability and proof across stores. Jhola never buys anything here.</p>
+        <p class="lede">Check availability and proof across stores. Saarthi never buys anything here.</p>
       </div>
 
       <form class="compare-search-card" id="priceForm">
@@ -115,10 +115,10 @@
             <div class="select-wrapper">
               <select class="compare-select" id="compStores" name="maxStores">
                 <option value="2">2 stores</option>
-                <option value="3" selected>3 stores</option>
+                <option value="3">3 stores</option>
                 <option value="4">4 stores</option>
                 <option value="5">5 stores</option>
-                <option value="6">6 stores</option>
+                <option value="6" selected>6 stores</option>
               </select>
               <span class="select-arrow">⌄</span>
             </div>
@@ -159,8 +159,59 @@
               </tr>
             </thead>
             <tbody>
-              <!-- Row 1: Amazon -->
-              <tr>
+              <!-- Row 1: IndiaMART -->
+              <tr data-store="indiamart">
+                <td>
+                  <div class="store-meta">
+                    <img src="/assets/indiamart-hz.png" alt="IndiaMART" class="store-logo-img" style="height: 22px; max-width: 125px;" />
+                    <div class="store-subname">IndiaMART.com</div>
+                    <span class="badge-best-price">WHOLESALE / DIRECT</span>
+                  </div>
+                </td>
+                <td>
+                  <div class="price-display">
+                    <div class="price-main">₹17,499</div>
+                    <div class="price-sub-under">₹501 under target</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="shipping-info">
+                    <div class="shipping-free">FREE delivery</div>
+                    <div class="shipping-sub">GST invoice included</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="delivery-info">
+                    <div class="delivery-headline">May 27</div>
+                    <div class="delivery-slot">by 10 AM - 6 PM</div>
+                    <div class="delivery-date">2-3 days</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="delta-info">
+                    <div class="delta-under">- ₹501</div>
+                    <div class="delta-pct-under">2.8% under</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="status-info">
+                    <span class="pill-stock">In stock</span>
+                    <div class="status-ships">TrustSEAL Verified</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="proof-wrap">
+                    <img src="/assets/thumb-indiamart@2x.png" alt="IndiaMART proof screenshot" class="proof-img" data-proof-title="IndiaMART · Sony WH-1000XM5" data-proof-price="₹17,499" data-proof-src="/assets/modal-indiamart.png" />
+                    <button type="button" class="btn-proof-link" data-proof-title="IndiaMART · Sony WH-1000XM5" data-proof-price="₹17,499" data-proof-src="/assets/modal-indiamart.png">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                      View proof
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Row 2: Amazon -->
+              <tr data-store="amazon">
                 <td>
                   <div class="store-meta">
                     <img src="/assets/amazon-in-clean.png" alt="Amazon.in" class="store-logo-img" style="height: 22px; max-width: 105px;" />
@@ -171,7 +222,7 @@
                 <td>
                   <div class="price-display">
                     <div class="price-main">₹17,990</div>
-                    <div class="price-sub-under">₹500 under target</div>
+                    <div class="price-sub-under">₹10 under target</div>
                   </div>
                 </td>
                 <td>
@@ -210,8 +261,59 @@
                 </td>
               </tr>
 
-              <!-- Row 2: Croma -->
-              <tr>
+              <!-- Row 3: Flipkart -->
+              <tr data-store="flipkart">
+                <td>
+                  <div class="store-meta">
+                    <img src="/assets/flipkart-clean.png" alt="Flipkart" class="store-logo-img" style="height: 22px; max-width: 105px;" />
+                    <div class="store-subname">Flipkart.com</div>
+                    <span class="badge-best-price" style="background:#eff6ff; color:#1d4ed8;">FLIPKART ASSURED</span>
+                  </div>
+                </td>
+                <td>
+                  <div class="price-display">
+                    <div class="price-main">₹18,199</div>
+                    <div class="price-sub-over">+ ₹199 over target</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="shipping-info">
+                    <div class="shipping-free">FREE delivery</div>
+                    <div class="shipping-sub">No convenience fee</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="delivery-info">
+                    <div class="delivery-headline">Tomorrow</div>
+                    <div class="delivery-slot">by 2 PM - 5 PM</div>
+                    <div class="delivery-date">May 25</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="delta-info">
+                    <div class="delta-over">+ ₹199</div>
+                    <div class="delta-pct-over">1.1% over</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="status-info">
+                    <span class="pill-stock">In stock</span>
+                    <div class="status-ships">Usually ships within 24 hrs</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="proof-wrap">
+                    <img src="/assets/thumb-flipkart@2x.png" alt="Flipkart proof screenshot" class="proof-img" data-proof-title="Flipkart · Sony WH-1000XM5" data-proof-price="₹18,199" data-proof-src="/assets/modal-flipkart.png" />
+                    <button type="button" class="btn-proof-link" data-proof-title="Flipkart · Sony WH-1000XM5" data-proof-price="₹18,199" data-proof-src="/assets/modal-flipkart.png">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                      View proof
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Row 4: Croma -->
+              <tr data-store="croma">
                 <td>
                   <div class="store-meta">
                     <img src="/assets/croma-trimmed.png" alt="Croma" class="store-logo-img" style="height: 24px; max-width: 105px;" />
@@ -260,11 +362,62 @@
                 </td>
               </tr>
 
-              <!-- Row 3: Reliance Digital -->
-              <tr>
+              <!-- Row 5: Zepto -->
+              <tr data-store="zepto">
                 <td>
                   <div class="store-meta">
-                    <img src="/assets/reliance-digital-sharp.png" alt="Reliance Digital" class="store-logo-img" style="height: 24px; max-width: 120px;" />
+                    <img src="/assets/zepto-badge.png" alt="Zepto" class="store-logo-img" style="height: 24px; max-width: 90px; border-radius: 4px;" />
+                    <div class="store-subname">Zeptonow.com</div>
+                    <span class="badge-best-price" style="background:#fdf2f8; color:#be185d;">⚡ 10-15 MINS</span>
+                  </div>
+                </td>
+                <td>
+                  <div class="price-display">
+                    <div class="price-main">₹18,499</div>
+                    <div class="price-sub-over">+ ₹499 over target</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="shipping-info">
+                    <div class="shipping-free" style="color:#0f172a;">₹15 delivery fee</div>
+                    <div class="shipping-sub">Instant express courier</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="delivery-info">
+                    <div class="delivery-headline" style="color:#be185d;">Today</div>
+                    <div class="delivery-slot">⚡ in 12-15 mins</div>
+                    <div class="delivery-date">Immediate</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="delta-info">
+                    <div class="delta-over">+ ₹499</div>
+                    <div class="delta-pct-over">2.8% over</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="status-info">
+                    <span class="pill-stock">In stock</span>
+                    <div class="status-ships">Dark store nearby</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="proof-wrap">
+                    <img src="/assets/thumb-zepto@2x.png" alt="Zepto proof screenshot" class="proof-img" data-proof-title="Zepto · Sony WH-1000XM5" data-proof-price="₹18,499" data-proof-src="/assets/modal-zepto.png" />
+                    <button type="button" class="btn-proof-link" data-proof-title="Zepto · Sony WH-1000XM5" data-proof-price="₹18,499" data-proof-src="/assets/modal-zepto.png">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                      View proof
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Row 6: Reliance Digital -->
+              <tr data-store="reliance">
+                <td>
+                  <div class="store-meta">
+                    <img src="/assets/reliance-digital-sharp.png" alt="Reliance Digital" class="store-logo-img" style="height: 24px; max-width: 95px; border-radius: 3px;" />
                     <div class="store-subname">Reliance Digital</div>
                   </div>
                 </td>

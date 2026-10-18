@@ -215,6 +215,21 @@ function renderResult(slot, j) {
   }
 }
 
+const STORE_LOGOS = {
+  'amazon.in': '/assets/amazon-in-clean.png',
+  'amazon.com': '/assets/amazon-in-clean.png',
+  'flipkart.com': '/assets/flipkart-clean.png',
+  'croma.com': '/assets/croma-trimmed.png',
+  'reliancedigital.in': '/assets/reliance-digital-sharp.png',
+  'zeptonow.com': '/assets/zepto-badge.png',
+  'indiamart.com': '/assets/indiamart-hz.png',
+  'blinkit.com': '/assets/blinkit-clean.png',
+};
+function storeLogoHtml(domain, alt, height = 20) {
+  const src = STORE_LOGOS[domain];
+  return src ? `<img src="${src}" alt="${esc(alt || domain)}" style="height:${height}px; vertical-align:middle; margin-right:6px; object-fit:contain;" />` : '';
+}
+
 function renderPrice(slot, j, r) {
   const b = r.best;
   const below = b && r.target && b.price <= r.target;
@@ -222,7 +237,7 @@ function renderPrice(slot, j, r) {
   <div class="summary ${b ? 'good' : ''}">${b ? '🏆' : 'ℹ️'} ${esc(r.summary || r.message)}</div>
   ${b ? `<div class="card best">
     <div>
-      <div class="store">${esc(b.domain)} ${below ? '<span class="badge good">Below your target</span>' : ''}</div>
+      <div class="store">${storeLogoHtml(b.domain, b.domain, 20)}${esc(b.domain)} ${below ? '<span class="badge good">Below your target</span>' : ''}</div>
       <div><span class="price">${money(b.price, b.currency)}</span>${b.mrp && b.mrp > b.price ? `<span class="mrp">${money(b.mrp, b.currency)}</span> <span class="badge good">${Math.round((1 - b.price / b.mrp) * 100)}% off</span>` : ''}</div>
       <p>${esc(b.product_name)}</p>
       <p class="small">${b.in_stock ? '<span class="badge good">In stock</span>' : '<span class="badge bad">Out of stock</span>'} ${esc(b.delivery_info || '')} ${b.seller ? `· Sold by ${esc(b.seller)}` : ''}</p>
@@ -237,7 +252,7 @@ function renderPrice(slot, j, r) {
   ${r.offers?.length ? `<div class="card"><h4 style="margin-top:0">Every store checked</h4><div class="tbl-wrap"><table>
     <thead><tr><th>Store</th><th>Price</th><th>Stock</th><th>Listing</th><th>Delivery / offers</th></tr></thead><tbody>
     ${r.offers.map((o) => `<tr>
-      <td><a href="${esc(safeUrl(o.url))}" target="_blank" rel="noopener">${esc(o.domain)}</a></td>
+      <td><a href="${esc(safeUrl(o.url))}" target="_blank" rel="noopener">${storeLogoHtml(o.domain, o.domain, 16)}${esc(o.domain)}</a></td>
       <td class="num">${money(o.price, o.currency)}${o.mrp && o.mrp > o.price ? `<div class="small" style="text-decoration:line-through">${money(o.mrp, o.currency)}</div>` : ''}</td>
       <td>${o.in_stock ? '<span class="badge good">In stock</span>' : '<span class="badge bad">Out</span>'}</td>
       <td>${esc(o.product_name)} ${o.mismatch ? '<div><span class="badge warn">Different model/variant?</span></div>' : ''}</td>
@@ -267,7 +282,22 @@ function updateEstimate() {
   const est = $('#priceEstimate');
   if (est) est.textContent = `≈ ${n} agent runs · typically $${(n * 0.06).toFixed(2)}–$${(n * 0.2).toFixed(2)} · ~1–3 min`;
 }
-if (priceForm?.maxStores) { priceForm.maxStores.addEventListener('change', updateEstimate); updateEstimate(); }
+if (priceForm?.maxStores) {
+  priceForm.maxStores.addEventListener('change', () => {
+    updateEstimate();
+    filterCompareRows();
+  });
+  updateEstimate();
+}
+
+function filterCompareRows() {
+  const n = Number($('#compStores')?.value || 6);
+  const rows = $$('.replica-table tbody tr');
+  rows.forEach((r, idx) => {
+    r.style.display = idx < n ? '' : 'none';
+  });
+}
+filterCompareRows();
 priceForm?.addEventListener('submit', async (e) => {
   e.preventDefault();
   try {
