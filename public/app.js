@@ -1148,17 +1148,28 @@ async function previewPlan() {
       (p.items.length ? ` <span>from</span> ${p.stores.map((d, k) => `<span class="pill ${p.usingDefaults ? 'soft' : 'store'}">${esc(storeLabel(d))}</span>${k < p.stores.length - 1 ? '<span>→</span>' : ''}`).join(' ')}` : '');
   } catch { el.innerHTML = ''; }
 }
-orderForm.text.addEventListener('input', () => { clearTimeout(parseTimer); parseTimer = setTimeout(previewPlan, 250); });
+orderForm.text.addEventListener('input', () => {
+  clearTimeout(parseTimer);
+  parseTimer = setTimeout(previewPlan, 250);
+  const c = $('#orderCharCount');
+  if (c) c.textContent = `${orderForm.text.value.length} / 500`;
+});
 orderForm.text.addEventListener('keydown', (e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); orderForm.requestSubmit(); } });
 orderForm.addEventListener('submit', async (e) => {
   e.preventDefault();
   const text = orderForm.text.value.trim();
   if (!text) return orderForm.text.focus();
-  if (!hasAddress()) { toast('First add your name, phone and address in Me.'); return show('me'); }
+  if (!hasAddress()) { toast('First add your name, phone and address in Profile.'); return show('me'); }
   try { const { id } = await api('/api/order', { method: 'POST', body: { text } }); mountRun($('#orderRun'), id); }
   catch (err) { toast(err.message); }
 });
-$$('#orderExamples button').forEach((b) => b.addEventListener('click', () => { orderForm.text.value = b.textContent; previewPlan(); orderForm.text.focus(); }));
+$$('#orderExamples button').forEach((b) => b.addEventListener('click', () => {
+  orderForm.text.value = b.dataset.order || b.querySelector('.preset-card-title')?.textContent || b.textContent.trim();
+  const c = $('#orderCharCount');
+  if (c) c.textContent = `${orderForm.text.value.length} / 500`;
+  previewPlan();
+  orderForm.text.focus();
+}));
 const hasAddress = () => ['full_name', 'phone', 'address_line1', 'pincode'].every((k) => profile[k]);
 
 function renderMatch(slot, j) {
@@ -1480,11 +1491,12 @@ async function updateDynamicSavingsSnapshot() {
 }
 
 function updateBasketDeliveryLoc() {
-  const locEl = $('#basketDeliveryLoc');
-  if (!locEl) return;
   const pin = profile.pincode || '110001';
   const city = profile.city || profile.state || 'Delhi';
-  locEl.innerHTML = `${esc(pin)} · ${esc(city)} <span class="loc-caret">⌄</span>`;
+  const locEl = $('#basketDeliveryLoc');
+  if (locEl) locEl.innerHTML = `${esc(pin)} · ${esc(city)} <span class="loc-caret">⌄</span>`;
+  const ordLocEl = $('#orderDeliveryLoc');
+  if (ordLocEl) ordLocEl.innerHTML = `${esc(pin)} · ${esc(city)} <span class="loc-caret">⌄</span>`;
 }
 
 function updateTopProfileBadge() {

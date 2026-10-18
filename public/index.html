@@ -640,26 +640,369 @@
       </div>
     </section>
 
-    <!-- ORDER -->
+    <!-- ORDER: AUTONOMOUS RETAIL CONCIERGE -->
     <section class="panel" id="tab-order">
-      <div class="hero">
-        <h1 id="hello">What do you need today?</h1>
-        <p class="lede">Just type it like you'd say it. I'll find it and check with you before anything else happens.</p>
-      </div>
-      <div class="banner hidden" id="needInfo">📍 Add your name, phone and address in <a href="#me">Me</a> so I know where to deliver.</div>
-      <form id="orderForm" class="ask">
-        <textarea name="text" rows="3" maxlength="500" placeholder="e.g. I want 2 Amul butter and a dozen eggs from Blinkit"></textarea>
-        <div class="ask-foot">
-          <div class="plan" id="orderPlan"></div>
-          <button class="primary big" type="submit">Find it →</button>
+      <!-- HERO BANNER -->
+      <div class="order-hero">
+        <div class="order-hero-content">
+          <div class="order-kicker">AUTONOMOUS CONCIERGE · ONE-STEP FULFILLMENT</div>
+          <h1 class="order-headline" id="hello">What do you need today?</h1>
+          <p class="order-subhead">Just type it like you'd say it. Saarthi finds the exact SKU, prepares your cart, and verifies everything with you before any order is placed.</p>
         </div>
-      </form>
-      <div class="chips" id="orderExamples">
-        <button type="button">Vaseline lip balm from Blinkit</button>
-        <button type="button">2 Parle-G and 1 Amul milk 500ml</button>
-        <button type="button">Dolo 650 from Tata 1mg</button>
+
+        <div class="order-hero-side">
+          <div class="order-delivery-pill">
+            <div class="delivery-pin-icon">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            </div>
+            <div class="delivery-text-wrap">
+              <span class="delivery-label">DELIVERY VAULT</span>
+              <span class="delivery-val" id="orderDeliveryLoc">110001 · Delhi Central <span class="loc-caret">⌄</span></span>
+            </div>
+            <a href="#me" class="delivery-edit-btn">Edit</a>
+          </div>
+        </div>
       </div>
-      <div id="orderRun"></div>
+
+      <div class="banner hidden" id="needInfo">📍 Add your name, phone and address in <a href="#me">Profile</a> so I know where to deliver.</div>
+
+      <!-- 2-COLUMN ORDER WORKSPACE GRID -->
+      <div class="order-main-grid">
+        <!-- LEFT COLUMN: MAIN INPUT CARD & PRESETS -->
+        <div class="order-left-col">
+          <form id="orderForm" class="order-card-main">
+            <div class="order-card-header">
+              <h2 class="order-card-title">Describe what you want to order</h2>
+              <span class="order-format-hint" title="You can specify quantities, brands, and target store like '2 packets bread from blinkit' or 'dolo 650 from 1mg'">
+                Multi-store NLP enabled
+                <span class="hint-info-circle">ⓘ</span>
+              </span>
+            </div>
+
+            <div class="order-input-container">
+              <textarea name="text" id="orderTextInput" rows="4" maxlength="500" placeholder="e.g. I want 2 Amul butter and a dozen eggs from Blinkit"></textarea>
+              <div class="order-char-counter" id="orderCharCount">0 / 500</div>
+            </div>
+
+            <!-- DYNAMIC SMART PARSE PLAN STRIP -->
+            <div class="order-plan-section">
+              <span class="order-plan-label">Live Intent Detection:</span>
+              <div class="plan" id="orderPlan">
+                <span class="order-plan-empty">Type an item name, quantity, and store above...</span>
+              </div>
+            </div>
+
+            <div class="order-card-footer">
+              <div class="order-meta-hints">
+                <span class="meta-tag"><span>🔒</span> Zero card access</span>
+                <span class="dot-sep">·</span>
+                <span class="meta-tag"><span>⚡</span> Real-time SKU match</span>
+                <span class="dot-sep">·</span>
+                <span class="meta-tag"><span>👍</span> Manual approval required</span>
+              </div>
+              <button class="primary big btn-find-order" type="submit">
+                Find it &amp; prepare cart
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+              </button>
+            </div>
+          </form>
+
+          <!-- QUICK ORDER PRESETS RECIPES -->
+          <div class="order-presets-section">
+            <div class="order-presets-head">
+              <h3>Popular quick-order recipes</h3>
+              <span class="presets-sub-label">Click any prompt to autofill</span>
+            </div>
+
+            <div class="chips order-presets-grid" id="orderExamples">
+              <button type="button" class="order-preset-card" data-order="Vaseline lip balm from Blinkit">
+                <div class="preset-card-top">
+                  <span class="preset-badge blinkit">Blinkit</span>
+                  <span class="preset-eta">11 mins</span>
+                </div>
+                <div class="preset-card-title">Vaseline lip balm from Blinkit</div>
+                <div class="preset-card-desc">Personal care restock · Petroleum jelly 48g</div>
+              </button>
+
+              <button type="button" class="order-preset-card" data-order="2 Parle-G and 1 Amul milk 500ml">
+                <div class="preset-card-top">
+                  <span class="preset-badge zepto">Zepto</span>
+                  <span class="preset-eta">9 mins</span>
+                </div>
+                <div class="preset-card-title">2 Parle-G and 1 Amul milk 500ml</div>
+                <div class="preset-card-desc">Breakfast tea companion · 2x biscuit, 500ml milk</div>
+              </button>
+
+              <button type="button" class="order-preset-card" data-order="Dolo 650 from Tata 1mg">
+                <div class="preset-card-top">
+                  <span class="preset-badge tata1mg">Tata 1mg</span>
+                  <span class="preset-eta">Same day</span>
+                </div>
+                <div class="preset-card-title">Dolo 650 from Tata 1mg</div>
+                <div class="preset-card-desc">Fever &amp; pain relief · Strip of 15 tablets</div>
+              </button>
+
+              <button type="button" class="order-preset-card" data-order="Head and Shoulders shampoo from amazon">
+                <div class="preset-card-top">
+                  <span class="preset-badge amazon">Amazon</span>
+                  <span class="preset-eta">Prime</span>
+                </div>
+                <div class="preset-card-title">Head and Shoulders shampoo from amazon</div>
+                <div class="preset-card-desc">Anti-dandruff cool menthol · 650ml pump bottle</div>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT COLUMN: SAFETY, PLATFORMS & CONCIERGE STATUS -->
+        <div class="order-right-col">
+          <!-- HOW AUTONOMOUS ORDERING WORKS CARD -->
+          <div class="order-side-card safety-card">
+            <div class="side-card-head">
+              <h3>How Saarthi orders for you</h3>
+              <span class="status-indicator-dot online" title="Agent engine active"></span>
+            </div>
+
+            <div class="order-steps-stack">
+              <div class="order-step-row">
+                <div class="step-num-circle orange">1</div>
+                <div class="step-detail">
+                  <b>AI Natural Language Parsing</b>
+                  <p>Resolves everyday slang, weights, quantities, and preferred retailer.</p>
+                </div>
+              </div>
+
+              <div class="order-step-row">
+                <div class="step-num-circle blue">2</div>
+                <div class="step-detail">
+                  <b>Stealth Store Verification</b>
+                  <p>TinyFish agent inspects live availability, exact pack sizes, and prices.</p>
+                </div>
+              </div>
+
+              <div class="order-step-row">
+                <div class="step-num-circle green">3</div>
+                <div class="step-detail">
+                  <b>Visual Proof &amp; Match Review</b>
+                  <p>We present the exact product photo and total bill for your review.</p>
+                </div>
+              </div>
+
+              <div class="order-step-row">
+                <div class="step-num-circle amber">4</div>
+                <div class="step-detail">
+                  <b>You Approve Before Any Cart Action</b>
+                  <p>Zero surprise charges. You always pay yourself via your own UPI.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="safety-guarantee-pill">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+              <span>Bank-grade privacy: Saarthi never accesses cards or UPI PINs.</span>
+            </div>
+          </div>
+
+          <!-- SUPPORTED NETWORKS DIRECTORY CARD -->
+          <div class="order-side-card network-card">
+            <div class="side-card-head">
+              <h3>Supported store networks</h3>
+              <span class="active-networks-count">6 connected</span>
+            </div>
+
+            <div class="network-badges-list">
+              <div class="network-item">
+                <div class="net-left">
+                  <span class="net-icon blinkit">⚡</span>
+                  <div class="net-names">
+                    <span class="net-title">Blinkit</span>
+                    <span class="net-type">Quick Commerce · 10-15m</span>
+                  </div>
+                </div>
+                <span class="net-status-badge online">Active</span>
+              </div>
+
+              <div class="network-item">
+                <div class="net-left">
+                  <span class="net-icon zepto">🚀</span>
+                  <div class="net-names">
+                    <span class="net-title">Zepto</span>
+                    <span class="net-type">Quick Commerce · 10m</span>
+                  </div>
+                </div>
+                <span class="net-status-badge online">Active</span>
+              </div>
+
+              <div class="network-item">
+                <div class="net-left">
+                  <span class="net-icon instamart">🛒</span>
+                  <div class="net-names">
+                    <span class="net-title">Swiggy Instamart</span>
+                    <span class="net-type">Quick Commerce · 15m</span>
+                  </div>
+                </div>
+                <span class="net-status-badge online">Active</span>
+              </div>
+
+              <div class="network-item">
+                <div class="net-left">
+                  <span class="net-icon amazon">📦</span>
+                  <div class="net-names">
+                    <span class="net-title">Amazon India</span>
+                    <span class="net-type">E-Commerce &amp; Prime</span>
+                  </div>
+                </div>
+                <span class="net-status-badge online">Active</span>
+              </div>
+
+              <div class="network-item">
+                <div class="net-left">
+                  <span class="net-icon tata1mg">💊</span>
+                  <div class="net-names">
+                    <span class="net-title">Tata 1mg</span>
+                    <span class="net-type">Pharmacy &amp; Health</span>
+                  </div>
+                </div>
+                <span class="net-status-badge online">Active</span>
+              </div>
+
+              <div class="network-item">
+                <div class="net-left">
+                  <span class="net-icon flipkart">🛍️</span>
+                  <div class="net-names">
+                    <span class="net-title">Flipkart</span>
+                    <span class="net-type">National Marketplace</span>
+                  </div>
+                </div>
+                <span class="net-status-badge online">Active</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ACTIVE RUN / LIVE AGENT EXECUTION SLOTS -->
+      <div id="orderRun" class="order-run-slot"></div>
+
+      <!-- BELOW-THE-FOLD ORDER DISCOVERY & ENTERPRISE MODULES -->
+      <div class="order-btf-container">
+        <!-- SECTION 1: ORDER CATEGORIES SHOWCASE -->
+        <div class="order-categories-section">
+          <div class="sec-headline-wrap">
+            <div class="sec-kicker">WHAT YOU CAN ORDER</div>
+            <h2 class="sec-title">Autonomous fulfillment across retail verticals</h2>
+            <p class="sec-sub">From 10-minute groceries to prescription medicines and certified electronics.</p>
+          </div>
+
+          <div class="order-verticals-grid">
+            <div class="vertical-card">
+              <div class="vert-icon orange">🥦</div>
+              <h3 class="vert-title">Daily Groceries &amp; Kitchen</h3>
+              <p class="vert-desc">Farm fresh milk, vegetables, atta, oils, and pantry essentials ordered directly from Blinkit, Zepto, and Instamart.</p>
+              <div class="vert-footer"><span>Avg Fulfillment: <b>10–15 mins</b></span></div>
+            </div>
+
+            <div class="vertical-card">
+              <div class="vert-icon teal">💊</div>
+              <h3 class="vert-title">Medicines &amp; Diagnostics</h3>
+              <p class="vert-desc">Painkillers, OTC supplements, baby care, and diagnostic essentials dispatched from verified pharmacies on Tata 1mg and Apollo.</p>
+              <div class="vert-footer"><span>Avg Fulfillment: <b>Same Day</b></span></div>
+            </div>
+
+            <div class="vertical-card">
+              <div class="vert-icon blue">🎧</div>
+              <h3 class="vert-title">Electronics &amp; Gadgets</h3>
+              <p class="vert-desc">Headphones, chargers, cables, and home tech sourced with verified brand warranty from Amazon India and Flipkart.</p>
+              <div class="vert-footer"><span>Avg Fulfillment: <b>Prime 1-Day</b></span></div>
+            </div>
+
+            <div class="vertical-card">
+              <div class="vert-icon purple">✨</div>
+              <h3 class="vert-title">Personal Care &amp; Beauty</h3>
+              <p class="vert-desc">Shampoos, moisturizers, skincare, and grooming essentials with exact bottle volume and variant matching.</p>
+              <div class="vert-footer"><span>Avg Fulfillment: <b>Under 30 mins</b></span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 2: TELEMETRY & TRUST STRIP -->
+        <div class="order-telemetry-banner">
+          <div class="telemetry-stat">
+            <div class="t-val">&lt; 1.4s</div>
+            <div class="t-label">Live Intent Resolution</div>
+            <div class="t-sub">Instant Hinglish commodity parser</div>
+          </div>
+          <div class="t-divider"></div>
+          <div class="telemetry-stat">
+            <div class="t-val text-green">100%</div>
+            <div class="t-label">Client-Side Vault</div>
+            <div class="t-sub">Zero card or address cloud tracking</div>
+          </div>
+          <div class="t-divider"></div>
+          <div class="telemetry-stat">
+            <div class="t-val text-orange">₹0.00</div>
+            <div class="t-label">Platform Markup</div>
+            <div class="t-sub">Exact official retail store bills</div>
+          </div>
+          <div class="t-divider"></div>
+          <div class="telemetry-stat">
+            <div class="t-val">Human In The Loop</div>
+            <div class="t-label">1-Click Approval</div>
+            <div class="t-sub">No autonomous unauthorized checkout</div>
+          </div>
+        </div>
+
+        <!-- SECTION 3: FAQ ACCORDION -->
+        <div class="order-faq-section">
+          <div class="sec-headline-wrap center">
+            <div class="sec-kicker">ORDERING FAQ</div>
+            <h2 class="sec-title">Common questions about automated orders</h2>
+            <p class="sec-sub">Clear details on how Saarthi prepares orders and protects your payment information.</p>
+          </div>
+
+          <div class="faq-accordion-wrap">
+            <details class="faq-item" open>
+              <summary class="faq-question">
+                <span>How does Saarthi find the right product without my store password?</span>
+                <span class="faq-chevron">⌄</span>
+              </summary>
+              <div class="faq-answer">
+                Saarthi uses headless browser agents powered by TinyFish to search the public catalog of stores servicing your PIN code. When you approve the proposed match, Saarthi opens the official product listing with your prepared cart so you can log in securely via your own OTP.
+              </div>
+            </details>
+
+            <details class="faq-item">
+              <summary class="faq-question">
+                <span>What happens if an exact pack size is out of stock?</span>
+                <span class="faq-chevron">⌄</span>
+              </summary>
+              <div class="faq-answer">
+                Saarthi looks for the closest available unit match (e.g. two 250ml bottles instead of one 500ml bottle) and explicitly highlights this in the match confirmation card with an attention badge before anything is finalized.
+              </div>
+            </details>
+
+            <details class="faq-item">
+              <summary class="faq-question">
+                <span>Can I order from multiple stores in a single natural language sentence?</span>
+                <span class="faq-chevron">⌄</span>
+              </summary>
+              <div class="faq-answer">
+                Yes! If you mention multiple stores (e.g. <code>"2 amul butter from blinkit and dolo 650 from tata 1mg"</code>), Saarthi parses each item with its target store into an organized multi-store plan.
+              </div>
+            </details>
+
+            <details class="faq-item">
+              <summary class="faq-question">
+                <span>Does Saarthi save my payment cards or UPI credentials?</span>
+                <span class="faq-chevron">⌄</span>
+              </summary>
+              <div class="faq-answer">
+                No. Saarthi is strictly non-custodial. We never request, store, or process credit cards, debit cards, or UPI PINs. You make all payments directly on the official merchant gateway.
+              </div>
+            </details>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- PRICE HUNT / COMPARE LIVE PRICES -->
