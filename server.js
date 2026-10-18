@@ -191,6 +191,6 @@ app.put('/api/profile', (req, res) => {
 
 const PORT = Number(process.env.PORT) || 4321;
 app.listen(PORT, '127.0.0.1', () => {
-  console.log(`\n  🛍️  Jhola is running → http://localhost:${PORT}\n`);
+  console.log(`\n  🤖 Saarthi is running → http://localhost:${PORT}\n`);
   if (!process.env.TINYFISH_API_KEY) console.log('  ⚠  TINYFISH_API_KEY is not set — add it to .env\n');
 });

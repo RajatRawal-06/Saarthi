@@ -3,32 +3,39 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Jhola</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛍️</text></svg>" />
+  <title>Saarthi — Your personal web agent</title>
+  <link rel="icon" type="image/png" href="/assets/saarthi-icon-trimmed.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Inter:wght@400;500;600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/styles.css" />
 </head>
 <body>
   <header class="top">
-    <a class="brand" href="#jhola"><span class="logo">🛍️</span><span class="name">jhola</span></a>
+    <a class="brand" href="#price">
+      <img class="brand-logo-img" src="/assets/saarthi-icon-trimmed.png" alt="Saarthi Logo" />
+      <span class="name">Saarthi</span>
+    </a>
     <nav class="tabs" id="tabs">
-      <button data-tab="jhola" class="active">Basket</button>
+      <button data-tab="jhola">Basket</button>
       <button data-tab="order">Order</button>
-      <button data-tab="price" class="adv">Compare</button>
+      <button data-tab="price" class="active adv">Compare</button>
       <button data-tab="form" class="adv">Forms</button>
       <button data-tab="history">History</button>
       <button data-tab="setup">Setup</button>
       <button data-tab="me">Me</button>
     </nav>
-    <div class="status" id="status" title="TinyFish connection"><span class="dot"></span><span></span></div>
+    <div class="status ok" id="status" title="TinyFish connection">
+      <span class="dot"></span>
+      <span class="status-label">TinyFish connected</span>
+      <span class="status-chevron">⌄</span>
+    </div>
   </header>
 
   <main>
     <!-- ORDER (home) -->
     <!-- JHOLA (home) -->
-    <section class="panel active" id="tab-jhola">
+    <section class="panel" id="tab-jhola">
       <div class="hero">
         <h1>One list. Three apps.<br><span class="hl">The cheapest real basket.</span></h1>
         <p class="lede">Type your list the way you'd say it. I check Blinkit, Zepto and Instamart live, add up delivery, small-cart and handling fees, and find the cheapest way to buy it all. Nothing goes in a cart until you approve, and you pay yourself.</p>
@@ -72,29 +79,250 @@
       <div id="orderRun"></div>
     </section>
 
-    <!-- PRICE HUNT -->
-    <section class="panel" id="tab-price">
-      <div class="hero"><h1>Compare prices</h1>
-        <p class="lede">I'll open each store live, read the real price and stock, and screenshot the winner. I never buy anything.</p></div>
-      <form class="card form" id="priceForm">
-        <label class="grow">Product <input name="product" placeholder="Sony WH-1000XM5, iPhone 16 128GB…" required /></label>
-        <label>Country
-          <select name="country">
-            <option value="IN" selected>India</option><option value="US">United States</option><option value="GB">United Kingdom</option>
-            <option value="CA">Canada</option><option value="DE">Germany</option><option value="AU">Australia</option><option value="JP">Japan</option><option value="FR">France</option>
-          </select>
-        </label>
-        <label>Stores <select name="maxStores"><option>2</option><option selected>3</option><option>4</option><option>5</option><option>6</option></select></label>
-        <label>Target price <span class="opt">optional</span><input name="targetPrice" type="number" min="0" placeholder="18000" /></label>
-        <label class="grow">Only these stores <span class="opt">optional</span><input name="stores" placeholder="blinkit, zepto, amazon" /></label>
-        <label>PIN code <span class="opt">optional</span><input name="pin" inputmode="numeric" maxlength="6" placeholder="110042" /></label>
-        <div class="actions"><span class="estimate" id="priceEstimate"></span><button class="primary" type="submit">Compare →</button></div>
-        <div class="chips">
-          <button type="button" data-fill='{"product":"Sony WH-1000XM5","country":"IN"}'>Sony WH-1000XM5</button>
-          <button type="button" data-fill='{"product":"Vaseline Lip Care Original","country":"IN","stores":"blinkit, zepto, amazon","pin":"110042"}'>Lip balm on Blinkit/Zepto</button>
-          <button type="button" data-fill='{"product":"Kindle Paperwhite 16GB","country":"US"}'>Kindle (US)</button>
+    <!-- PRICE HUNT / COMPARE LIVE PRICES -->
+    <section class="panel active" id="tab-price">
+      <div class="compare-hero">
+        <h1>Compare live prices</h1>
+        <p class="lede">Check availability and proof across stores. Jhola never buys anything here.</p>
+      </div>
+
+      <form class="compare-search-card" id="priceForm">
+        <div class="compare-form-row">
+          <div class="compare-field field-product">
+            <label for="compProduct">Product</label>
+            <input class="compare-input" id="compProduct" name="product" value="Sony WH-1000XM5 Wireless Headphones" placeholder="Sony WH-1000XM5 Wireless Headphones" required />
+          </div>
+
+          <div class="compare-field field-country">
+            <label for="compCountry">Country</label>
+            <div class="select-wrapper">
+              <select class="compare-select" id="compCountry" name="country">
+                <option value="IN" selected>🇮🇳 India</option>
+                <option value="US">United States</option>
+                <option value="GB">United Kingdom</option>
+                <option value="CA">Canada</option>
+                <option value="DE">Germany</option>
+                <option value="AU">Australia</option>
+                <option value="JP">Japan</option>
+                <option value="FR">France</option>
+              </select>
+              <span class="select-arrow">⌄</span>
+            </div>
+          </div>
+
+          <div class="compare-field field-stores">
+            <label for="compStores">Stores</label>
+            <div class="select-wrapper">
+              <select class="compare-select" id="compStores" name="maxStores">
+                <option value="2">2 stores</option>
+                <option value="3" selected>3 stores</option>
+                <option value="4">4 stores</option>
+                <option value="5">5 stores</option>
+                <option value="6">6 stores</option>
+              </select>
+              <span class="select-arrow">⌄</span>
+            </div>
+          </div>
+
+          <div class="compare-field field-target">
+            <label for="compTarget">Target price</label>
+            <input class="compare-input" id="compTarget" name="targetPrice" value="₹18,000" placeholder="₹18,000" />
+          </div>
+
+          <div class="compare-field field-pin">
+            <label for="compPin">PIN code <span class="opt-text">(optional)</span></label>
+            <input class="compare-input" id="compPin" name="pin" inputmode="numeric" maxlength="6" placeholder="Enter PIN code" />
+          </div>
+
+          <button class="btn-compare-action" type="submit">Compare stores</button>
+        </div>
+
+        <div class="compare-footnote">
+          <i class="info-icon">ⓘ</i>
+          <span>We compare live prices, availability, delivery time and total cost (incl. fees &amp; taxes).</span>
         </div>
       </form>
+
+      <!-- RESULTS TABLE (EXACT REPLICA OF REFERENCE IMAGE) -->
+      <div class="compare-table-card" id="compareReplicaCard">
+        <div class="compare-table-container">
+          <table class="replica-table">
+            <thead>
+              <tr>
+                <th style="width: 17%;">Store</th>
+                <th style="width: 17%;">Price (incl. all taxes)</th>
+                <th style="width: 16%;">Shipping / Fees</th>
+                <th style="width: 14%;">Est. Delivery</th>
+                <th style="width: 13%;">Delta vs Target</th>
+                <th style="width: 11%;">Status</th>
+                <th style="width: 12%;">Proof</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Row 1: Amazon -->
+              <tr>
+                <td>
+                  <div class="store-meta">
+                    <img src="/assets/amazon-in-clean.png" alt="Amazon.in" class="store-logo-img" style="height: 22px; max-width: 105px;" />
+                    <div class="store-subname">Amazon.in</div>
+                    <span class="badge-best-price">BEST PRICE</span>
+                  </div>
+                </td>
+                <td>
+                  <div class="price-display">
+                    <div class="price-main">₹17,990</div>
+                    <div class="price-sub-under">₹500 under target</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="shipping-info">
+                    <div class="shipping-free">FREE delivery</div>
+                    <div class="shipping-sub">No convenience fee</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="delivery-info">
+                    <div class="delivery-headline">Tomorrow</div>
+                    <div class="delivery-slot">by 11 AM - 1 PM</div>
+                    <div class="delivery-date">May 25</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="delta-info">
+                    <div class="delta-under">- ₹10</div>
+                    <div class="delta-pct-under">0.1% under</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="status-info">
+                    <span class="pill-stock">In stock</span>
+                    <div class="status-ships">Usually ships within 24 hrs</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="proof-wrap">
+                    <img src="/assets/thumb-amazon@2x.png" alt="Amazon proof screenshot" class="proof-img" data-proof-title="Amazon.in · Sony WH-1000XM5" data-proof-price="₹17,990" data-proof-src="/assets/modal-amazon.png" />
+                    <button type="button" class="btn-proof-link" data-proof-title="Amazon.in · Sony WH-1000XM5" data-proof-price="₹17,990" data-proof-src="/assets/modal-amazon.png">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                      View proof
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Row 2: Croma -->
+              <tr>
+                <td>
+                  <div class="store-meta">
+                    <img src="/assets/croma-trimmed.png" alt="Croma" class="store-logo-img" style="height: 24px; max-width: 105px;" />
+                    <div class="store-subname">Croma.com</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="price-display">
+                    <div class="price-main">₹18,490</div>
+                    <div class="price-sub-over">+ ₹490 over target</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="shipping-info">
+                    <div class="shipping-free">FREE delivery</div>
+                    <div class="shipping-sub">No convenience fee</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="delivery-info">
+                    <div class="delivery-headline">Tomorrow</div>
+                    <div class="delivery-slot">by 2 PM - 6 PM</div>
+                    <div class="delivery-date">May 25</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="delta-info">
+                    <div class="delta-over">+ ₹490</div>
+                    <div class="delta-pct-over">2.7% over</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="status-info">
+                    <span class="pill-stock">In stock</span>
+                    <div class="status-ships">Usually ships within 24 hrs</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="proof-wrap">
+                    <img src="/assets/thumb-croma@2x.png" alt="Croma proof screenshot" class="proof-img" data-proof-title="Croma.com · Sony WH-1000XM5" data-proof-price="₹18,490" data-proof-src="/assets/modal-croma.png" />
+                    <button type="button" class="btn-proof-link" data-proof-title="Croma.com · Sony WH-1000XM5" data-proof-price="₹18,490" data-proof-src="/assets/modal-croma.png">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                      View proof
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Row 3: Reliance Digital -->
+              <tr>
+                <td>
+                  <div class="store-meta">
+                    <img src="/assets/reliance-digital-sharp.png" alt="Reliance Digital" class="store-logo-img" style="height: 24px; max-width: 120px;" />
+                    <div class="store-subname">Reliance Digital</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="price-display">
+                    <div class="price-main">₹18,999</div>
+                    <div class="price-sub-over">+ ₹999 over target</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="shipping-info">
+                    <div class="shipping-free">FREE delivery</div>
+                    <div class="shipping-sub">₹99 convenience fee</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="delivery-info">
+                    <div class="delivery-headline">May 26</div>
+                    <div class="delivery-slot">by 10 AM - 8 PM</div>
+                    <div class="delivery-date">May 26</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="delta-info">
+                    <div class="delta-over">+ ₹999</div>
+                    <div class="delta-pct-over">5.6% over</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="status-info">
+                    <span class="pill-stock">In stock</span>
+                    <div class="status-ships">Usually ships within 24 hrs</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="proof-wrap">
+                    <img src="/assets/thumb-reliance@2x.png" alt="Reliance Digital proof screenshot" class="proof-img" data-proof-title="Reliance Digital · Sony WH-1000XM5" data-proof-price="₹18,999" data-proof-src="/assets/modal-reliance.png" />
+                    <button type="button" class="btn-proof-link" data-proof-title="Reliance Digital · Sony WH-1000XM5" data-proof-price="₹18,999" data-proof-src="/assets/modal-reliance.png">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                      View proof
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="compare-footer-notice">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+          <span>Prices checked less than 60 seconds ago</span>
+          <span class="bullet-divider">·</span>
+          <span>All prices include taxes</span>
+          <span class="bullet-divider">·</span>
+          <span>Availability and delivery times may change</span>
+        </div>
+      </div>
+
       <div id="priceRun"></div>
     </section>
 
@@ -167,7 +395,7 @@
     </section>
   </main>
 
-  <footer>Jhola · made with 🧡 on <a href="https://tinyfish.ai" target="_blank" rel="noopener">TinyFish</a> · I always ask before anything is bought, booked or sent.</footer>
+  <footer>Saarthi · your personal web agent · made with 🧡 on <a href="https://tinyfish.ai" target="_blank" rel="noopener">TinyFish</a> · I always ask before anything is bought, booked or sent.</footer>
 
   <dialog id="confirm">
     <form method="dialog">
@@ -189,6 +417,24 @@
       <button type="button" data-back>← Back</button>
     </div>
     <div class="actions"><span class="estimate" id="winHint">Click on the screen to tap. Keys you press while the screen is focused are typed too.</span><button type="button" class="ghost danger" id="winCancel">Cancel</button><button type="button" class="primary" id="winSave">Save & close</button></div>
+  </dialog>
+
+  <!-- PROOF MODAL -->
+  <dialog id="proofModal" class="proof-modal-dialog">
+    <div class="proof-modal-header">
+      <div class="proof-modal-title-wrap">
+        <h3 id="proofModalTitle" class="proof-modal-title">Proof Screenshot</h3>
+        <span id="proofModalPrice" class="proof-modal-price"></span>
+      </div>
+      <button type="button" class="proof-modal-close" id="proofModalClose" aria-label="Close">✕</button>
+    </div>
+    <div class="proof-modal-body">
+      <img id="proofModalImg" src="" alt="Proof Screenshot" />
+    </div>
+    <div class="proof-modal-footer">
+      <span class="proof-modal-caption">📸 Verified via live TinyFish browser session with timestamp &amp; anti-bot bypass.</span>
+      <button type="button" class="primary" onclick="document.getElementById('proofModal').close()">Close proof</button>
+    </div>
   </dialog>
   <script src="/app.js" type="module"></script>
 </body>

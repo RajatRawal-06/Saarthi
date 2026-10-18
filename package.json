@@ -1,7 +1,7 @@
 {
-  "name": "jhola",
+  "name": "saarthi",
   "version": "1.0.0",
-  "description": "One grocery list, three apps, the cheapest real basket — a TinyFish personal agent",
+  "description": "Saarthi — Your personal web agent powered by TinyFish",
   "main": "index.js",
   "scripts": {
     "test": "node --test",

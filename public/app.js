@@ -262,19 +262,47 @@ async function rerun(id, container) {
 // ---------- Price Hunt ----------
 const priceForm = $('#priceForm');
 function updateEstimate() {
-  const n = Number(priceForm.maxStores.value);
-  $('#priceEstimate').textContent = `≈ ${n} agent runs · typically $${(n * 0.06).toFixed(2)}–$${(n * 0.2).toFixed(2)} · ~1–3 min`;
+  if (!priceForm?.maxStores) return;
+  const n = Number(priceForm.maxStores.value || 3);
+  const est = $('#priceEstimate');
+  if (est) est.textContent = `≈ ${n} agent runs · typically $${(n * 0.06).toFixed(2)}–$${(n * 0.2).toFixed(2)} · ~1–3 min`;
 }
-priceForm.maxStores.addEventListener('change', updateEstimate); updateEstimate();
-priceForm.addEventListener('submit', async (e) => {
+if (priceForm?.maxStores) { priceForm.maxStores.addEventListener('change', updateEstimate); updateEstimate(); }
+priceForm?.addEventListener('submit', async (e) => {
   e.preventDefault();
-  try { const { id } = await api('/api/price-hunt', { method: 'POST', body: formData(priceForm) }); mountRun($('#priceRun'), id); }
-  catch (err) { toast(err.message); }
+  try {
+    const { id } = await api('/api/price-hunt', { method: 'POST', body: formData(priceForm) });
+    mountRun($('#priceRun'), id);
+  } catch (err) { toast(err.message); }
 });
 $$('[data-fill]').forEach((b) => b.addEventListener('click', () => {
   const v = JSON.parse(b.dataset.fill);
-  priceForm.reset(); for (const [k, val] of Object.entries(v)) priceForm[k].value = val; updateEstimate();
+  priceForm.reset(); for (const [k, val] of Object.entries(v)) if (priceForm[k]) priceForm[k].value = val; updateEstimate();
 }));
+
+// Proof screenshot modal handlers
+document.addEventListener('click', (e) => {
+  const trigger = e.target.closest('[data-proof-src]');
+  if (trigger) {
+    const src = trigger.getAttribute('data-proof-src');
+    const title = trigger.getAttribute('data-proof-title') || 'Proof Screenshot';
+    const price = trigger.getAttribute('data-proof-price') || '';
+    const modal = $('#proofModal');
+    if (modal) {
+      const titleEl = $('#proofModalTitle');
+      const priceEl = $('#proofModalPrice');
+      const imgEl = $('#proofModalImg');
+      if (titleEl) titleEl.textContent = title;
+      if (priceEl) priceEl.textContent = price;
+      if (imgEl) imgEl.src = src;
+      modal.showModal();
+    }
+  }
+});
+$('#proofModalClose')?.addEventListener('click', () => $('#proofModal')?.close());
+$('#proofModal')?.addEventListener('click', (e) => {
+  if (e.target === $('#proofModal')) $('#proofModal').close();
+});
 
 // ---------- Form Fill ----------
 const formForm = $('#formForm');
@@ -698,6 +726,6 @@ loadStatus();
 await loadSettings().catch(() => {});
 await loadMe().catch(() => {});
 await loadAccounts(); renderAppToggles();
-show((location.hash || '#jhola').slice(1) || 'jhola');
-window.addEventListener('hashchange', () => show(location.hash.slice(1) || 'jhola'));
+show((location.hash || '#price').slice(1) || 'price');
+window.addEventListener('hashchange', () => show(location.hash.slice(1) || 'price'));
 resumeJhola();
