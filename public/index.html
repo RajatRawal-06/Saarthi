@@ -703,43 +703,211 @@
       </div>
     </section>
 
-    <!-- ME -->
+    <!-- ME: LOCAL VAULT & PROFILE INTELLIGENCE -->
     <section class="panel" id="tab-me">
-      <div class="hero"><h1>Me</h1><p class="lede">Saved only on this computer, in <code>data/</code>. Used to deliver your orders and fill forms.</p></div>
-
-      <form class="card" id="meForm">
-        <h3>Your details</h3>
-        <div class="fgrid">
-          <label>Full name <input name="full_name" autocomplete="name" /></label>
-          <label>Phone <input name="phone" inputmode="tel" autocomplete="tel" /></label>
-          <label>Email <span class="opt">optional</span><input name="email" type="email" autocomplete="email" /></label>
-          <label class="wide">House / flat, street <input name="address_line1" autocomplete="address-line1" /></label>
-          <label class="wide">Area / locality <input name="address_line2" autocomplete="address-line2" /></label>
-          <label>Landmark <span class="opt">optional</span><input name="landmark" /></label>
-          <label>City <input name="city" autocomplete="address-level2" /></label>
-          <label>State <input name="state" autocomplete="address-level1" /></label>
-          <label>PIN code <input name="pincode" inputmode="numeric" maxlength="6" autocomplete="postal-code" /></label>
+      <!-- HERO -->
+      <div class="me-hero">
+        <div class="me-badge">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+          <span>LOCAL DATA VAULT &amp; DELIVERY PROFILE</span>
         </div>
-        <details class="extra"><summary>More details for forms (college, roll number…)</summary><div id="extraRows"></div><button type="button" class="ghost" id="addExtra">+ Add a detail</button></details>
-        <div class="actions"><span class="estimate">Passwords, OTPs, card and ID numbers are never stored.</span><button class="primary" type="submit">Save my details</button></div>
+        <h1 class="me-title">Personal Profile &amp; Caretaker Routing</h1>
+        <p class="me-lede">
+          Stored strictly on this machine in local <code>data/profile.json</code>. Saarthi uses your address to unlock hyper-local dark stores, calculate accurate delivery slots, and fill checkout forms without storing passwords, OTPs, or payment cards.
+        </p>
+
+        <!-- IDENTITY PREVIEW CARD -->
+        <div class="me-identity-card" id="meIdentityCard">
+          <div class="me-id-avatar" id="meIdAvatar">RR</div>
+          <div class="me-id-details">
+            <div class="me-id-header">
+              <h2 class="me-id-name" id="meIdName">Rajat Rawal</h2>
+              <span class="me-id-status">
+                <span class="status-dot green"></span>
+                100% Client-Side Local Storage
+              </span>
+            </div>
+            <div class="me-id-meta-row">
+              <span class="me-id-meta-item" id="meIdLoc">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                <span id="meIdLocText">110001 · Uttam Nagar, New Delhi</span>
+              </span>
+              <span class="me-id-meta-item" id="meIdPhone">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                <span id="meIdPhoneText">+91 97783930</span>
+              </span>
+              <span class="me-id-meta-item" id="meIdEmail">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                <span id="meIdEmailText">rawalrajat044@gmail.com</span>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MAIN PROFILE & ADDRESS FORM -->
+      <form class="me-profile-card" id="meForm">
+        <div class="me-card-section-head">
+          <div class="me-section-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+          </div>
+          <div>
+            <h3>Personal Identity &amp; Contact</h3>
+            <p>Used to address your delivery orders and greet you.</p>
+          </div>
+        </div>
+
+        <div class="me-form-grid">
+          <label class="me-field">
+            <span class="me-field-label">Full Name <span class="req">*</span></span>
+            <input name="full_name" autocomplete="name" placeholder="e.g. Rajat Rawal" required />
+          </label>
+          <label class="me-field">
+            <span class="me-field-label">Mobile Phone <span class="req">*</span></span>
+            <div class="input-with-prefix">
+              <span class="input-prefix">🇮🇳 +91</span>
+              <input name="phone" inputmode="tel" autocomplete="tel" placeholder="98765 43210" required />
+            </div>
+          </label>
+          <label class="me-field">
+            <span class="me-field-label">Email Address <span class="opt">optional</span></span>
+            <input name="email" type="email" autocomplete="email" placeholder="name@example.com" />
+          </label>
+        </div>
+
+        <div class="me-card-section-head" style="margin-top: 24px;">
+          <div class="me-section-icon blue">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+          </div>
+          <div>
+            <h3>Delivery Coordinates &amp; Hyper-Local Dark Store Geofence</h3>
+            <p>Accurate address coordinates enable Blinkit, Zepto, and Instamart 10-15 minute dispatch.</p>
+          </div>
+        </div>
+
+        <div class="me-form-grid">
+          <label class="me-field wide">
+            <span class="me-field-label">House / Flat / Building / Street Address <span class="req">*</span></span>
+            <input name="address_line1" autocomplete="address-line1" placeholder="Flat No. 102, Building A, Main Road" required />
+          </label>
+          <label class="me-field wide">
+            <span class="me-field-label">Area / Locality / Sector <span class="req">*</span></span>
+            <input name="address_line2" autocomplete="address-line2" placeholder="Sector 14, Uttam Nagar, Near Metro" required />
+          </label>
+          <label class="me-field">
+            <span class="me-field-label">Nearby Landmark <span class="opt">optional</span></span>
+            <input name="landmark" placeholder="Near Arya Samaj Mandir" />
+          </label>
+          <label class="me-field">
+            <span class="me-field-label">City <span class="req">*</span></span>
+            <input name="city" autocomplete="address-level2" placeholder="New Delhi" required />
+          </label>
+          <label class="me-field">
+            <span class="me-field-label">State <span class="req">*</span></span>
+            <input name="state" autocomplete="address-level1" placeholder="Delhi" required />
+          </label>
+          <label class="me-field">
+            <span class="me-field-label">PIN Code (6 digits) <span class="req">*</span></span>
+            <div class="pincode-input-wrap">
+              <input name="pincode" inputmode="numeric" maxlength="6" pattern="[0-9]{6}" autocomplete="postal-code" placeholder="110001" required />
+              <span class="pincode-badge">⚡ DARK STORE KEY</span>
+            </div>
+          </label>
+        </div>
+
+        <details class="me-extra-details">
+          <summary>
+            <span class="extra-summary-title">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+              Custom Form Fill Attributes (College, Roll Number, Alternate Info…)
+            </span>
+          </summary>
+          <div class="extra-details-body">
+            <p class="small" style="color: #64748b; margin: 4px 0 12px;">Saarthi auto-fills these into web application forms (never passwords, OTPs, or IDs).</p>
+            <div id="extraRows"></div>
+            <button type="button" class="btn-add-extra" id="addExtra">+ Add Custom Attribute</button>
+          </div>
+        </details>
+
+        <div class="me-form-footer">
+          <div class="me-privacy-notice">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+            <span>Passwords, OTPs, card numbers and CVVs are strictly blocked and never stored.</span>
+          </div>
+          <button class="primary btn-save-me" type="submit">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            Save Profile Coordinates
+          </button>
+        </div>
       </form>
 
-      <div class="card" id="careCard">
-        <h3>👵 Caretaker settings</h3>
-        <p class="small">For a parent or grandparent: choose where orders go when they don't name a store, and keep the app simple.</p>
-        <div id="careLocked" class="hidden">
-          <div class="row"><input id="careUnlockPin" type="password" inputmode="numeric" maxlength="6" placeholder="Caretaker PIN" /><button type="button" class="primary" id="careUnlock">Unlock</button></div>
-        </div>
-        <div id="careBody">
-          <label class="lbl">Default stores <span class="opt">tap in order of preference, up to 4</span></label>
-          <div class="chips pick" id="careStores"></div>
-          <div class="fgrid">
-            <label>Caretaker name <input id="careName" placeholder="e.g. Priya" /></label>
-            <label>Caretaker phone <input id="carePhone" inputmode="tel" /></label>
-            <label>Set a PIN <span class="opt">4–6 digits, optional</span><input id="careNewPin" type="password" inputmode="numeric" maxlength="6" /></label>
+      <!-- CARETAKER SETTINGS CARD -->
+      <div class="me-caretaker-card" id="careCard">
+        <div class="care-header">
+          <div class="care-icon-wrap">👵</div>
+          <div class="care-title-group">
+            <h3>Caretaker Mode &amp; Default Store Routing</h3>
+            <p>For parents or seniors: route unassigned orders to top preferred stores and enable a distraction-free interface.</p>
           </div>
-          <label class="toggle"><input type="checkbox" id="careSimple" /> <span>Simple mode: big text, only Order, History and Me</span></label>
-          <div class="actions"><button type="button" class="primary" id="careSave">Save caretaker settings</button></div>
+        </div>
+
+        <div id="careLocked" class="care-locked-box hidden">
+          <div class="care-lock-content">
+            <div class="care-lock-icon">🔒</div>
+            <div class="care-lock-text">
+              <b>Caretaker Controls Are PIN-Locked</b>
+              <p>Enter the 4–6 digit caretaker security PIN to modify routing and settings.</p>
+            </div>
+            <div class="care-unlock-row">
+              <input id="careUnlockPin" type="password" inputmode="numeric" maxlength="6" placeholder="Enter PIN" />
+              <button type="button" class="primary" id="careUnlock">Unlock Settings</button>
+            </div>
+          </div>
+        </div>
+
+        <div id="careBody" class="care-body">
+          <div class="care-stores-section">
+            <div class="care-stores-head">
+              <span class="care-stores-title">Default Store Routing Priority</span>
+              <span class="care-stores-hint">Tap up to 4 stores in order of routing preference:</span>
+            </div>
+            <div class="care-stores-grid" id="careStores">
+              <!-- Rendered with brand logos and priority tags -->
+            </div>
+          </div>
+
+          <div class="care-details-grid">
+            <label class="me-field">
+              <span class="me-field-label">Caretaker Name</span>
+              <input id="careName" placeholder="e.g. Priya" />
+            </label>
+            <label class="me-field">
+              <span class="me-field-label">Caretaker Emergency Phone</span>
+              <input id="carePhone" inputmode="tel" placeholder="e.g. 98765 00000" />
+            </label>
+            <label class="me-field">
+              <span class="me-field-label">Security Lock PIN <span class="opt">4–6 digits</span></span>
+              <input id="careNewPin" type="password" inputmode="numeric" maxlength="6" placeholder="Leave empty to keep current" />
+            </label>
+          </div>
+
+          <div class="care-simple-mode-card">
+            <label class="care-simple-toggle">
+              <input type="checkbox" id="careSimple" />
+              <span class="toggle-slider"></span>
+              <div class="toggle-desc">
+                <b>Simple Mode Interface</b>
+                <span>Large high-contrast text, streamlined view showing only Order, History, and Me.</span>
+              </div>
+            </label>
+          </div>
+
+          <div class="care-actions">
+            <button type="button" class="primary btn-care-save" id="careSave">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+              Save Caretaker Settings
+            </button>
+          </div>
         </div>
       </div>
     </section>

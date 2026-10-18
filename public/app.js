@@ -1218,11 +1218,46 @@ function extraRow(k = '', v = '') {
   $('button', d).onclick = () => d.remove();
   return d;
 }
+function renderMeIdentityCard() {
+  const nameEl = $('#meIdName');
+  const avatarEl = $('#meIdAvatar');
+  const locEl = $('#meIdLocText');
+  const phoneEl = $('#meIdPhoneText');
+  const emailEl = $('#meIdEmailText');
+
+  if (!nameEl) return;
+
+  const fullName = (profile.full_name || '').trim();
+  nameEl.textContent = fullName || 'Anonymous Profile';
+
+  // Initials
+  const parts = fullName.split(/\s+/).filter(Boolean);
+  let initials = 'ME';
+  if (parts.length >= 2) {
+    initials = (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+  } else if (parts.length === 1 && parts[0].length >= 2) {
+    initials = parts[0].slice(0, 2).toUpperCase();
+  } else if (parts.length === 1) {
+    initials = parts[0].toUpperCase();
+  }
+  if (avatarEl) avatarEl.textContent = initials;
+
+  // Location summary
+  const pin = profile.pincode ? `PIN ${profile.pincode}` : '';
+  const area = [profile.address_line2, profile.city, profile.state].filter(Boolean).join(', ');
+  const locSummary = [pin, area].filter(Boolean).join(' · ');
+  if (locEl) locEl.textContent = locSummary || 'No delivery coordinates saved';
+
+  if (phoneEl) phoneEl.textContent = profile.phone ? (profile.phone.startsWith('+') ? profile.phone : `+91 ${profile.phone}`) : 'No phone linked';
+  if (emailEl) emailEl.textContent = profile.email || 'No email linked';
+}
+
 async function loadMe() {
   profile = await api('/api/profile');
-  PROFILE_KEYS.forEach((k) => { meForm[k].value = profile[k] || ''; });
+  PROFILE_KEYS.forEach((k) => { if (meForm[k]) meForm[k].value = profile[k] || ''; });
   const rows = $('#extraRows'); rows.innerHTML = '';
   Object.entries(profile).filter(([k]) => !PROFILE_KEYS.includes(k)).forEach(([k, v]) => rows.append(extraRow(k, v)));
+  renderMeIdentityCard();
   renderCare();
   updateHello();
 }
@@ -1230,10 +1265,11 @@ $('#addExtra').onclick = () => $('#extraRows').append(extraRow());
 meForm.addEventListener('submit', async (e) => {
   e.preventDefault();
   const obj = {}; const refused = [];
-  PROFILE_KEYS.forEach((k) => { const v = meForm[k].value.trim(); if (v) obj[k] = v; });
+  PROFILE_KEYS.forEach((k) => { const v = meForm[k]?.value.trim(); if (v) obj[k] = v; });
   $$('#extraRows .prow').forEach((r) => { const k = $('.k', r).value.trim(); const v = $('.v', r).value.trim(); if (!k || !v) return; if (SENSITIVE.test(k)) refused.push(k); else obj[k] = v; });
   if (obj.pincode && !/^\d{6}$/.test(obj.pincode)) return toast('PIN code should be 6 digits.');
   profile = await api('/api/profile', { method: 'PUT', body: obj });
+  renderMeIdentityCard();
   toast(refused.length ? `Saved. Not stored (sensitive): ${refused.join(', ')}` : 'Saved 🧡');
   updateHello();
 });
@@ -1257,15 +1293,32 @@ function renderCare() {
   $('#careBody').classList.toggle('hidden', locked);
   $('#careStores').innerHTML = settings.stores.map((s) => {
     const i = carePicked.indexOf(s.domain);
-    return `<button type="button" data-d="${esc(s.domain)}" class="${i >= 0 ? 'on' : ''}">${i >= 0 ? `<span class="n">${i + 1}</span>` : ''}${esc(s.name)}</button>`;
+    const isPicked = i >= 0;
+    return `
+      <button type="button" data-d="${esc(s.domain)}" class="care-store-tile ${isPicked ? 'on' : ''}">
+        <div class="care-store-top">
+          <div class="care-store-logo-box">
+            ${storeLogoHtml(s.domain, s.name, 22)}
+          </div>
+          ${isPicked
+            ? `<span class="care-priority-badge"><span class="badge-num">#${i + 1}</span> Priority</span>`
+            : `<span class="care-add-badge">+ Add</span>`}
+        </div>
+        <div class="care-store-info">
+          <div class="care-store-name">${esc(s.name)}</div>
+          <div class="care-store-domain">${esc(s.domain)}</div>
+        </div>
+      </button>
+    `;
   }).join('');
   $$('#careStores button').forEach((b) => b.onclick = () => {
     const d = b.dataset.d;
     carePicked = carePicked.includes(d) ? carePicked.filter((x) => x !== d) : carePicked.length < 4 ? [...carePicked, d] : carePicked;
     renderCare();
   });
-  $('#careName').value = settings.caretakerName; $('#carePhone').value = settings.caretakerPhone;
-  $('#careSimple').checked = settings.simpleMode;
+  $('#careName').value = settings.caretakerName || '';
+  $('#carePhone').value = settings.caretakerPhone || '';
+  $('#careSimple').checked = !!settings.simpleMode;
 }
 $('#careUnlock').onclick = async () => {
   const pin = $('#careUnlockPin').value;
