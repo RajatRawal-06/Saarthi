@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 36" width="150" height="36">
+  <!-- Swiggy Instamart horizontal logo -->
+  <g id="swiggy-icon">
+    <rect x="1" y="2" width="32" height="32" rx="8" fill="#FC8019"/>
+    <path d="M 17 7 C 13.5 7 10.8 9.7 10.8 13.2 C 10.8 17.5 17 25 17 25 C 17 25 23.2 17.5 23.2 13.2 C 23.2 9.7 20.5 7 17 7 Z M 17 15.5 C 15.6 15.5 14.5 14.4 14.5 13 C 14.5 11.6 15.6 10.5 17 10.5 C 18.4 10.5 19.5 11.6 19.5 13 C 19.5 14.4 18.4 15.5 17 15.5 Z" fill="#ffffff"/>
+  </g>
+  <text x="40" y="19" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="14.5" font-weight="800" fill="#FC8019" letter-spacing="-0.4px">swiggy</text>
+  <text x="40" y="32" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="900" fill="#581c87" letter-spacing="-0.3px">instamart</text>
+</svg>

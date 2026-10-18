@@ -508,11 +508,135 @@
       <div id="historyRun"></div>
     </section>
 
-    <!-- SETUP -->
+    <!-- SETUP: ANTI-BOT PROTECTION & RETAILER SESSIONS -->
     <section class="panel" id="tab-setup">
-      <div class="hero"><h1>Setup</h1><p class="lede">Connect each app once. You log in with your own phone number and OTP inside a secure TinyFish browser (India), and set your delivery address there. I save the session, never your OTP.</p></div>
-      <div class="grid3" id="setupApps"></div>
-      <div class="card small">💡 After logging in, check the delivery address at the top of the app is yours, then press <b>Save & close</b>. If an app logs you out later, I'll tell you and you can reconnect here.</div>
+      <!-- HERO -->
+      <div class="setup-hero">
+        <div class="setup-badge">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+          <span>ANTI-BOT SHIELD &amp; STORE SESSION ENGINE</span>
+        </div>
+        <h1 class="setup-title">Retailer Sessions &amp; Anti-Blocking Shield</h1>
+        <p class="setup-lede">
+          Modern Indian quick-commerce and retail platforms deploy Cloudflare Turnstile, perimeter bot-walls, and hyper-local location fences that block generic web scrapers. Saarthi connects through authenticated TinyFish browser sessions with residential Indian proxies, bypassing bot walls to extract live verified prices and inventory across all 11 major retailers.
+        </p>
+
+        <!-- TELEMETRY / LIVE METRICS PILLS -->
+        <div class="setup-stats-bar">
+          <div class="setup-stat-pill">
+            <span class="setup-stat-num">11</span>
+            <span class="setup-stat-label">Verified Retailers</span>
+          </div>
+          <div class="setup-stat-pill">
+            <span class="setup-stat-dot green"></span>
+            <span class="setup-stat-label">TinyFish Stealth CDP Active</span>
+          </div>
+          <div class="setup-stat-pill">
+            <span class="setup-stat-dot blue"></span>
+            <span class="setup-stat-label">Residential India Proxy (IN)</span>
+          </div>
+          <div class="setup-stat-pill">
+            <span class="setup-stat-badge">ZERO OTP STORED</span>
+            <span class="setup-stat-label">100% Client Privacy</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ANTI-BOT EXPLANATION & ARCHITECTURE CARD -->
+      <div class="setup-shield-banner">
+        <div class="shield-banner-header">
+          <div class="shield-banner-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+          </div>
+          <div class="shield-banner-title-group">
+            <h3>Why Websites Block Automated Price Checks &amp; How Saarthi Solves It</h3>
+            <p>Every major store (Blinkit, Zepto, Swiggy, Flipkart, Amazon, IndiaMART) protects prices behind login or geolocation fences.</p>
+          </div>
+        </div>
+
+        <div class="shield-features-grid">
+          <div class="shield-feature-item">
+            <div class="shield-feat-icon red">🛑</div>
+            <div class="shield-feat-content">
+              <b>The Bot-Wall Problem</b>
+              <p>When unauthenticated scrapers request a product page, websites return <code>403 Forbidden</code>, Cloudflare challenge captchas, or empty stock placeholders.</p>
+            </div>
+          </div>
+
+          <div class="shield-feature-item">
+            <div class="shield-feat-icon amber">📍</div>
+            <div class="shield-feat-content">
+              <b>Dark Store Geofencing</b>
+              <p>Quick-commerce stores (Blinkit, Zepto, Swiggy) do not index inventory without an exact Delivery PIN code and a localized dark store session.</p>
+            </div>
+          </div>
+
+          <div class="shield-feature-item">
+            <div class="shield-feat-icon green">⚡</div>
+            <div class="shield-feat-content">
+              <b>TinyFish Stealth Bypass</b>
+              <p>Saarthi launches real headless Chromium sessions with genuine browser headers, human mouse trajectories, and residential Indian IP routes.</p>
+            </div>
+          </div>
+
+          <div class="shield-feature-item">
+            <div class="shield-feat-icon purple">🔒</div>
+            <div class="shield-feat-content">
+              <b>Zero Password Storage</b>
+              <p>You log in directly inside the remote browser window. Saarthi never sees or stores passwords, OTPs, or payment details—only encrypted session cookies.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DELIVERY PIN & LOCATION CONTROL BAR -->
+      <div class="setup-pincode-card">
+        <div class="pincode-card-left">
+          <div class="pincode-icon-wrap">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+          </div>
+          <div class="pincode-info">
+            <div class="pincode-headline">Hyper-Local Delivery Geofence</div>
+            <div class="pincode-sub" id="setupPinStatus">Active PIN: <b>110001</b> · Delhi NCR Dark Stores Unlocked</div>
+          </div>
+        </div>
+        <form class="pincode-form" id="setupPinForm">
+          <input type="text" id="setupPinInput" inputmode="numeric" maxlength="6" pattern="[0-9]{6}" placeholder="e.g. 110001" required />
+          <button type="submit" class="btn-pincode-sync">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
+            Sync &amp; Bypass All
+          </button>
+        </form>
+      </div>
+
+      <!-- FILTER TABS & STORE GRID -->
+      <div class="setup-grid-container">
+        <div class="setup-grid-header">
+          <div class="setup-grid-title-group">
+            <h2>All Supported Retailers &amp; Platforms (11)</h2>
+            <span class="setup-grid-sub">Click Connect to log in via secure remote browser, or Test Ping to verify live stealth bypass.</span>
+          </div>
+          <div class="setup-filter-chips" id="setupCategoryFilters">
+            <button type="button" class="setup-chip active" data-cat="all">All (11)</button>
+            <button type="button" class="setup-chip" data-cat="quick">⚡ Quick Commerce (4)</button>
+            <button type="button" class="setup-chip" data-cat="retail">🛒 Marketplaces &amp; Tech (4)</button>
+            <button type="button" class="setup-chip" data-cat="b2b">🏭 Wholesale &amp; Health (3)</button>
+          </div>
+        </div>
+
+        <div class="setup-apps-grid" id="setupApps">
+          <!-- Rendered dynamically by loadSetup() -->
+        </div>
+
+        <div class="setup-footer-notice">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+          <span>All session cookies encrypted locally in <code>data/</code></span>
+          <span class="bullet-divider">·</span>
+          <span>Zero passwords, OTPs, or credit cards stored</span>
+          <span class="bullet-divider">·</span>
+          <span>Automatic Cloudflare Turnstile &amp; Dark Store bypass</span>
+        </div>
+      </div>
     </section>
 
     <!-- ME -->

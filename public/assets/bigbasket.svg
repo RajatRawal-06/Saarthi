@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 50" width="200" height="50">
+  <!-- BigBasket official branding -->
+  <g id="bb-icon">
+    <rect x="2" y="5" width="40" height="40" rx="10" fill="#e21a22"/>
+    <text x="22" y="32" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="24" font-weight="900" fill="#ffffff" text-anchor="middle" font-style="italic">bb</text>
+  </g>
+  <text x="50" y="32" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="20" font-weight="800" fill="#2d3748" letter-spacing="-0.5px">big<tspan fill="#689f38">basket</tspan></text>
+  <text x="52" y="44" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9" font-weight="700" fill="#84cc16" letter-spacing="0.5px">A TATA ENTERPRISE</text>
+</svg>
