@@ -254,6 +254,7 @@ const STORE_THEMES = {
   'amazon.in': { bg: '#131921', accent: '#ff9900', badge: '#232f3e', name: 'Amazon India' },
   'flipkart.com': { bg: '#2874f0', accent: '#ffe500', badge: '#1759bb', name: 'Flipkart' },
   'zepto.com': { bg: '#3b0764', accent: '#ec4899', badge: '#581c87', name: 'Zepto' },
+  'zeptonow.com': { bg: '#3b0764', accent: '#ec4899', badge: '#581c87', name: 'Zepto' },
   'blinkit.com': { bg: '#f59e0b', accent: '#15803d', badge: '#d97706', name: 'Blinkit' },
   'indiamart.com': { bg: '#082f49', accent: '#0284c7', badge: '#0c4a6e', name: 'IndiaMART' },
   'starquik.com': { bg: '#881337', accent: '#f43f5e', badge: '#4c0519', name: 'Starquik' },
