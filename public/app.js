@@ -796,18 +796,345 @@ $$('[data-fill-form]').forEach((b) => b.addEventListener('click', () => {
   const v = JSON.parse(b.dataset.fillForm); for (const [k, val] of Object.entries(v)) formForm[k].value = val;
 }));
 
-// ---------- History ----------
-async function loadHistory() {
+// ---------- History: Autonomous Agent Mission Control & Audit Ledger ----------
+let historyCachedJobs = [];
+let historyActiveType = 'all';
+let historySearchQuery = '';
+
+function renderHistoryCards() {
   const list = $('#historyList');
-  const js = await api('/api/jobs');
-  if (!js.length) { list.innerHTML = '<div class="card small">Nothing yet. Run a chore and it shows up here.</div>'; return; }
-  list.innerHTML = js.map((j) => `<div class="card hist" data-id="${esc(j.id)}">
-    <div><div class="t">${esc(j.title)}</div><div class="small">${new Date(j.createdAt).toLocaleString()} · ${j.usage.agentRuns} agent runs · ≈ $${j.cost.toFixed(2)}${j.result?.summary ? ` · ${esc(j.result.summary)}` : j.result?.message ? ` · ${esc(j.result.message)}` : ''}</div></div>
-    <div class="row"><span class="chip ${esc(j.status)}">${esc(j.status.replace('_', ' '))}</span><button data-open>Open</button><button data-rerun>Re-run</button></div></div>`).join('');
-  $$('.hist', list).forEach((row) => {
-    $('[data-open]', row).onclick = () => { mountRun($('#historyRun'), row.dataset.id); $('#historyRun').scrollIntoView({ behavior: 'smooth' }); };
-    $('[data-rerun]', row).onclick = () => { rerun(row.dataset.id, $('#historyRun')); $('#historyRun').scrollIntoView({ behavior: 'smooth' }); };
+  if (!list) return;
+
+  const q = historySearchQuery.toLowerCase().trim();
+  const filtered = historyCachedJobs.filter((j) => {
+    if (historyActiveType !== 'all' && j.type !== historyActiveType) return false;
+    if (!q) return true;
+    const titleMatch = (j.title || '').toLowerCase().includes(q);
+    const prodMatch = (j.input?.product || '').toLowerCase().includes(q);
+    const storeMatch = (j.result?.best?.domain || '').toLowerCase().includes(q);
+    const urlMatch = (j.input?.url || '').toLowerCase().includes(q);
+    const idMatch = (j.id || '').toLowerCase().includes(q);
+    return titleMatch || prodMatch || storeMatch || urlMatch || idMatch;
   });
+
+  if (!filtered.length) {
+    list.innerHTML = `
+      <div class="history-empty-card">
+        <div class="empty-icon">🔍</div>
+        <h3>No tasks found matching your filter</h3>
+        <p>${q ? `No jobs matched query "${esc(q)}". Try searching a different keyword.` : 'You have not run any tasks in this category yet.'}</p>
+        <button type="button" class="btn-hist-reset" id="btnHistReset">View All Jobs</button>
+      </div>
+    `;
+    $('#btnHistReset')?.addEventListener('click', () => {
+      historyActiveType = 'all';
+      historySearchQuery = '';
+      const inp = $('#historySearchInput');
+      if (inp) inp.value = '';
+      $('#historySearchClear')?.classList.add('hidden');
+      $$('#historyFilters .hist-filter-btn').forEach((b) => b.classList.toggle('active', b.dataset.type === 'all'));
+      renderHistoryCards();
+    });
+    return;
+  }
+
+  list.innerHTML = filtered.map((j) => {
+    // Type definitions
+    let typeIcon = '🏷️';
+    let typeName = 'PRICE HUNT';
+    let typeBadgeClass = 'hunt';
+    if (j.type === 'order') { typeIcon = '🛍️'; typeName = 'GROCERY ORDER'; typeBadgeClass = 'order'; }
+    else if (j.type === 'form_fill') { typeIcon = '📝'; typeName = 'FORM FILL'; typeBadgeClass = 'form'; }
+    else if (j.type === 'jhola') { typeIcon = '🛒'; typeName = 'JHOLA BASKET'; typeBadgeClass = 'jhola'; }
+
+    // Status definitions
+    let statusClass = 'done';
+    let dotColor = 'green';
+    let statusLabel = 'Completed (Verified)';
+    if (j.status === 'partial') {
+      statusClass = 'partial';
+      dotColor = 'amber';
+      statusLabel = 'Partial Results';
+    } else if (j.status === 'interrupted' || j.status === 'failed') {
+      statusClass = 'failed';
+      dotColor = 'red';
+      statusLabel = j.status === 'interrupted' ? 'Interrupted' : 'Failed';
+    } else if (j.status === 'running') {
+      statusClass = 'running';
+      dotColor = 'blue pulse';
+      statusLabel = 'Running Live…';
+    }
+
+    const createdDate = new Date(j.createdAt);
+    const dateFormatted = createdDate.toLocaleDateString('en-IN', { month: 'short', day: 'numeric', year: 'numeric' });
+    const timeFormatted = createdDate.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' });
+
+    // Product thumbnail or type icon
+    const bestOffer = j.result?.best || j.liveOffers?.[0] || null;
+    const thumbUrl = bestOffer?.image_url || null;
+    let thumbHtml = '';
+    if (thumbUrl) {
+      thumbHtml = `<div class="hist-thumb-wrap"><img src="${esc(thumbUrl)}" alt="${esc(j.title)}" class="hist-thumb-img" onerror="this.parentElement.innerHTML='<div class=\\'hist-avatar-fallback ${typeBadgeClass}\\'>${typeIcon}</div>'" /></div>`;
+    } else {
+      thumbHtml = `<div class="hist-thumb-wrap"><div class="hist-avatar-fallback ${typeBadgeClass}">${typeIcon}</div></div>`;
+    }
+
+    // Clean title
+    let displayTitle = j.title || 'Agent Chore';
+    if (j.type === 'price_hunt' && j.input?.product) {
+      displayTitle = j.input.product;
+    } else if (j.type === 'form_fill' && j.input?.url) {
+      displayTitle = `Form: ${j.input.url.replace(/^https?:\/\//i, '').split('/')[0]}`;
+    }
+
+    // Result summary & price highlight
+    let resultHighlightHtml = '';
+    let extUrl = bestOffer?.url || (j.type === 'form_fill' ? j.input?.url : null);
+
+    if (j.type === 'price_hunt') {
+      if (bestOffer && bestOffer.price != null) {
+        const bestDomain = bestOffer.domain || '';
+        resultHighlightHtml = `
+          <div class="hist-result-box verified">
+            <div class="hist-price-group">
+              <span class="hist-price-main">${money(bestOffer.price, bestOffer.currency || 'INR')}</span>
+              ${bestOffer.mrp && bestOffer.mrp > bestOffer.price ? `<span class="hist-mrp-strike">${money(bestOffer.mrp, bestOffer.currency || 'INR')}</span>` : ''}
+            </div>
+            <div class="hist-store-pill">
+              ${storeLogoHtml(bestDomain, getStoreDisplayName(bestDomain), 18)}
+              <span class="hist-store-label">${esc(getStoreDisplayName(bestDomain))}</span>
+            </div>
+            ${bestOffer.in_stock !== false ? '<span class="hist-stock-tag in-stock">● In stock</span>' : '<span class="hist-stock-tag out-stock">● Out of stock</span>'}
+          </div>
+        `;
+      } else {
+        resultHighlightHtml = `
+          <div class="hist-result-box no-stock">
+            <span class="hist-no-stock-text">⚠️ No stores returned a usable in-stock price</span>
+            ${j.result?.summary ? `<span class="hist-summary-sub">${esc(j.result.summary)}</span>` : ''}
+          </div>
+        `;
+      }
+    } else if (j.type === 'form_fill') {
+      resultHighlightHtml = `
+        <div class="hist-result-box form">
+          <span class="hist-form-url">${esc(j.input?.url || '')}</span>
+          <span class="hist-summary-sub">${esc(j.result?.message || 'Analyzed form elements and fields.')}</span>
+        </div>
+      `;
+    } else {
+      resultHighlightHtml = `
+        <div class="hist-result-box info">
+          <span class="hist-summary-sub">${esc(j.result?.summary || j.result?.message || 'Completed task.')}</span>
+        </div>
+      `;
+    }
+
+    const agentRuns = j.usage?.agentRuns || 1;
+    const browserSecs = j.usage?.browserSeconds || 0;
+    const costUsd = Number(j.cost || 0).toFixed(2);
+    const searchesCount = j.usage?.searches || 0;
+
+    return `
+      <div class="history-item-card" data-id="${esc(j.id)}" data-type="${esc(j.type)}">
+        <div class="hist-card-top">
+          <div class="hist-type-and-time">
+            <span class="hist-type-badge ${typeBadgeClass}">${typeIcon} ${typeName}</span>
+            <span class="hist-time-tag">${dateFormatted} · ${timeFormatted}</span>
+            <span class="hist-ago-tag">${ago(j.createdAt)}</span>
+          </div>
+          <div class="hist-status-wrap">
+            <span class="hist-status-badge ${statusClass}">
+              <span class="hist-dot ${dotColor}"></span>
+              ${statusLabel}
+            </span>
+            <button type="button" class="btn-hist-delete" data-del="${esc(j.id)}" title="Delete from history">✕</button>
+          </div>
+        </div>
+
+        <div class="hist-card-middle">
+          ${thumbHtml}
+
+          <div class="hist-details-wrap">
+            <div class="hist-headline-group">
+              <h3 class="hist-item-title">${esc(displayTitle)}</h3>
+              ${j.input?.country ? `<span class="hist-country-tag">🇮🇳 ${esc(j.input.country)}</span>` : ''}
+            </div>
+
+            ${resultHighlightHtml}
+
+            <div class="hist-telemetry-row">
+              <span class="hist-telem-chip">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 2a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2 2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zM4 11v2a8 8 0 0 0 16 0v-2"></path><rect x="5" y="10" width="14" height="10" rx="3"></rect></svg>
+                ${agentRuns} Agent Run${agentRuns > 1 ? 's' : ''}
+              </span>
+              <span class="hist-telem-chip">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                ${browserSecs}s Browser
+              </span>
+              <span class="hist-telem-chip cost">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                $${costUsd} USD
+              </span>
+              ${searchesCount ? `
+                <span class="hist-telem-chip">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                  ${searchesCount} Searches
+                </span>
+              ` : ''}
+            </div>
+          </div>
+
+          <div class="hist-actions-wrap">
+            <button type="button" class="primary btn-hist-open" data-open="${esc(j.id)}">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+              Inspect Run ↗
+            </button>
+            <button type="button" class="btn-hist-rerun" data-rerun="${esc(j.id)}">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
+              Re-run
+            </button>
+            ${extUrl ? `
+              <a href="${esc(safeUrl(extUrl))}" target="_blank" rel="noopener" class="btn-hist-ext" title="Open verified listing page">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                Store Link ↗
+              </a>
+            ` : ''}
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  // Wire up event listeners
+  $$('.btn-hist-open', list).forEach((b) => {
+    b.onclick = () => {
+      const jobId = b.dataset.open;
+      const runSlot = $('#historyRun');
+      runSlot.innerHTML = `
+        <div class="history-inspector-card">
+          <div class="hist-inspector-header">
+            <div class="hist-inspector-title">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+              <span>Inspecting Agent Execution: <b>${esc(jobId)}</b></span>
+            </div>
+            <button type="button" class="btn-hist-inspector-close" id="btnHistCloseInspector">✕ Close Inspector</button>
+          </div>
+          <div id="historyRunInner"></div>
+        </div>
+      `;
+      $('#btnHistCloseInspector').onclick = () => { runSlot.innerHTML = ''; };
+      mountRun($('#historyRunInner'), jobId);
+      runSlot.scrollIntoView({ behavior: 'smooth' });
+    };
+  });
+
+  $$('.btn-hist-rerun', list).forEach((b) => {
+    b.onclick = () => {
+      const jobId = b.dataset.rerun;
+      const runSlot = $('#historyRun');
+      runSlot.innerHTML = `
+        <div class="history-inspector-card">
+          <div class="hist-inspector-header">
+            <div class="hist-inspector-title">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
+              <span>Re-running Chore: <b>${esc(jobId)}</b></span>
+            </div>
+            <button type="button" class="btn-hist-inspector-close" id="btnHistCloseInspector">✕ Close</button>
+          </div>
+          <div id="historyRunInner"></div>
+        </div>
+      `;
+      $('#btnHistCloseInspector').onclick = () => { runSlot.innerHTML = ''; };
+      rerun(jobId, $('#historyRunInner'));
+      runSlot.scrollIntoView({ behavior: 'smooth' });
+    };
+  });
+
+  $$('.btn-hist-delete', list).forEach((b) => {
+    b.onclick = async () => {
+      const jobId = b.dataset.del;
+      if (await confirmBox('Delete this task record?', '<p>This will remove this job and its telemetry logs from your history ledger.</p>', 'Delete')) {
+        await api(`/api/jobs/${jobId}`, { method: 'DELETE' });
+        historyCachedJobs = historyCachedJobs.filter((x) => x.id !== jobId);
+        updateHistoryStats(historyCachedJobs);
+        renderHistoryCards();
+        toast('Task record deleted.');
+      }
+    };
+  });
+}
+
+function updateHistoryStats(jobs) {
+  const totalEl = $('#histStatTotal');
+  const foundEl = $('#histStatFound');
+  const costEl = $('#histStatCost');
+  const timeEl = $('#histStatTime');
+
+  if (!totalEl) return;
+
+  const total = jobs.length;
+  const verifiedFound = jobs.filter((j) => (j.result?.best?.price != null) || (j.result?.offers && j.result.offers.length > 0) || j.result?.orders).length;
+  const totalCost = jobs.reduce((acc, j) => acc + (j.cost || 0), 0);
+  const browserSecs = jobs.map((j) => j.usage?.browserSeconds || 0).filter((s) => s > 0);
+  const avgSecs = browserSecs.length ? Math.round(browserSecs.reduce((a, b) => a + b, 0) / browserSecs.length) : 0;
+
+  totalEl.textContent = `${total} Tasks`;
+  foundEl.textContent = `${verifiedFound} Deals`;
+  costEl.textContent = `$${totalCost.toFixed(2)}`;
+  timeEl.textContent = `${avgSecs}s`;
+}
+
+async function loadHistory() {
+  const js = await api('/api/jobs').catch(() => []);
+  historyCachedJobs = Array.isArray(js) ? js : [];
+
+  updateHistoryStats(historyCachedJobs);
+
+  // Search input binding
+  const searchInput = $('#historySearchInput');
+  const clearBtn = $('#historySearchClear');
+  if (searchInput && !searchInput.dataset.bound) {
+    searchInput.dataset.bound = 'true';
+    searchInput.addEventListener('input', () => {
+      historySearchQuery = searchInput.value;
+      if (clearBtn) clearBtn.classList.toggle('hidden', !historySearchQuery);
+      renderHistoryCards();
+    });
+  }
+  if (clearBtn && !clearBtn.dataset.bound) {
+    clearBtn.dataset.bound = 'true';
+    clearBtn.addEventListener('click', () => {
+      searchInput.value = '';
+      historySearchQuery = '';
+      clearBtn.classList.add('hidden');
+      renderHistoryCards();
+    });
+  }
+
+  // Filter chips binding
+  $$('#historyFilters .hist-filter-btn').forEach((btn) => {
+    btn.onclick = () => {
+      $$('#historyFilters .hist-filter-btn').forEach((b) => b.classList.remove('active'));
+      btn.classList.add('active');
+      historyActiveType = btn.dataset.type || 'all';
+      renderHistoryCards();
+    };
+  });
+
+  // Refresh button binding
+  const refreshBtn = $('#historyRefreshBtn');
+  if (refreshBtn && !refreshBtn.dataset.bound) {
+    refreshBtn.dataset.bound = 'true';
+    refreshBtn.onclick = async () => {
+      refreshBtn.classList.add('spinning');
+      await loadHistory();
+      setTimeout(() => refreshBtn.classList.remove('spinning'), 500);
+      toast('History ledger refreshed.');
+    };
+  }
+
+  renderHistoryCards();
 }
 
 // ---------- Order (one text box) ----------

@@ -501,11 +501,75 @@
       <div id="formRun"></div>
     </section>
 
-    <!-- HISTORY -->
+    <!-- HISTORY: AGENT AUDIT LOG & MISSION CONTROL -->
     <section class="panel" id="tab-history">
-      <div class="hero"><h1>History</h1><p class="lede">Everything I've done for you, and what it cost.</p></div>
-      <div id="historyList"></div>
-      <div id="historyRun"></div>
+      <!-- HERO -->
+      <div class="history-hero">
+        <div class="history-badge">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+          <span>AUTONOMOUS AGENT ACTIVITY LEDGER</span>
+        </div>
+        <h1 class="history-title">Activity History &amp; Price Intelligence</h1>
+        <p class="history-lede">
+          Real-time audit log of every autonomous chore executed by Saarthi. Track live retail price hunts, dark-store multi-cart sweeps, and automated form submissions with complete browser telemetry, cost analysis, and verified proof artifacts.
+        </p>
+
+        <!-- TELEMETRY / EXECUTIVE STATS BAR -->
+        <div class="history-stats-bar" id="historyStatsBar">
+          <div class="history-stat-card">
+            <span class="hist-stat-label">Total Jobs Run</span>
+            <div class="hist-stat-val" id="histStatTotal">—</div>
+            <span class="hist-stat-sub">Across all stores</span>
+          </div>
+          <div class="history-stat-card">
+            <span class="hist-stat-label">Verified Best Prices</span>
+            <div class="hist-stat-val text-green" id="histStatFound">—</div>
+            <span class="hist-stat-sub">Live deals uncovered</span>
+          </div>
+          <div class="history-stat-card">
+            <span class="hist-stat-label">TinyFish Agent Compute</span>
+            <div class="hist-stat-val text-orange" id="histStatCost">—</div>
+            <span class="hist-stat-sub">Total session spend</span>
+          </div>
+          <div class="history-stat-card">
+            <span class="hist-stat-label">Avg. Browser Time</span>
+            <div class="hist-stat-val" id="histStatTime">—</div>
+            <span class="hist-stat-sub">Per store price check</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- INTERACTIVE CONTROLS BAR: SEARCH & FILTERS -->
+      <div class="history-controls-card">
+        <div class="history-search-wrap">
+          <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <input type="text" id="historySearchInput" placeholder="Filter by product name, store, URL, or task ID..." />
+          <button type="button" class="search-clear-btn hidden" id="historySearchClear">✕</button>
+        </div>
+
+        <div class="history-filters-wrap" id="historyFilters">
+          <button type="button" class="hist-filter-btn active" data-type="all">All Jobs</button>
+          <button type="button" class="hist-filter-btn" data-type="price_hunt">🏷️ Price Hunts</button>
+          <button type="button" class="hist-filter-btn" data-type="order">🛍️ Orders</button>
+          <button type="button" class="hist-filter-btn" data-type="form_fill">📝 Form Fills</button>
+          <button type="button" class="hist-filter-btn" data-type="jhola">🛒 Jhola</button>
+        </div>
+
+        <div class="history-actions-wrap">
+          <button type="button" class="btn-hist-refresh" id="historyRefreshBtn" title="Refresh history">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
+            Refresh
+          </button>
+        </div>
+      </div>
+
+      <!-- HISTORY LIST CONTAINER -->
+      <div class="history-cards-container" id="historyList">
+        <!-- Rendered dynamically by loadHistory() -->
+      </div>
+
+      <!-- ACTIVE RUN INSPECTOR VIEWER -->
+      <div id="historyRun" class="history-run-slot"></div>
     </section>
 
     <!-- SETUP: ANTI-BOT PROTECTION & RETAILER SESSIONS -->
