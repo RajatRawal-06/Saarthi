@@ -20,6 +20,18 @@ test('model numbers must match', () => {
   assert.ok(matchScore('Sony WH-1000XM5', 'Sony WH-1000XM4 Wireless Headphones') < 0.6);
 });
 
+test('grocery and unit matching handles commodities cleanly', () => {
+  assert.ok(matchScore('onions 1 kg', 'Fresh Onion') >= 0.85);
+  assert.ok(matchScore('onions 1 kg', 'Fresh Onion 900 g - 1 kg') >= 0.85);
+  assert.ok(matchScore('onion 1kg', 'Fresh Onion') >= 0.85);
+  assert.ok(matchScore('onion 1kg', 'Fresh Onion 1 kg') >= 0.85);
+  assert.ok(matchScore('onions 1 kg', 'Watermelon 1 kg') < 0.4);
+  assert.ok(matchScore('atta 5kg', 'Aashirvaad Shudh Chakki Atta 5 kg') >= 0.85);
+  assert.ok(matchScore('atta 5kg', 'Fortune Basmati Rice 5 kg') < 0.4);
+  assert.ok(matchScore('Dolo 650', 'Dolo 650 Tablet') >= 0.9);
+  assert.ok(matchScore('Dolo 650', 'Dolo 500 Tablet') < 0.6);
+});
+
 test('sensitive fields are never auto-filled', () => {
   for (const f of ['Password', 'OTP', 'Card number', 'CVV', 'Aadhaar No', 'UPI ID']) assert.ok(isSensitiveField(f), f);
   for (const f of ['Full name', 'Email', 'Phone', 'PIN code']) assert.ok(!isSensitiveField(f), f);

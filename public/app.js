@@ -467,17 +467,22 @@ function updateCompareCard(job) {
   }
 
   // Filter: ONLY available stores with a valid price!
-  const validOffers = offers.filter((o) => o.price != null && !o.mismatch);
-  if (validOffers.length === 0 && finished) {
-    tbodyEl.innerHTML = `
-      <tr>
-        <td colspan="7" style="text-align:center; padding: 42px 16px; color:#4b5563;">
-          <div style="font-size:32px; margin-bottom:8px;">🚫</div>
-          <div style="font-size:16px; font-weight:700; color:#111827;">Product not sold on checked stores</div>
-          <p style="font-size:13px; color:#6b7280; margin:6px 0 0;">The websites checked do not carry "${esc(job.input?.product)}".</p>
-        </td>
-      </tr>
-    `;
+  const validOffers = offers
+    .filter((o) => o.price != null && (o.match == null || o.match >= 0.45))
+    .sort((a, b) => (a.mismatch - b.mismatch) || (b.in_stock - a.in_stock) || (a.price - b.price));
+
+  if (validOffers.length === 0) {
+    if (finished) {
+      tbodyEl.innerHTML = `
+        <tr>
+          <td colspan="7" style="text-align:center; padding: 42px 16px; color:#4b5563;">
+            <div style="font-size:32px; margin-bottom:8px;">🚫</div>
+            <div style="font-size:16px; font-weight:700; color:#111827;">Product not sold on checked stores</div>
+            <p style="font-size:13px; color:#6b7280; margin:6px 0 0;">The websites checked do not carry "${esc(job.input?.product)}".</p>
+          </td>
+        </tr>
+      `;
+    }
     return;
   }
 
@@ -488,6 +493,9 @@ function updateCompareCard(job) {
     const isQuick = /zepto|blinkit|instamart|swiggy/i.test(o.domain);
     const domain = o.domain;
     const storeTitle = getStoreDisplayName(domain);
+    const cleanProductName = (o.product_name && o.product_name.trim().length > 2 && /[a-z0-9]/i.test(o.product_name))
+      ? o.product_name
+      : (job.input?.product || 'Product');
 
     let priceSubHtml = '';
     let deltaHtml = '';
@@ -529,12 +537,12 @@ function updateCompareCard(job) {
       proofModalSrc = proofShot;
     } else if (isSonySearch) {
       proofImgSrc = getStoreThumbMock(domain);
-      proofModalSrc = getStoreProofMock(domain, o.product_name, o.price);
+      proofModalSrc = getStoreProofMock(domain, cleanProductName, o.price);
     } else {
       const dynamicCard = createDynamicProofSvg({
         domain,
         storeTitle,
-        productName: o.product_name || job.input?.product,
+        productName: cleanProductName,
         price: o.price,
         currency: o.currency,
         mrp: o.mrp,
@@ -560,6 +568,7 @@ function updateCompareCard(job) {
               <div class="store-subname">${esc(domain.replace(/^(?:www|dir)\./i, ''))}</div>
             `}
             ${isBest ? '<span class="badge-best-price">BEST PRICE</span>' : ''}
+            ${o.mismatch ? '<span class="badge-best-price" style="background:#fef3c7; color:#92400e;">VARIANTS</span>' : ''}
           </div>
         </td>
         <td>
@@ -594,8 +603,8 @@ function updateCompareCard(job) {
         </td>
         <td>
           <div class="proof-wrap">
-            <img src="${esc(proofImgSrc)}" alt="${esc(storeTitle)} proof" class="proof-img" data-proof-title="${esc(storeTitle)} · ${esc(o.product_name || job.input?.product)}" data-proof-price="${money(o.price, o.currency)}" data-proof-src="${esc(proofModalSrc)}" data-proof-url="${esc(safeUrl(o.url))}" />
-            <button type="button" class="btn-proof-link" data-proof-title="${esc(storeTitle)} · ${esc(o.product_name || job.input?.product)}" data-proof-price="${money(o.price, o.currency)}" data-proof-src="${esc(proofModalSrc)}" data-proof-url="${esc(safeUrl(o.url))}">
+            <img src="${esc(proofImgSrc)}" alt="${esc(storeTitle)} proof" class="proof-img" data-proof-title="${esc(storeTitle)} · ${esc(cleanProductName)}" data-proof-price="${money(o.price, o.currency)}" data-proof-src="${esc(proofModalSrc)}" data-proof-url="${esc(safeUrl(o.url))}" />
+            <button type="button" class="btn-proof-link" data-proof-title="${esc(storeTitle)} · ${esc(cleanProductName)}" data-proof-price="${money(o.price, o.currency)}" data-proof-src="${esc(proofModalSrc)}" data-proof-url="${esc(safeUrl(o.url))}">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
               View proof
             </button>
