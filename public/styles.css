@@ -449,6 +449,39 @@ main { overflow-x: clip; }
   line-height: 1;
 }
 
+.compare-sample-chips {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+  flex-wrap: wrap;
+}
+
+.sample-chips-label {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #64748b;
+}
+
+.btn-sample-chip {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 999px;
+  padding: 5px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #334155;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-sample-chip:hover {
+  background: #fff7ed;
+  border-color: #fdba74;
+  color: #ea580c;
+}
+
+
 /* Compare Results Table Card */
 .compare-table-card {
   background: #ffffff;
@@ -796,5 +829,104 @@ main { overflow-x: clip; }
 .proof-modal-caption {
   font-size: 12.5px;
   color: #6b7280;
+}
+
+/* Dynamic Live Compare Status and Excluded Stores */
+.compare-live-status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 18px;
+  background: #f0fdf4;
+  border-bottom: 1px solid #dcfce7;
+  font-size: 13.5px;
+  color: #166534;
+}
+
+.compare-live-status.active {
+  background: #fff7ed;
+  border-bottom-color: #ffedd5;
+  color: #9a3412;
+}
+
+.compare-live-status .scan-indicator {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+}
+
+.compare-live-status .pulse-dot {
+  width: 9px;
+  height: 9px;
+  background: #ea580c;
+  border-radius: 50%;
+  box-shadow: 0 0 0 0 rgba(234, 88, 12, 0.7);
+  animation: pulseScan 1.4s infinite ease-in-out;
+}
+
+@keyframes pulseScan {
+  0% { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(234, 88, 12, 0.7); }
+  70% { transform: scale(1.1); box-shadow: 0 0 0 8px rgba(234, 88, 12, 0); }
+  100% { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(234, 88, 12, 0); }
+}
+
+.compare-live-status .scan-stage {
+  font-size: 12.5px;
+  font-weight: 500;
+  color: #c2410c;
+}
+
+.compare-excluded-stores {
+  padding: 11px 18px;
+  background: #f9fafb;
+  border-top: 1px solid #f3f4f6;
+  font-size: 12.5px;
+  color: #4b5563;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.compare-excluded-stores .excluded-label {
+  font-weight: 600;
+  color: #6b7280;
+}
+
+.excluded-chip {
+  background: #fee2e2;
+  color: #991b1b;
+  padding: 2.5px 9px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 11px;
+}
+
+.skeleton-row td {
+  padding: 18px 12px;
+}
+
+.skeleton-box {
+  height: 16px;
+  background: linear-gradient(90deg, #f3f4f6 25%, #e5e7eb 50%, #f3f4f6 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 4px;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.store-badge-fallback {
+  background: #f3f4f6;
+  color: #1f2937;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 4px;
+  border: 1px solid #e5e7eb;
 }
 

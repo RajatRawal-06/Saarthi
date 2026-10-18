@@ -137,6 +137,13 @@
           <button class="btn-compare-action" type="submit">Compare stores</button>
         </div>
 
+        <div class="compare-sample-chips">
+          <span class="sample-chips-label">Try searching:</span>
+          <button type="button" class="btn-sample-chip" data-fill-price='{"product":"Maggi 2-Minute Masala Instant Noodles 420g","targetPrice":"₹60","maxStores":"5"}'>🍜 Maggi Masala Noodles</button>
+          <button type="button" class="btn-sample-chip" data-fill-price='{"product":"Sony WH-1000XM5 Wireless Headphones","targetPrice":"₹18,000","maxStores":"5"}'>🎧 Sony WH-1000XM5</button>
+          <button type="button" class="btn-sample-chip" data-fill-price='{"product":"Cadbury Dairy Milk Silk Chocolate Bar 150g","targetPrice":"₹175","maxStores":"5"}'>🍫 Dairy Milk Silk</button>
+        </div>
+
         <div class="compare-footnote">
           <i class="info-icon">ⓘ</i>
           <span>We compare live prices, availability, delivery time and total cost (incl. fees &amp; taxes).</span>
@@ -145,6 +152,7 @@
 
       <!-- RESULTS TABLE (EXACT REPLICA OF REFERENCE IMAGE) -->
       <div class="compare-table-card" id="compareReplicaCard">
+        <div class="compare-live-status hidden" id="compareLiveStatus"></div>
         <div class="compare-table-container">
           <table class="replica-table">
             <thead>
@@ -158,7 +166,7 @@
                 <th style="width: 12%;">Proof</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody id="compareTableBody">
               <!-- Row 1: IndiaMART -->
               <tr data-store="indiamart">
                 <td>
@@ -465,6 +473,8 @@
             </tbody>
           </table>
         </div>
+
+        <div class="compare-excluded-stores hidden" id="compareExcludedStores"></div>
 
         <div class="compare-footer-notice">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>

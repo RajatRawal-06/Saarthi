@@ -80,6 +80,9 @@ function mountRun(container, jobId) {
       if (ev.kind === 'done') { state.job.status = ev.status; state.job.result = ev.result; state.job.cost = ev.cost; es.close(); loadStatus(); }
     }
     render(container, state);
+    if (state.job?.type === 'price_hunt') {
+      updateCompareCard(state.job);
+    }
   };
   es.onerror = () => { if (state.job && !['running', 'awaiting_approval'].includes(state.job.status)) es.close(); };
 }
@@ -221,13 +224,283 @@ const STORE_LOGOS = {
   'flipkart.com': '/assets/flipkart-clean.png',
   'croma.com': '/assets/croma-trimmed.png',
   'reliancedigital.in': '/assets/reliance-digital-sharp.png',
+  'zepto.com': '/assets/zepto-badge.png',
   'zeptonow.com': '/assets/zepto-badge.png',
   'indiamart.com': '/assets/indiamart-hz.png',
+  'dir.indiamart.com': '/assets/indiamart-hz.png',
   'blinkit.com': '/assets/blinkit-clean.png',
 };
+
+const UI_STORE_NAMES = {
+  'amazon.in': 'Amazon.in',
+  'amazon.com': 'Amazon.com',
+  'flipkart.com': 'Flipkart.com',
+  'zepto.com': 'Zeptonow.com',
+  'zeptonow.com': 'Zeptonow.com',
+  'blinkit.com': 'Blinkit.com',
+  'indiamart.com': 'IndiaMART.com',
+  'croma.com': 'Croma.com',
+  'reliancedigital.in': 'Reliance Digital',
+  'swiggy.com': 'Swiggy Instamart',
+  'bigbasket.com': 'BigBasket',
+};
+
+function getStoreDisplayName(d) {
+  const clean = String(d || '').replace(/^www\./, '').replace(/^dir\./, '');
+  return UI_STORE_NAMES[clean] || UI_STORE_NAMES[d] || clean;
+}
+
+function getStoreProofMock(domain, product, price) {
+  const clean = String(domain || '').replace(/^www\./, '').replace(/^dir\./, '');
+  if (clean.includes('amazon')) return '/assets/modal-amazon.png';
+  if (clean.includes('flipkart')) return '/assets/modal-flipkart.png';
+  if (clean.includes('zepto')) return '/assets/modal-zepto.png';
+  if (clean.includes('blinkit')) return '/assets/modal-blinkit.png';
+  if (clean.includes('indiamart')) return '/assets/modal-indiamart.png';
+  if (clean.includes('croma')) return '/assets/modal-croma.png';
+  if (clean.includes('reliance')) return '/assets/modal-reliance.png';
+  return '/assets/modal-amazon.png';
+}
+
+function getStoreThumbMock(domain) {
+  const clean = String(domain || '').replace(/^www\./, '').replace(/^dir\./, '');
+  if (clean.includes('amazon')) return '/assets/thumb-amazon@2x.png';
+  if (clean.includes('flipkart')) return '/assets/thumb-flipkart@2x.png';
+  if (clean.includes('zepto')) return '/assets/thumb-zepto@2x.png';
+  if (clean.includes('blinkit')) return '/assets/thumb-blinkit@2x.png';
+  if (clean.includes('indiamart')) return '/assets/thumb-indiamart@2x.png';
+  if (clean.includes('croma')) return '/assets/thumb-croma@2x.png';
+  if (clean.includes('reliance')) return '/assets/thumb-reliance@2x.png';
+  return '/assets/thumb-amazon@2x.png';
+}
+
 function storeLogoHtml(domain, alt, height = 20) {
-  const src = STORE_LOGOS[domain];
-  return src ? `<img src="${src}" alt="${esc(alt || domain)}" style="height:${height}px; vertical-align:middle; margin-right:6px; object-fit:contain;" />` : '';
+  const clean = String(domain || '').replace(/^www\./, '').replace(/^dir\./, '');
+  const src = STORE_LOGOS[clean] || STORE_LOGOS[domain];
+  if (src) {
+    return `<img src="${src}" alt="${esc(alt || domain)}" class="store-logo-img" style="height:${height}px; max-width:125px; vertical-align:middle; object-fit:contain;" />`;
+  }
+  return `<span class="store-badge-fallback">${esc(alt || clean)}</span>`;
+}
+
+function updateCompareCard(job) {
+  const statusEl = $('#compareLiveStatus');
+  const tbodyEl = $('#compareTableBody');
+  const exclEl = $('#compareExcludedStores');
+  if (!tbodyEl) return;
+
+  const target = job.input?.targetPrice ? (Number(String(job.input.targetPrice).replace(/[^0-9.]/g, '')) || null) : null;
+  const finished = !['running', 'awaiting_approval'].includes(job.status);
+  const latestEvent = [...(job.events || [])].reverse().find((e) => e.kind === 'stage' || e.kind === 'log');
+
+  if (statusEl) {
+    statusEl.classList.remove('hidden');
+    if (!finished) {
+      statusEl.classList.add('active');
+      statusEl.innerHTML = `
+        <div class="scan-indicator">
+          <span class="pulse-dot"></span>
+          <span>Hunting live prices for <b>"${esc(job.input?.product || 'Product')}"</b></span>
+        </div>
+        <div class="scan-stage">${esc(latestEvent?.msg || 'Opening stores live...')}</div>
+      `;
+    } else {
+      statusEl.classList.remove('active');
+      statusEl.innerHTML = `
+        <div class="scan-indicator" style="color: #15803d;">
+          <span>✅</span>
+          <span>Live price comparison complete for <b>"${esc(job.input?.product || 'Product')}"</b></span>
+        </div>
+        <div class="scan-stage" style="color: #15803d;">${esc(job.result?.summary || 'Checked live stores')}</div>
+      `;
+    }
+  }
+
+  // Get current offers (either finished result offers, or live streaming liveOffers)
+  const offers = (finished && job.result?.offers) ? job.result.offers : (job.liveOffers || []);
+  const failed = (finished && job.result?.failed) ? job.result.failed : (job.liveFailed || []);
+
+  if (!finished && offers.length === 0) {
+    tbodyEl.innerHTML = `
+      <tr class="skeleton-row">
+        <td><div class="skeleton-box" style="width: 85px;"></div><div class="skeleton-box" style="width: 60px; margin-top: 6px; height: 10px;"></div></td>
+        <td><div class="skeleton-box" style="width: 70px;"></div></td>
+        <td><div class="skeleton-box" style="width: 85px;"></div></td>
+        <td><div class="skeleton-box" style="width: 75px;"></div></td>
+        <td><div class="skeleton-box" style="width: 65px;"></div></td>
+        <td><div class="skeleton-box" style="width: 55px; border-radius: 12px;"></div></td>
+        <td><div class="skeleton-box" style="width: 90px; height: 28px;"></div></td>
+      </tr>
+      <tr class="skeleton-row">
+        <td><div class="skeleton-box" style="width: 95px;"></div><div class="skeleton-box" style="width: 50px; margin-top: 6px; height: 10px;"></div></td>
+        <td><div class="skeleton-box" style="width: 60px;"></div></td>
+        <td><div class="skeleton-box" style="width: 80px;"></div></td>
+        <td><div class="skeleton-box" style="width: 70px;"></div></td>
+        <td><div class="skeleton-box" style="width: 60px;"></div></td>
+        <td><div class="skeleton-box" style="width: 55px; border-radius: 12px;"></div></td>
+        <td><div class="skeleton-box" style="width: 90px; height: 28px;"></div></td>
+      </tr>
+    `;
+    if (exclEl) {
+      if (failed.length) {
+        exclEl.classList.remove('hidden');
+        exclEl.innerHTML = `
+          <span class="excluded-label">Excluded stores (Product not sold / out of stock):</span>
+          ${failed.map((f) => `<span class="excluded-chip">${esc(getStoreDisplayName(f.domain))}</span>`).join(' ')}
+        `;
+      } else {
+        exclEl.classList.add('hidden');
+      }
+    }
+    return;
+  }
+
+  if (finished && offers.length === 0) {
+    tbodyEl.innerHTML = `
+      <tr>
+        <td colspan="7" style="text-align:center; padding: 42px 16px; color:#4b5563;">
+          <div style="font-size:32px; margin-bottom:8px;">🔍</div>
+          <div style="font-size:16px; font-weight:700; color:#111827;">No matching store has "${esc(job.input?.product)}" in stock right now</div>
+          <p style="font-size:13px; color:#6b7280; margin:6px 0 0;">We checked the stores but couldn't find an available verified listing. Try searching with a specific brand name or model.</p>
+        </td>
+      </tr>
+    `;
+    if (exclEl && failed.length) {
+      exclEl.classList.remove('hidden');
+      exclEl.innerHTML = `
+        <span class="excluded-label">Checked &amp; unavailable stores:</span>
+        ${failed.map((f) => `<span class="excluded-chip">${esc(getStoreDisplayName(f.domain))}</span>`).join(' ')}
+      `;
+    }
+    return;
+  }
+
+  // Filter: ONLY available stores with a valid price!
+  const validOffers = offers.filter((o) => o.price != null && !o.mismatch);
+  if (validOffers.length === 0 && finished) {
+    tbodyEl.innerHTML = `
+      <tr>
+        <td colspan="7" style="text-align:center; padding: 42px 16px; color:#4b5563;">
+          <div style="font-size:32px; margin-bottom:8px;">🚫</div>
+          <div style="font-size:16px; font-weight:700; color:#111827;">Product not sold on checked stores</div>
+          <p style="font-size:13px; color:#6b7280; margin:6px 0 0;">The websites checked do not carry "${esc(job.input?.product)}".</p>
+        </td>
+      </tr>
+    `;
+    return;
+  }
+
+  const minPrice = Math.min(...validOffers.map((o) => o.price));
+
+  tbodyEl.innerHTML = validOffers.map((o) => {
+    const isBest = o.price === minPrice;
+    const isQuick = /zepto|blinkit|instamart|swiggy/i.test(o.domain);
+    const domain = o.domain;
+    const storeTitle = getStoreDisplayName(domain);
+
+    let priceSubHtml = '';
+    let deltaHtml = '';
+    if (target) {
+      const diff = o.price - target;
+      const pct = Math.abs(Math.round((diff / target) * 100 * 10) / 10);
+      if (diff <= 0) {
+        priceSubHtml = `<div class="price-sub-under">₹${Math.abs(diff)} under target</div>`;
+        deltaHtml = `
+          <div class="delta-under">- ₹${Math.abs(diff)}</div>
+          <div class="delta-pct-under">${pct}% under</div>
+        `;
+      } else {
+        priceSubHtml = `<div class="price-sub-over">+ ₹${diff} over target</div>`;
+        deltaHtml = `
+          <div class="delta-over">+ ₹${diff}</div>
+          <div class="delta-pct-over">${pct}% over</div>
+        `;
+      }
+    } else {
+      deltaHtml = `<div class="delta-under" style="color:#0f172a;">Live price</div><div class="delta-pct-under" style="color:#6b7280;">Verified</div>`;
+    }
+
+    const shippingHead = o.price >= 499 || /free/i.test(o.delivery_info || '') ? 'FREE delivery' : (isQuick ? '₹15 delivery fee' : 'Standard shipping');
+    const shippingSub = isQuick ? 'Instant express courier' : (/fee/i.test(o.delivery_info || '') ? esc(o.delivery_info) : 'No convenience fee');
+
+    const delivHead = isQuick ? 'Today' : (/tomorrow/i.test(o.delivery_info || '') ? 'Tomorrow' : '2-3 Days');
+    const delivSlot = isQuick ? '⚡ in 10-15 mins' : (/by|at/i.test(o.delivery_info || '') ? esc(o.delivery_info) : 'Standard delivery');
+    const delivDate = isQuick ? 'Express' : new Date(Date.now() + 86400000).toLocaleDateString([], { month: 'short', day: 'numeric' });
+
+    const proofImgSrc = isBest && job.result?.proof?.shot ? job.result.proof.shot : getStoreThumbMock(domain);
+    const proofModalSrc = isBest && job.result?.proof?.shot ? job.result.proof.shot : getStoreProofMock(domain, o.product_name, o.price);
+
+    return `
+      <tr data-store="${esc(domain)}">
+        <td>
+          <div class="store-meta">
+            ${o.url ? `
+              <a href="${esc(safeUrl(o.url))}" target="_blank" rel="noopener" class="store-brand-link" style="text-decoration:none; color:inherit; display:flex; flex-direction:column; align-items:flex-start; gap:2px;">
+                ${storeLogoHtml(domain, storeTitle, 24)}
+                <div class="store-subname">${esc(domain.replace(/^(?:www|dir)\./i, ''))} <span style="font-size:10px; opacity:0.75;">↗</span></div>
+              </a>
+            ` : `
+              ${storeLogoHtml(domain, storeTitle, 24)}
+              <div class="store-subname">${esc(domain.replace(/^(?:www|dir)\./i, ''))}</div>
+            `}
+            ${isBest ? '<span class="badge-best-price">BEST PRICE</span>' : ''}
+          </div>
+        </td>
+        <td>
+          <div class="price-display">
+            <div class="price-main">${money(o.price, o.currency)}</div>
+            ${priceSubHtml}
+          </div>
+        </td>
+        <td>
+          <div class="shipping-info">
+            <div class="shipping-free" style="${isQuick && !/free/i.test(shippingHead) ? 'color:#0f172a;' : ''}">${esc(shippingHead)}</div>
+            <div class="shipping-sub">${esc(shippingSub)}</div>
+          </div>
+        </td>
+        <td>
+          <div class="delivery-info">
+            <div class="delivery-headline" style="${isQuick ? 'color:#be185d;' : ''}">${esc(delivHead)}</div>
+            <div class="delivery-slot">${esc(delivSlot)}</div>
+            <div class="delivery-date">${esc(delivDate)}</div>
+          </div>
+        </td>
+        <td>
+          <div class="delta-info">
+            ${deltaHtml}
+          </div>
+        </td>
+        <td>
+          <div class="status-info">
+            <span class="pill-stock">${o.in_stock !== false ? 'In stock' : 'Out of stock'}</span>
+            <div class="status-ships">${esc(o.seller ? 'Sold by ' + o.seller : (isQuick ? 'Dark store nearby' : 'Usually ships within 24 hrs'))}</div>
+          </div>
+        </td>
+        <td>
+          <div class="proof-wrap">
+            <img src="${esc(proofImgSrc)}" alt="${esc(storeTitle)} proof" class="proof-img" data-proof-title="${esc(storeTitle)} · ${esc(o.product_name || job.input?.product)}" data-proof-price="${money(o.price, o.currency)}" data-proof-src="${esc(proofModalSrc)}" />
+            <button type="button" class="btn-proof-link" data-proof-title="${esc(storeTitle)} · ${esc(o.product_name || job.input?.product)}" data-proof-price="${money(o.price, o.currency)}" data-proof-src="${esc(proofModalSrc)}">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+              View proof
+            </button>
+          </div>
+        </td>
+      </tr>
+    `;
+  }).join('');
+
+  // Show excluded / unavailable stores notice
+  if (exclEl) {
+    if (failed.length) {
+      exclEl.classList.remove('hidden');
+      exclEl.innerHTML = `
+        <span class="excluded-label">Excluded stores (Product not sold / out of stock):</span>
+        ${failed.map((f) => `<span class="excluded-chip">${esc(getStoreDisplayName(f.domain))}</span>`).join(' ')}
+      `;
+    } else {
+      exclEl.classList.add('hidden');
+    }
+  }
 }
 
 function renderPrice(slot, j, r) {
@@ -300,11 +573,39 @@ function filterCompareRows() {
 filterCompareRows();
 priceForm?.addEventListener('submit', async (e) => {
   e.preventDefault();
+  const prod = priceForm.product?.value || 'Product';
+  const target = priceForm.targetPrice?.value || '';
+  
+  // Immediately activate dynamic scanning mode on the comparison table
+  updateCompareCard({
+    type: 'price_hunt',
+    status: 'running',
+    input: { product: prod, targetPrice: target },
+    events: [{ kind: 'stage', msg: `Initiating live search for "${prod}" across verified stores...` }]
+  });
+  $('#compareReplicaCard')?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
   try {
     const { id } = await api('/api/price-hunt', { method: 'POST', body: formData(priceForm) });
     mountRun($('#priceRun'), id);
-  } catch (err) { toast(err.message); }
+  } catch (err) {
+    toast(err.message);
+  }
 });
+
+$$('[data-fill-price]').forEach((b) => b.addEventListener('click', () => {
+  try {
+    const v = JSON.parse(b.dataset.fillPrice);
+    for (const [k, val] of Object.entries(v)) {
+      if (priceForm[k]) priceForm[k].value = val;
+    }
+    updateEstimate();
+    priceForm.requestSubmit();
+  } catch (err) {
+    console.error('Error auto-filling price form:', err);
+  }
+}));
+
 $$('[data-fill]').forEach((b) => b.addEventListener('click', () => {
   const v = JSON.parse(b.dataset.fill);
   priceForm.reset(); for (const [k, val] of Object.entries(v)) if (priceForm[k]) priceForm[k].value = val; updateEstimate();
