@@ -596,7 +596,10 @@
     </div>
     <div class="proof-modal-footer">
       <span class="proof-modal-caption">📸 Verified via live TinyFish browser session with timestamp &amp; anti-bot bypass.</span>
-      <button type="button" class="primary" onclick="document.getElementById('proofModal').close()">Close proof</button>
+      <div style="display: flex; gap: 8px; align-items: center;">
+        <a id="proofModalUrl" href="#" target="_blank" rel="noopener" class="btn-proof-open" style="display:none; align-items:center; gap:6px; padding:7px 13px; background:#f1f5f9; color:#0f172a; text-decoration:none; font-weight:600; font-size:12.5px; border-radius:8px; border:1px solid #cbd5e1;">Open store listing ↗</a>
+        <button type="button" class="primary" onclick="document.getElementById('proofModal').close()">Close proof</button>
+      </div>
     </div>
   </dialog>
   <script src="/app.js" type="module"></script>
