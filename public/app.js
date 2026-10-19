@@ -2194,6 +2194,56 @@ function initCurvedLoopMarquee() {
   requestAnimationFrame(tick);
 }
 
+// ---------- Hero Headline Typewriter Effect (TextType) ----------
+function initHeroTypewriter() {
+  const el = document.getElementById('heroTypewriterText');
+  if (!el) return;
+
+  const phrases = [
+    'ONE BASKET. EVERY STORE. LOWEST TOTAL.',
+    'ONE LIST. THREE STORES. MAXIMUM SAVINGS.',
+    'REAL-TIME ARBITRAGE ACROSS ALL DARK STORES.',
+    'ZEPTO, BLINKIT & INSTAMART COMPARED LIVE.'
+  ];
+
+  let phraseIdx = 0;
+  let charIdx = phrases[0].length;
+  let isDeleting = false;
+  const typingSpeed = 75;
+  const pauseDuration = 1800;
+  const deletingSpeed = 45;
+
+  function tick() {
+    const phrase = phrases[phraseIdx % phrases.length];
+
+    if (!isDeleting) {
+      el.textContent = phrase.slice(0, charIdx);
+      if (charIdx < phrase.length) {
+        charIdx++;
+        setTimeout(tick, typingSpeed);
+      } else {
+        isDeleting = true;
+        setTimeout(tick, pauseDuration);
+      }
+    } else {
+      el.textContent = phrase.slice(0, charIdx);
+      if (charIdx > 0) {
+        charIdx--;
+        setTimeout(tick, deletingSpeed);
+      } else {
+        isDeleting = false;
+        phraseIdx = (phraseIdx + 1) % phrases.length;
+        setTimeout(tick, 250);
+      }
+    }
+  }
+
+  setTimeout(() => {
+    isDeleting = true;
+    tick();
+  }, pauseDuration);
+}
+
 // ---------- boot ----------
 loadStatus();
 await loadSettings().catch(() => {});
@@ -2205,6 +2255,7 @@ updateTopProfileBadge();
 updateCharCounter();
 initStoreCylinderAnimation();
 initCurvedLoopMarquee();
+initHeroTypewriter();
 show((location.hash || '#saarthi').slice(1) || 'saarthi');
 window.addEventListener('hashchange', () => show(location.hash.slice(1) || 'saarthi'));
 resumeSaarthi();

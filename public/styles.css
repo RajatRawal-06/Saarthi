@@ -41,9 +41,9 @@ code { background: var(--cream); padding: 1px 6px; border-radius: 6px; font-size
 body.simple .tabs .adv { display: none; }
 @media (max-width: 960px) { .status .status-label { display: none; } }
 .status { display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 500; color: #4b5563; font-family: 'Inter', system-ui, sans-serif; }
-.status .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--good); }
-.status.ok .dot { background: var(--good); box-shadow: 0 0 0 3px var(--good-soft); }
-.status.bad .dot { background: var(--bad); }
+.status .dot { display: none !important; }
+.status.ok .dot { display: none !important; }
+.status.bad .dot { display: none !important; }
 .status .status-chevron { font-size: 11px; color: #6b7280; font-weight: 700; margin-left: 1px; }
 
 main { width: 100%; max-width: 100%; margin: 0; padding: 20px clamp(16px, 2vw, 36px) 60px; box-sizing: border-box; }
@@ -3609,6 +3609,7 @@ main { overflow-x: clip; }
 
 .masked-heading-wrap {
   margin: 0 0 12px;
+  min-height: 2.2em;
 }
 
 .basket-masked-headline {
@@ -3625,6 +3626,23 @@ main { overflow-x: clip; }
   background-clip: text;
   color: transparent;
   filter: drop-shadow(0 2px 8px rgba(234, 88, 12, 0.08));
+  display: inline-block;
+}
+
+.hero-type-cursor {
+  display: inline-block;
+  margin-left: 3px;
+  font-weight: 900;
+  color: #ea580c;
+  -webkit-text-fill-color: #ea580c;
+  background: none;
+  animation: heroCursorBlink 0.5s infinite alternate ease-in-out;
+  vertical-align: baseline;
+}
+
+@keyframes heroCursorBlink {
+  0% { opacity: 1; }
+  100% { opacity: 0; }
 }
 
 .basket-subhead {
@@ -7078,47 +7096,11 @@ main { overflow-x: clip; }
   line-height: 1;
 }
 
-/* Controls Bar & Stream Hint */
-.cylinder-controls-bar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 12px;
-  background: #f8fafc;
-  border: 1px solid #eef2f6;
-  border-radius: 12px;
-  padding: 8px 16px;
-  margin: 10px 0 22px;
-}
-
-.cylinder-controls-bar.stream-hint-only {
-  justify-content: center;
-  background: rgba(248, 250, 252, 0.85);
-  border: 1px solid #e2e8f0;
-  padding: 10px 18px;
-  margin: 12px 0 24px;
-}
-
-.cylinder-interactive-hint {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 12.5px;
-  font-weight: 600;
-  color: #475569;
-}
-
-.hint-sparkle {
-  color: #ea580c;
-  font-size: 14px;
-}
-
 /* Venn Partner Logo Strip */
 .venn-partners-section {
-  border-top: 1px solid #f1f5f9;
-  padding-top: 22px;
-  margin-top: 10px;
+  border-top: none;
+  padding-top: 14px;
+  margin-top: 8px;
 }
 
 .venn-partners-header {
