@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+      <defs>
+        <linearGradient id="batBg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#fff7ed"/><stop offset="100%" stop-color="#fed7aa"/></linearGradient>
+        <linearGradient id="copper" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#c2410c"/><stop offset="100%" stop-color="#ea580c"/></linearGradient>
+      </defs>
+      <rect width="100" height="100" rx="18" fill="url(#batBg)"/>
+      <!-- Duracell Battery Pack -->
+      <g transform="translate(24, 12)">
+        <rect x="6" y="6" width="40" height="62" rx="4" fill="#0f172a" stroke="#334155" stroke-width="1.5"/>
+        <!-- 2 batteries -->
+        <g transform="translate(10, 12)">
+          <rect x="2" y="0" width="12" height="14" fill="url(#copper)"/>
+          <rect x="2" y="14" width="12" height="34" fill="#000000"/>
+          <rect x="18" y="0" width="12" height="14" fill="url(#copper)"/>
+          <rect x="18" y="14" width="12" height="34" fill="#000000"/>
+        </g>
+        <text x="26" y="58" font-family="'Plus Jakarta Sans', sans-serif" font-size="5" font-weight="900" fill="#ea580c" text-anchor="middle">DURACELL</text>
+        <text x="26" y="64" font-family="'Inter', sans-serif" font-size="4" font-weight="700" fill="#ffffff" text-anchor="middle">AAA · 4 Pack</text>
+      </g>
+    </svg>

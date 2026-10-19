@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+      <defs>
+        <linearGradient id="surfBg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#f0fdf4"/><stop offset="100%" stop-color="#dcfce7"/></linearGradient>
+      </defs>
+      <rect width="100" height="100" rx="18" fill="url(#surfBg)"/>
+      <!-- Surf Excel Matic Liquid Bottle -->
+      <g transform="translate(26, 8)">
+        <rect x="14" y="2" width="18" height="10" rx="3" fill="#ec4899"/>
+        <path d="M12 12 L34 12 L42 30 L42 76 C42 80, 4 80, 4 76 L4 30 Z" fill="#0284c7" stroke="#0369a1" stroke-width="1.5"/>
+        <path d="M8 34 L38 34 L38 58 L8 58 Z" fill="#ffffff" rx="2"/>
+        <text x="23" y="44" font-family="'Plus Jakarta Sans', sans-serif" font-size="6.5" font-weight="900" fill="#ec4899" text-anchor="middle">Surf excel</text>
+        <text x="23" y="52" font-family="'Inter', sans-serif" font-size="5.5" font-weight="800" fill="#0284c7" text-anchor="middle">MATIC 1L</text>
+      </g>
+    </svg>

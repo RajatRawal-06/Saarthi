@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+      <defs>
+        <linearGradient id="gdBg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#fefce8"/><stop offset="100%" stop-color="#fde047"/></linearGradient>
+      </defs>
+      <rect width="100" height="100" rx="18" fill="url(#gdBg)"/>
+      <!-- Good Day Pack -->
+      <g transform="translate(16, 20)">
+        <rect x="4" y="6" width="60" height="42" rx="6" fill="#f59e0b" stroke="#d97706" stroke-width="1.5"/>
+        <circle cx="22" cy="27" r="12" fill="#fef08a"/>
+        <path d="M16 28 Q22 34 28 28" stroke="#b45309" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <text x="48" y="24" font-family="'Plus Jakarta Sans', sans-serif" font-size="6.5" font-weight="900" fill="#ffffff">Good</text>
+        <text x="48" y="32" font-family="'Plus Jakarta Sans', sans-serif" font-size="6.5" font-weight="900" fill="#ffffff">Day</text>
+        <text x="48" y="40" font-family="'Inter', sans-serif" font-size="5" font-weight="800" fill="#78350f">Cashew 200g</text>
+      </g>
+    </svg>

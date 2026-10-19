@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 170 40" width="170" height="40">
+  <rect width="170" height="40" rx="8" fill="#fffbeb" stroke="#fef08a" stroke-width="1.5" />
+  <g transform="translate(6, 6)">
+    <circle cx="14" cy="14" r="14" fill="#f59e0b" />
+    <path d="M14 7v14M7 14h14" stroke="#ffffff" stroke-width="3" stroke-linecap="round" />
+  </g>
+  <text x="40" y="21" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="13" font-weight="800" fill="#92400e" letter-spacing="-0.02em">Local Kirana</text>
+  <text x="40" y="32" font-family="'Inter', system-ui, sans-serif" font-size="9" font-weight="700" fill="#b45309" letter-spacing="0.04em">ONDC &amp; CORNER STORES</text>
+</svg>

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+      <defs>
+        <linearGradient id="riceBg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#fdf4ff"/><stop offset="100%" stop-color="#fae8ff"/></linearGradient>
+      </defs>
+      <rect width="100" height="100" rx="18" fill="url(#riceBg)"/>
+      <!-- India Gate Basmati Bag -->
+      <g transform="translate(22, 10)">
+        <path d="M8 8 C16 4, 38 4, 46 8 L50 72 C50 76, 6 76, 6 72 Z" fill="#581c87" stroke="#4a044e" stroke-width="1.5"/>
+        <rect x="10" y="22" width="34" height="26" fill="#fef08a" rx="3"/>
+        <text x="27" y="32" font-family="'Plus Jakarta Sans', sans-serif" font-size="5" font-weight="900" fill="#581c87" text-anchor="middle">INDIA GATE</text>
+        <text x="27" y="40" font-family="'Inter', sans-serif" font-size="6" font-weight="800" fill="#b91c1c" text-anchor="middle">BASMATI</text>
+        <text x="27" y="46" font-family="'Inter', sans-serif" font-size="4.5" font-weight="700" fill="#0f172a" text-anchor="middle">Rozana 5kg</text>
+      </g>
+    </svg>

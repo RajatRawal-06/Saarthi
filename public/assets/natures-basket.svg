@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 170 40" width="170" height="40">
+  <rect width="170" height="40" rx="8" fill="#ffffff" />
+  <g transform="translate(6, 6)">
+    <rect width="28" height="28" rx="7" fill="#84cc16" />
+    <path d="M7 16c4-6 10-6 14 0M14 8v14M8 12c2 4 10 4 12 0" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" fill="none" />
+  </g>
+  <text x="42" y="21" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="13" font-weight="800" fill="#3f6212" letter-spacing="-0.02em">Nature's</text>
+  <text x="42" y="32" font-family="'Inter', system-ui, sans-serif" font-size="9" font-weight="700" fill="#65a30d" letter-spacing="0.05em">BASKET</text>
+</svg>

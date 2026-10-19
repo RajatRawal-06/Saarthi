@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 40" width="160" height="40">
+  <rect width="160" height="40" rx="8" fill="#ffffff" />
+  <g transform="translate(8, 6)">
+    <circle cx="14" cy="14" r="14" fill="#006644" />
+    <path d="M14 6v16M6 14h16" stroke="#ffffff" stroke-width="4" stroke-linecap="round" />
+  </g>
+  <text x="44" y="21" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="14" font-weight="800" fill="#006644" letter-spacing="-0.02em">Apollo</text>
+  <text x="44" y="32" font-family="'Inter', system-ui, sans-serif" font-size="9" font-weight="700" fill="#e67e22" letter-spacing="0.04em">PHARMACY</text>
+</svg>

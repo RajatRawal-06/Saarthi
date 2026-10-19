@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+      <defs>
+        <linearGradient id="saltBg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#f0f9ff"/><stop offset="100%" stop-color="#e0f2fe"/></linearGradient>
+      </defs>
+      <rect width="100" height="100" rx="18" fill="url(#saltBg)"/>
+      <!-- Tata Salt Pack -->
+      <g transform="translate(24, 12)">
+        <rect x="4" y="6" width="44" height="66" rx="4" fill="#0284c7" stroke="#0369a1" stroke-width="1.5"/>
+        <rect x="4" y="24" width="44" height="24" fill="#ffffff"/>
+        <text x="26" y="36" font-family="'Plus Jakarta Sans', sans-serif" font-size="8.5" font-weight="900" fill="#b91c1c" text-anchor="middle">TATA</text>
+        <text x="26" y="44" font-family="'Inter', sans-serif" font-size="7" font-weight="800" fill="#0f172a" text-anchor="middle">SALT</text>
+        <text x="26" y="60" font-family="'Inter', sans-serif" font-size="5" font-weight="700" fill="#ffffff" text-anchor="middle">IODIZED · 1 kg</text>
+      </g>
+    </svg>
