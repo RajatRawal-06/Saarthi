@@ -2033,53 +2033,11 @@ $('#win').addEventListener('cancel', (e) => { e.preventDefault(); closeWin(false
 // ---------- 3D Cylindrical Store Stream & Anime.js Controls ----------
 function initStoreCylinderAnimation() {
   const track = document.getElementById('cylinderOrbitTrack');
-  const btnNormal = document.getElementById('btnCylNormal');
-  const btnFast = document.getElementById('btnCylFast');
-  const btnSlow = document.getElementById('btnCylSlow');
-  const btnPause = document.getElementById('btnCylPause');
   if (!track) return;
 
-  const buttons = [btnNormal, btnFast, btnSlow, btnPause].filter(Boolean);
-
-  function setActiveBtn(btn) {
-    buttons.forEach((b) => b.classList.remove('active'));
-    if (btn) btn.classList.add('active');
-  }
-
-  btnNormal?.addEventListener('click', () => {
-    track.style.animationDuration = '48s';
-    track.style.animationPlayState = 'running';
-    if (btnPause) btnPause.textContent = 'Pause';
-    setActiveBtn(btnNormal);
-  });
-
-  btnFast?.addEventListener('click', () => {
-    track.style.animationDuration = '20s';
-    track.style.animationPlayState = 'running';
-    if (btnPause) btnPause.textContent = 'Pause';
-    setActiveBtn(btnFast);
-  });
-
-  btnSlow?.addEventListener('click', () => {
-    track.style.animationDuration = '85s';
-    track.style.animationPlayState = 'running';
-    if (btnPause) btnPause.textContent = 'Pause';
-    setActiveBtn(btnSlow);
-  });
-
-  btnPause?.addEventListener('click', () => {
-    const isPaused = track.style.animationPlayState === 'paused';
-    if (isPaused) {
-      track.style.animationPlayState = 'running';
-      btnPause.textContent = 'Pause';
-      btnPause.classList.remove('active');
-      btnNormal?.classList.add('active');
-    } else {
-      track.style.animationPlayState = 'paused';
-      btnPause.textContent = 'Resume';
-      setActiveBtn(btnPause);
-    }
-  });
+  // Default to steady 1x continuous stream speed
+  track.style.animationDuration = '48s';
+  track.style.animationPlayState = 'running';
 
   // Anime.js Elastic Spring Physics on Cards
   if (window.anime && typeof window.anime.animate === 'function') {
@@ -2139,6 +2097,103 @@ function initStoreCylinderAnimation() {
   });
 }
 
+// ---------- Curved Loop Interactive SVG Text Marquee ----------
+function initCurvedLoopMarquee() {
+  const jacket = document.getElementById('homeCurvedLoop');
+  const svg = document.getElementById('homeCurvedSvg');
+  const textPath = document.getElementById('curveHomeTextPath');
+  const measureText = document.getElementById('curveHomeMeasure');
+  if (!jacket || !svg || !textPath) return;
+
+  let spacing = 0;
+  function measure() {
+    if (measureText) {
+      const len = measureText.getComputedTextLength();
+      if (len > 0) spacing = len;
+    }
+  }
+  measure();
+  if (document.fonts) {
+    document.fonts.ready.then(measure);
+  }
+
+  let offset = 0;
+  let velocity = 0;
+  let direction = -1; // Moving towards left
+  const baseSpeed = 1.4;
+  let isDragging = false;
+  let dragX = 0;
+  let dragTime = 0;
+  let dragVelocity = 0;
+  const VIEW_WIDTH = 1440;
+  const MAX_FLING = 3500;
+
+  function wrapOffset(val, len) {
+    if (len <= 0) return val;
+    return (((val % len) + len) % len) - len;
+  }
+
+  jacket.addEventListener('pointerdown', (e) => {
+    isDragging = true;
+    dragX = e.clientX;
+    dragTime = performance.now();
+    dragVelocity = 0;
+    velocity = 0;
+    jacket.style.cursor = 'grabbing';
+    if (jacket.setPointerCapture) {
+      jacket.setPointerCapture(e.pointerId);
+    }
+  });
+
+  jacket.addEventListener('pointermove', (e) => {
+    if (!isDragging) return;
+    const now = performance.now();
+    const rect = svg.getBoundingClientRect();
+    const scale = VIEW_WIDTH / (rect.width || VIEW_WIDTH);
+    const delta = (e.clientX - dragX) * scale;
+    const dt = Math.max(now - dragTime, 1) / 1000;
+    dragX = e.clientX;
+    dragTime = now;
+    dragVelocity = dragVelocity * 0.5 + (delta / dt) * 0.5;
+    offset = wrapOffset(offset + delta, spacing || 1400);
+    textPath.setAttribute('startOffset', `${offset.toFixed(2)}px`);
+  });
+
+  function endDrag() {
+    if (!isDragging) return;
+    isDragging = false;
+    jacket.style.cursor = 'grab';
+    const elapsed = performance.now() - dragTime;
+    const fling = elapsed > 100 ? 0 : Math.max(-MAX_FLING, Math.min(MAX_FLING, dragVelocity));
+    velocity = fling;
+    if (Math.abs(fling) > 60) {
+      direction = fling > 0 ? 1 : -1;
+    }
+  }
+
+  jacket.addEventListener('pointerup', endDrag);
+  jacket.addEventListener('pointercancel', endDrag);
+  jacket.addEventListener('pointerleave', endDrag);
+
+  let lastTime = 0;
+  function tick(now) {
+    const dt = lastTime ? Math.min((now - lastTime) / 1000, 0.05) : 0;
+    lastTime = now;
+
+    if (!isDragging) {
+      const target = direction * baseSpeed * 60;
+      velocity += (target - velocity) * (1 - Math.exp(-dt * 3));
+      const step = velocity * dt;
+      if (Math.abs(step) > 0.0001 && spacing > 0) {
+        offset = wrapOffset(offset + step, spacing);
+        textPath.setAttribute('startOffset', `${offset.toFixed(2)}px`);
+      }
+    }
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+
 // ---------- boot ----------
 loadStatus();
 await loadSettings().catch(() => {});
@@ -2149,6 +2204,7 @@ updateBasketDeliveryLoc();
 updateTopProfileBadge();
 updateCharCounter();
 initStoreCylinderAnimation();
+initCurvedLoopMarquee();
 show((location.hash || '#saarthi').slice(1) || 'saarthi');
 window.addEventListener('hashchange', () => show(location.hash.slice(1) || 'saarthi'));
 resumeSaarthi();
