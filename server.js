@@ -1,4 +1,4 @@
-// Jhola — one grocery list, three apps, the cheapest real basket (plus Order, Compare and Forms). Powered by TinyFish.
+// Saarthi — one grocery list, three apps, the cheapest real basket (plus Order and Compare). Powered by TinyFish.
 import fs from 'node:fs';
 import path from 'node:path';
 import express from 'express';
@@ -21,7 +21,7 @@ const { order } = await import('./lib/chores/order.js');
 const { parseOrder } = await import('./lib/orderParse.js');
 const { ORDER_STORES, STORE_NAMES } = await import('./lib/stores.js');
 const crypto = await import('node:crypto');
-const { jhola, knownFees } = await import('./lib/basket/jhola.js');
+const { jhola, saarthi = jhola, knownFees } = await import('./lib/basket/jhola.js');
 const { parseList } = await import('./lib/basket/parse.js');
 const accounts = await import('./lib/accounts.js');
 const { APPS, APP_NAMES } = await import('./public/lib/basket.js');
@@ -40,7 +40,8 @@ const CHORES = {
   price_hunt: { run: priceHunt, title: (i) => `Price hunt: ${i.product}` },
   form_fill: { run: formFill, title: (i) => `Form fill: ${hostOf(i.url)}` },
   order: { run: order, title: (i) => `Order: ${i.text.slice(0, 60)}` },
-  jhola: { run: jhola, title: (i) => `Jhola: ${i.items.map((x) => x.name).join(', ').slice(0, 60)}` },
+  saarthi: { run: jhola, title: (i) => `Saarthi: ${i.items.map((x) => x.name).join(', ').slice(0, 60)}` },
+  jhola: { run: jhola, title: (i) => `Saarthi: ${i.items.map((x) => x.name).join(', ').slice(0, 60)}` },
 };
 const hostOf = (u) => { try { return new URL(u).hostname.replace(/^www\./, ''); } catch { return u; } };
 
@@ -70,9 +71,12 @@ app.post('/api/form-fill', wrap((req, res) => {
   res.json(startChore('form_fill', req.body));
 }));
 
-// ---- Jhola: one list, three apps ----
-app.post('/api/jhola/parse', (req, res) => res.json({ items: parseList(String(req.body.text || '').slice(0, 2000)) }));
-app.post('/api/jhola', wrap((req, res) => {
+// ---- Saarthi: one list, three apps ----
+const parseHandler = (req, res) => res.json({ items: parseList(String(req.body.text || '').slice(0, 2000)) });
+app.post('/api/saarthi/parse', parseHandler);
+app.post('/api/jhola/parse', parseHandler);
+
+const saarthiChoreHandler = wrap((req, res) => {
   const items = (Array.isArray(req.body.items) ? req.body.items : []).slice(0, 25).map((i) => ({
     id: String(i.id || crypto.randomUUID().slice(0, 8)).slice(0, 12),
     name: String(i.name || '').trim().slice(0, 80),
@@ -85,10 +89,15 @@ app.post('/api/jhola', wrap((req, res) => {
   const apps = (req.body.apps || APPS).filter((a) => APPS.includes(a));
   if (!apps.length) return res.status(400).json({ error: 'Pick at least one app.' });
   const pincode = readJSON('profile.json', {}).pincode || '';
-  const job = jobs.runChore('jhola', { items, apps, pincode }, CHORES.jhola.title({ items }), jhola);
+  const job = jobs.runChore('saarthi', { items, apps, pincode }, CHORES.saarthi.title({ items }), jhola);
   res.json({ id: job.id });
-}));
-app.get('/api/jhola/fees', (_req, res) => res.json(knownFees()));
+});
+app.post('/api/saarthi', saarthiChoreHandler);
+app.post('/api/jhola', saarthiChoreHandler);
+
+const feesHandler = (_req, res) => res.json(knownFees());
+app.get('/api/saarthi/fees', feesHandler);
+app.get('/api/jhola/fees', feesHandler);
 
 // ---- Setup: connected apps (log in once, India-proxy profiles) ----
 app.get('/api/accounts', (_req, res) => {

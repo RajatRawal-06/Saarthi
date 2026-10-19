@@ -1,4 +1,4 @@
-// Jhola UI — vanilla JS, no build step.
+// Saarthi UI — vanilla JS, no build step.
 import { optimise, APPS, APP_NAMES, feesFor } from '/lib/basket.js';
 const $ = (s, el = document) => el.querySelector(s);
 const $$ = (s, el = document) => [...el.querySelectorAll(s)];
@@ -28,13 +28,14 @@ const formData = (f) => Object.fromEntries(new FormData(f).entries());
 
 // ---------- tabs ----------
 function show(tab) {
+  if (tab === 'jhola') tab = 'saarthi';
   if (document.body.classList.contains('simple') && ['price', 'order'].includes(tab)) tab = 'order';
-  $$('#tabs button').forEach((b) => b.classList.toggle('active', b.dataset.tab === tab));
-  $$('.panel').forEach((p) => p.classList.toggle('active', p.id === `tab-${tab}`));
+  $$('#tabs button').forEach((b) => b.classList.toggle('active', b.dataset.tab === tab || (tab === 'saarthi' && b.dataset.tab === 'jhola')));
+  $$('.panel').forEach((p) => p.classList.toggle('active', p.id === `tab-${tab}` || (tab === 'saarthi' && p.id === 'tab-jhola')));
   if (tab === 'history') loadHistory();
   if (tab === 'me') loadMe();
   if (tab === 'setup') loadSetup();
-  if (tab === 'jhola') {
+  if (tab === 'saarthi' || tab === 'jhola') {
     loadAccounts().then(renderAppToggles);
     updateDynamicSavingsSnapshot();
     updateBasketDeliveryLoc();
@@ -60,6 +61,7 @@ const STAGES = {
   price_hunt: [['search', 'Search'], ['triage', 'Fetch triage'], ['agents', 'Live agents'], ['proof', 'Browser proof'], ['done', 'Result']],
   form_fill: [['dryrun', 'Read form'], ['review', 'Your approval'], ['submit', 'Fill & submit'], ['done', 'Result']],
   order: [['find', 'Searching'], ['confirm', 'Your OK'], ['done', 'Ready']],
+  saarthi: [['collect', 'Live prices'], ['plan', 'Your plan'], ['fill', 'Fill carts'], ['check', 'Check totals'], ['done', 'Pay']],
   jhola: [['collect', 'Live prices'], ['plan', 'Your plan'], ['fill', 'Fill carts'], ['check', 'Check totals'], ['done', 'Pay']],
 };
 let activeStreams = new Map();
@@ -138,8 +140,8 @@ function render(container, state) {
     <div id="approvalSlot"></div>
     <div id="resultSlot"></div>
     ${isOrder && j.status === 'running' ? `<div class="card thinking"><span class="fish">🐟</span><div><b>On it…</b><div class="small">${esc(latest?.msg || 'Starting')}</div></div></div>` : ''}
-    ${j.type === 'jhola' && j.basket ? panelsHtml(j, state, finished) : ''}
-    <details class="behind" ${!isOrder && j.type !== 'jhola' || state.behindOpen ? 'open' : ''}><summary>${isOrder ? 'See what the agent is doing' : 'Live view & activity'}</summary>
+    ${(j.type === 'saarthi' || j.type === 'jhola') && j.basket ? panelsHtml(j, state, finished) : ''}
+    <details class="behind" ${!isOrder && j.type !== 'saarthi' && j.type !== 'jhola' || state.behindOpen ? 'open' : ''}><summary>${isOrder ? 'See what the agent is doing' : 'Live view & activity'}</summary>
     <div class="split">
       <div class="card live">
         <div class="live-head">Live browser ${liveUrl && !finished ? `<a href="${esc(liveUrl)}" target="_blank" rel="noopener" style="margin-left:auto;order:9">Pop out ↗</a>` : ''} ${[...state.live.keys()].map((t) => `<button data-live="${esc(t)}" class="${t === state.liveTag ? 'on' : ''}">${esc(t)}</button>`).join('')}</div>
@@ -212,7 +214,7 @@ function renderResult(slot, j) {
   if (r.error) { slot.innerHTML = `<div class="summary"><span class="badge bad">Error</span> ${esc(r.error)}</div>`; return; }
   if (j.type === 'price_hunt') return renderPrice(slot, j, r);
   if (j.type === 'order') return renderOrderResult(slot, j, r);
-  if (j.type === 'jhola') return renderCarts(slot, j, r);
+  if (j.type === 'saarthi' || j.type === 'jhola') return renderCarts(slot, j, r);
   if (j.type === 'form_fill') {
     const good = r.status === 'done';
     slot.innerHTML = `<div class="card">
@@ -801,7 +803,13 @@ function renderHistoryCards() {
 
   const q = historySearchQuery.toLowerCase().trim();
   const filtered = historyCachedJobs.filter((j) => {
-    if (historyActiveType !== 'all' && j.type !== historyActiveType) return false;
+    if (historyActiveType !== 'all') {
+      if (historyActiveType === 'saarthi') {
+        if (j.type !== 'saarthi' && j.type !== 'jhola') return false;
+      } else if (j.type !== historyActiveType) {
+        return false;
+      }
+    }
     if (!q) return true;
     const titleMatch = (j.title || '').toLowerCase().includes(q);
     const prodMatch = (j.input?.product || '').toLowerCase().includes(q);
@@ -839,7 +847,7 @@ function renderHistoryCards() {
     let typeBadgeClass = 'hunt';
     if (j.type === 'order') { typeIcon = '🛍️'; typeName = 'GROCERY ORDER'; typeBadgeClass = 'order'; }
     else if (j.type === 'form_fill') { typeIcon = '📝'; typeName = 'FORM FILL'; typeBadgeClass = 'form'; }
-    else if (j.type === 'jhola') { typeIcon = '🛒'; typeName = 'JHOLA BASKET'; typeBadgeClass = 'jhola'; }
+    else if (j.type === 'saarthi' || j.type === 'jhola') { typeIcon = '🛒'; typeName = 'SAARTHI BASKET'; typeBadgeClass = 'saarthi'; }
 
     // Status definitions
     let statusClass = 'done';
@@ -1350,7 +1358,7 @@ $('#careSave').onclick = async () => {
   } catch (e) { toast(e.message); }
 };
 
-// ---------- Jhola: list → live panels → plan → carts ----------
+// ---------- Saarthi: list → live panels → plan → carts ----------
 let accountsCache = [];
 async function loadAccounts() { try { accountsCache = await api('/api/accounts'); } catch { accountsCache = []; } return accountsCache; }
 const acct = (app) => accountsCache.find((a) => a.app === app) || {};
@@ -1364,7 +1372,7 @@ let jTimer;
 async function jParse() {
   const text = jForm.text.value.trim();
   if (!text) { jItems = []; renderItems(); return; }
-  const { items } = await api('/api/jhola/parse', { method: 'POST', body: { text } });
+  const { items } = await api('/api/saarthi/parse', { method: 'POST', body: { text } });
   // Keep edits the user made to items that still exist.
   const old = new Map(jItems.map((i) => [i.raw, i]));
   jItems = items.map((i) => (old.get(i.raw)?.edited ? old.get(i.raw) : i));
@@ -1544,13 +1552,13 @@ jForm.addEventListener('submit', async (e) => {
   if (!jApps.length) return toast('Pick at least one app.');
   if (!profile.pincode && !accountsCache.some((a) => a.connected)) { toast('Add your PIN code in Me (or connect an app in Setup).'); return show('me'); }
   try {
-    const { id } = await api('/api/jhola', { method: 'POST', body: { items: jItems.map(({ edited, raw, ...i }) => i), apps: jApps } });
-    try { localStorage.setItem('jhola:last', id); } catch {}
+    const { id } = await api('/api/saarthi', { method: 'POST', body: { items: jItems.map(({ edited, raw, ...i }) => i), apps: jApps } });
+    try { localStorage.setItem('saarthi:last', id); localStorage.setItem('jhola:last', id); } catch {}
     mountRun($('#jRun'), id);
   } catch (err) { toast(err.message); }
 });
-async function resumeJhola() {
-  let id; try { id = localStorage.getItem('jhola:last'); } catch {}
+async function resumeSaarthi() {
+  let id; try { id = localStorage.getItem('saarthi:last') || localStorage.getItem('jhola:last'); } catch {}
   if (!id) return;
   try { const j = await api(`/api/jobs/${id}`); if (['running', 'awaiting_approval'].includes(j.status) || Date.now() - j.createdAt < 3600e3) mountRun($('#jRun'), id); } catch {}
 }
@@ -1972,8 +1980,8 @@ let win = null;
 async function openWindow(app, purpose) {
   const d = $('#win');
   const appName = getAppName(app);
-  $('#winTitle').textContent = purpose === 'pay' ? `Pay on ${appName} (you pay, not Jhola)` : `Log in to ${appName}`;
-  $('#winHint').textContent = purpose === 'pay' ? 'Open the cart and pay with your own UPI. Jhola does not click anything here.' : 'Tap Login, enter your phone number and OTP, and check your delivery address. Then Save & close.';
+  $('#winTitle').textContent = purpose === 'pay' ? `Pay on ${appName} (you pay, not Saarthi)` : `Log in to ${appName}`;
+  $('#winHint').textContent = purpose === 'pay' ? 'Open the cart and pay with your own UPI. Saarthi does not click anything here.' : 'Tap Login, enter your phone number and OTP, and check your delivery address. Then Save & close.';
   $('#winImg').removeAttribute('src');
   d.showModal();
   try {
@@ -2033,4 +2041,4 @@ updateTopProfileBadge();
 updateCharCounter();
 show((location.hash || '#price').slice(1) || 'price');
 window.addEventListener('hashchange', () => show(location.hash.slice(1) || 'price'));
-resumeJhola();
+resumeSaarthi();

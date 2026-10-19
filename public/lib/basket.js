@@ -1,4 +1,4 @@
-// Jhola basket maths — shared by the server and the browser (so swaps, drops
+// Saarthi basket maths — shared by the server and the browser (so swaps, drops
 // and "force one app" re-plan instantly on the page). Pure functions only.
 
 export const APPS = ['blinkit', 'zepto', 'instamart'];

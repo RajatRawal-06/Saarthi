@@ -186,7 +186,7 @@ dialog::backdrop { background: rgba(43, 33, 26, .35); }
 footer { text-align: center; color: var(--ink-3); font-size: .85em; padding: 24px 16px 40px; }
 .toast { position: fixed; bottom: 22px; left: 50%; transform: translateX(-50%); background: var(--ink); color: #fff; padding: 12px 18px; border-radius: 999px; font-weight: 700; z-index: 99; max-width: calc(100% - 32px); }
 
-/* ---------- Jhola ---------- */
+/* ---------- Saarthi ---------- */
 .hl { color: var(--orange); }
 .items-edit { width: 100%; margin: 4px 0 6px; border-top: 1.5px dashed var(--line); padding: 8px 6px 0; }
 .irow { display: grid; grid-template-columns: minmax(0, 2.2fr) 80px 70px minmax(0, 1.2fr) auto auto; gap: 6px; align-items: center; margin-bottom: 6px; font-size: .9em; }
@@ -2113,6 +2113,7 @@ main { overflow-x: clip; }
   border: 1px solid #dbeafe;
 }
 
+.hist-type-badge.saarthi,
 .hist-type-badge.jhola {
   background: #f5f3ff;
   color: #6d28d9;
@@ -2261,6 +2262,7 @@ main { overflow-x: clip; }
   background: #eff6ff;
 }
 
+.hist-avatar-fallback.saarthi,
 .hist-avatar-fallback.jhola {
   background: #f5f3ff;
 }
@@ -3546,8 +3548,9 @@ main { overflow-x: clip; }
 }
 
 /* ========================================================
-   BASKET / JHOLA: SMART GROCERY PLANNING TAB
+   SAARTHI: SMART GROCERY PLANNING TAB
    ======================================================== */
+#tab-saarthi,
 #tab-jhola {
   width: 100%;
   max-width: 100%;
