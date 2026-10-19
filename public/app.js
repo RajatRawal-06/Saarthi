@@ -2030,6 +2030,115 @@ $('#winSave').onclick = () => closeWin(true);
 $('#winCancel').onclick = () => closeWin(false);
 $('#win').addEventListener('cancel', (e) => { e.preventDefault(); closeWin(false); });
 
+// ---------- 3D Cylindrical Store Stream & Anime.js Controls ----------
+function initStoreCylinderAnimation() {
+  const track = document.getElementById('cylinderOrbitTrack');
+  const btnNormal = document.getElementById('btnCylNormal');
+  const btnFast = document.getElementById('btnCylFast');
+  const btnSlow = document.getElementById('btnCylSlow');
+  const btnPause = document.getElementById('btnCylPause');
+  if (!track) return;
+
+  const buttons = [btnNormal, btnFast, btnSlow, btnPause].filter(Boolean);
+
+  function setActiveBtn(btn) {
+    buttons.forEach((b) => b.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+  }
+
+  btnNormal?.addEventListener('click', () => {
+    track.style.animationDuration = '48s';
+    track.style.animationPlayState = 'running';
+    if (btnPause) btnPause.textContent = 'Pause';
+    setActiveBtn(btnNormal);
+  });
+
+  btnFast?.addEventListener('click', () => {
+    track.style.animationDuration = '20s';
+    track.style.animationPlayState = 'running';
+    if (btnPause) btnPause.textContent = 'Pause';
+    setActiveBtn(btnFast);
+  });
+
+  btnSlow?.addEventListener('click', () => {
+    track.style.animationDuration = '85s';
+    track.style.animationPlayState = 'running';
+    if (btnPause) btnPause.textContent = 'Pause';
+    setActiveBtn(btnSlow);
+  });
+
+  btnPause?.addEventListener('click', () => {
+    const isPaused = track.style.animationPlayState === 'paused';
+    if (isPaused) {
+      track.style.animationPlayState = 'running';
+      btnPause.textContent = 'Pause';
+      btnPause.classList.remove('active');
+      btnNormal?.classList.add('active');
+    } else {
+      track.style.animationPlayState = 'paused';
+      btnPause.textContent = 'Resume';
+      setActiveBtn(btnPause);
+    }
+  });
+
+  // Anime.js Elastic Spring Physics on Cards
+  if (window.anime && typeof window.anime.animate === 'function') {
+    const cards = document.querySelectorAll('.cylinder-card');
+    cards.forEach((card) => {
+      card.addEventListener('mouseenter', () => {
+        try {
+          window.anime.animate(card, {
+            scale: 1.05,
+            translateY: -6,
+            duration: 350,
+            ease: 'outElastic(1, .6)'
+          });
+        } catch (_) {}
+      });
+      card.addEventListener('mouseleave', () => {
+        try {
+          window.anime.animate(card, {
+            scale: 1.0,
+            translateY: 0,
+            duration: 300,
+            ease: 'outQuad'
+          });
+        } catch (_) {}
+      });
+    });
+
+    // Special glowing pulse on + More Local Brands
+    const plusGlow = document.querySelector('.plus-icon-glow');
+    if (plusGlow) {
+      try {
+        window.anime.animate(plusGlow, {
+          scale: [1, 1.15, 1],
+          boxShadow: [
+            '0 2px 8px rgba(234, 88, 12, 0.35)',
+            '0 4px 16px rgba(234, 88, 12, 0.65)',
+            '0 2px 8px rgba(234, 88, 12, 0.35)'
+          ],
+          loop: true,
+          duration: 2200,
+          ease: 'inOutSine'
+        });
+      } catch (_) {}
+    }
+  }
+
+  // Interactive Click Handlers
+  document.querySelectorAll('.cylinder-card, .venn-logo-item').forEach((item) => {
+    item.addEventListener('click', () => {
+      const store = item.dataset.store || item.getAttribute('title');
+      if (store === 'local-brands' || item.classList.contains('plus-more-card') || item.classList.contains('plus-more-venn')) {
+        toast('TinyFish autonomous agents scan local neighbourhood kiranas, specialty bakers & nearby dark stores in real time.');
+      } else if (store) {
+        toast(`Store selected: ${store.toUpperCase()} · Live dark store inventory linked.`);
+      }
+    });
+  });
+}
+
 // ---------- boot ----------
 loadStatus();
 await loadSettings().catch(() => {});
@@ -2039,6 +2148,8 @@ updateDynamicSavingsSnapshot();
 updateBasketDeliveryLoc();
 updateTopProfileBadge();
 updateCharCounter();
-show((location.hash || '#price').slice(1) || 'price');
-window.addEventListener('hashchange', () => show(location.hash.slice(1) || 'price'));
+initStoreCylinderAnimation();
+show((location.hash || '#saarthi').slice(1) || 'saarthi');
+window.addEventListener('hashchange', () => show(location.hash.slice(1) || 'saarthi'));
 resumeSaarthi();
+
