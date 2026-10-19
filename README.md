@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="public/assets/saarthi-icon-trimmed.png" alt="Saarthi Emblem" width="96" />
+  <img src="public/assets/saarthi-full.png" alt="Saarthi Company Logo" width="180" />
 </p>
 
 <h1 align="center">Saarthi</h1>
@@ -30,51 +30,51 @@ Saarthi interfaces directly with India's primary quick-commerce, supermarket, ph
   <table>
     <tr>
       <td align="center" width="160">
-        <img src="public/assets/thumb-blinkit@2x.png" alt="Blinkit" height="32" /><br />
+        <img src="public/assets/blinkit-badge.png" alt="Blinkit" height="28" /><br />
         <sub><b>Blinkit</b><br />10–15 Min Dark Store</sub>
       </td>
       <td align="center" width="160">
-        <img src="public/assets/thumb-zepto@2x.png" alt="Zepto" height="32" /><br />
+        <img src="public/assets/zepto-badge.png" alt="Zepto" height="28" /><br />
         <sub><b>Zepto</b><br />10 Min Hyper-Local</sub>
       </td>
       <td align="center" width="160">
-        <img src="public/assets/swiggy-instamart.svg" alt="Swiggy Instamart" height="32" /><br />
+        <img src="public/assets/swiggy-instamart.svg" alt="Swiggy Instamart" height="28" /><br />
         <sub><b>Swiggy Instamart</b><br />15 Min Grocery Pod</sub>
       </td>
       <td align="center" width="160">
-        <img src="public/assets/bigbasket.svg" alt="BigBasket" height="32" /><br />
+        <img src="public/assets/bigbasket.svg" alt="BigBasket" height="28" /><br />
         <sub><b>BigBasket</b><br />Instant &amp; Scheduled</sub>
       </td>
     </tr>
     <tr>
       <td align="center" width="160">
-        <img src="public/assets/thumb-amazon@2x.png" alt="Amazon India" height="32" /><br />
+        <img src="public/assets/amazon-in-clean.png" alt="Amazon India" height="26" /><br />
         <sub><b>Amazon India</b><br />Pan-India Marketplace</sub>
       </td>
       <td align="center" width="160">
-        <img src="public/assets/thumb-flipkart@2x.png" alt="Flipkart" height="32" /><br />
+        <img src="public/assets/flipkart-clean.png" alt="Flipkart" height="28" /><br />
         <sub><b>Flipkart</b><br />Retail &amp; Minutes</sub>
       </td>
       <td align="center" width="160">
-        <img src="public/assets/tata-1mg.svg" alt="Tata 1mg" height="32" /><br />
+        <img src="public/assets/tata-1mg.svg" alt="Tata 1mg" height="28" /><br />
         <sub><b>Tata 1mg</b><br />Digital Pharmacy</sub>
       </td>
       <td align="center" width="160">
-        <img src="public/assets/jiomart.svg" alt="JioMart" height="32" /><br />
+        <img src="public/assets/jiomart.svg" alt="JioMart" height="28" /><br />
         <sub><b>JioMart</b><br />Omnichannel Grocery</sub>
       </td>
     </tr>
     <tr>
       <td align="center" width="160">
-        <img src="public/assets/thumb-croma@2x.png" alt="Croma" height="32" /><br />
+        <img src="public/assets/croma-trimmed.png" alt="Croma" height="26" /><br />
         <sub><b>Croma</b><br />Consumer Electronics</sub>
       </td>
       <td align="center" width="160">
-        <img src="public/assets/reliance-digital-sharp.png" alt="Reliance Digital" height="32" /><br />
+        <img src="public/assets/reliance-digital-sharp.png" alt="Reliance Digital" height="26" /><br />
         <sub><b>Reliance Digital</b><br />Electronics Retail</sub>
       </td>
       <td align="center" width="160" colspan="2">
-        <img src="public/assets/thumb-indiamart@2x.png" alt="IndiaMART" height="32" /><br />
+        <img src="public/assets/indiamart-clean.png" alt="IndiaMART" height="28" /><br />
         <sub><b>IndiaMART</b><br />B2B Wholesale &amp; Direct Sourcing</sub>
       </td>
     </tr>
