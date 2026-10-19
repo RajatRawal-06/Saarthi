@@ -1007,9 +1007,27 @@
 
     <!-- PRICE HUNT / COMPARE LIVE PRICES -->
     <section class="panel active" id="tab-price">
+      <!-- HERO BANNER -->
       <div class="compare-hero">
-        <h1>Compare live prices</h1>
-        <p class="lede">Check availability and proof across stores. Saarthi never buys anything here.</p>
+        <div class="compare-hero-content">
+          <div class="compare-kicker">
+            <span class="compare-pulse-dot"></span>
+            LIVE PRICE INTELLIGENCE &amp; CRYPTOGRAPHIC PROOF
+          </div>
+          <h1 class="compare-headline">Compare live store prices with audit-ready proof</h1>
+          <p class="compare-subhead">
+            Autonomous browser agents sweep Amazon, Flipkart, IndiaMART, Croma, Zepto, and Reliance Digital in real time. We audit final checkout totals, hidden delivery fees, and taxes with zero markups or affiliate bias.
+          </p>
+        </div>
+        <div class="compare-hero-side">
+          <div class="compare-telemetry-pill">
+            <span class="pulse-green-dot"></span>
+            <div class="pill-text-wrap">
+              <span class="pill-title">6 Stores Synchronized</span>
+              <span class="pill-meta">Anti-bot stealth bypass · Real-time quotes</span>
+            </div>
+          </div>
+        </div>
       </div>
 
       <form class="compare-search-card" id="priceForm">
@@ -1075,8 +1093,41 @@
         </div>
       </form>
 
+      <!-- EXECUTIVE MARKET SUMMARY BAR -->
+      <div class="compare-executive-bar">
+        <div class="exec-stat-card win">
+          <div class="exec-stat-label">Lowest Live Price</div>
+          <div class="exec-stat-val">₹17,499</div>
+          <div class="exec-stat-sub"><span class="store-tag">IndiaMART</span> Wholesale Direct</div>
+        </div>
+        <div class="exec-stat-card">
+          <div class="exec-stat-label">Average Market Price</div>
+          <div class="exec-stat-val">₹18,271</div>
+          <div class="exec-stat-sub">Across 6 verified stores</div>
+        </div>
+        <div class="exec-stat-card highlight">
+          <div class="exec-stat-label">Maximum Arbitrage Spread</div>
+          <div class="exec-stat-val text-green">₹1,500 <span class="pct">(8.0% off)</span></div>
+          <div class="exec-stat-sub">Save vs Reliance Digital (₹18,999)</div>
+        </div>
+        <div class="exec-stat-card">
+          <div class="exec-stat-label">Proof-of-Price Status</div>
+          <div class="exec-stat-val text-blue">100% Verified</div>
+          <div class="exec-stat-sub">Dispute-ready DOM artifacts</div>
+        </div>
+      </div>
+
       <!-- RESULTS TABLE (EXACT REPLICA OF REFERENCE IMAGE) -->
       <div class="compare-table-card" id="compareReplicaCard">
+        <div class="compare-card-top-bar">
+          <div class="compare-card-title-group">
+            <span class="compare-live-pill"><span class="pulse-green-dot"></span> Live Stream</span>
+            <span class="compare-card-query-label">Active Comparison: Sony WH-1000XM5 Wireless Headphones</span>
+          </div>
+          <div class="compare-card-meta-badge">
+            <span>Audit timestamp: Less than 60s ago</span>
+          </div>
+        </div>
         <div class="compare-live-status hidden" id="compareLiveStatus"></div>
         <div class="compare-table-container">
           <table class="replica-table">
@@ -1412,6 +1463,246 @@
       </div>
 
       <div id="priceRun"></div>
+
+      <!-- BELOW-THE-FOLD PRICE DISCOVERY & INTELLIGENCE MODULES -->
+      <div class="compare-btf-container">
+        <!-- SECTION 1: LIVE RETAIL PRICE SPREAD SPECTRUM -->
+        <div class="price-spread-section">
+          <div class="sec-headline-wrap">
+            <div class="sec-kicker">LIVE RETAIL SPREAD SPECTRUM</div>
+            <h2 class="sec-title">Where each store positions on the market pricing curve</h2>
+            <p class="sec-sub">Saarthi traces quotes from direct manufacturer B2B wholesale through national retail down to 10-minute dark stores.</p>
+          </div>
+
+          <div class="spread-spectrum-card">
+            <div class="spectrum-header">
+              <div class="spectrum-title">Sony WH-1000XM5 Market Band (₹17,499 – ₹18,999)</div>
+              <div class="spectrum-spread-badge">₹1,500 Max Arbitrage Spread (8.0%)</div>
+            </div>
+
+            <div class="spectrum-bar-wrap">
+              <div class="spectrum-track">
+                <div class="spectrum-range-fill"></div>
+                <!-- Pin points with distributed spacing -->
+                <div class="spectrum-pin" style="left: 2%;">
+                  <span class="pin-tag green">₹17,499</span>
+                  <span class="pin-store">IndiaMART</span>
+                </div>
+                <div class="spectrum-pin" style="left: 24%;">
+                  <span class="pin-tag blue">₹17,990</span>
+                  <span class="pin-store">Amazon</span>
+                </div>
+                <div class="spectrum-pin target-marker" style="left: 36%;">
+                  <span class="pin-tag target">Target ₹18k</span>
+                  <span class="pin-store target-label">Your Budget</span>
+                </div>
+                <div class="spectrum-pin" style="left: 50%;">
+                  <span class="pin-tag">₹18,199</span>
+                  <span class="pin-store">Flipkart</span>
+                </div>
+                <div class="spectrum-pin" style="left: 68%;">
+                  <span class="pin-tag">₹18,490</span>
+                  <span class="pin-store">Croma</span>
+                </div>
+                <div class="spectrum-pin" style="left: 82%;">
+                  <span class="pin-tag orange">₹18,499</span>
+                  <span class="pin-store">Zepto ⚡</span>
+                </div>
+                <div class="spectrum-pin" style="left: 98%;">
+                  <span class="pin-tag red">₹18,999</span>
+                  <span class="pin-store">Reliance</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="spectrum-tiers-grid">
+              <div class="tier-card tier-wholesale">
+                <div class="tier-badge">Tier 1 · Direct Wholesale</div>
+                <div class="tier-name">IndiaMART &amp; Direct Suppliers</div>
+                <div class="tier-price">₹17,499 <span class="tier-diff green">-₹501 vs target</span></div>
+                <p class="tier-desc">Direct factory/distributor quotes. Includes official GST input tax credit (saves businesses up to 18% additional). Requires dealer inquiry or invoice matching.</p>
+                <div class="tier-meta"><span>Delivery: <b>2-3 Days</b></span><span>GST: <b>Included</b></span></div>
+              </div>
+
+              <div class="tier-card tier-ecommerce">
+                <div class="tier-badge">Tier 2 · National E-Commerce</div>
+                <div class="tier-name">Amazon India &amp; Flipkart</div>
+                <div class="tier-price">₹17,990 – ₹18,199 <span class="tier-diff blue">Best Consumer Value</span></div>
+                <p class="tier-desc">Pan-India fulfillment hubs with brand-authorized warranties, 1-click credit card instant bank discounts, and guaranteed next-morning delivery via Prime/Assured.</p>
+                <div class="tier-meta"><span>Delivery: <b>Next Day</b></span><span>Return: <b>7 Days</b></span></div>
+              </div>
+
+              <div class="tier-card tier-quick">
+                <div class="tier-badge">Tier 3 · Hyper-Local Quick-Comm</div>
+                <div class="tier-name">Zepto &amp; Blinkit Dark Stores</div>
+                <div class="tier-price">₹18,499 <span class="tier-diff orange">+₹499 convenience</span></div>
+                <p class="tier-desc">Instant fulfillment within 10 to 15 minutes dispatched from localized micro-warehouses. Best for immediate gifting or replacement needs without waiting.</p>
+                <div class="tier-meta"><span>Delivery: <b>10–15 Mins</b></span><span>Speed: <b>Immediate</b></span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 2: PROOF-OF-PRICE ARCHITECTURE -->
+        <div class="price-architecture-section">
+          <div class="sec-headline-wrap">
+            <div class="sec-kicker">PROOF-OF-PRICE ARCHITECTURE</div>
+            <h2 class="sec-title">How Saarthi audits live prices without affiliate bias</h2>
+            <p class="sec-sub">Traditional price comparison sites use stale affiliate feeds with kickback incentives. Saarthi runs headless browser agents that audit actual checkout totals.</p>
+          </div>
+
+          <div class="arch-pillars-grid">
+            <div class="arch-pillar-card">
+              <div class="arch-icon orange">🛡️</div>
+              <h3 class="arch-title">Anti-Scraping Stealth Browsers</h3>
+              <p class="arch-desc">Powered by TinyFish, each query spins up a headless Chromium container with residential IP rotation and realistic user interaction patterns to bypass Cloudflare, DataDome, and Akamai anti-bot guards.</p>
+              <div class="arch-tag">Residential Proxy Mesh</div>
+            </div>
+
+            <div class="arch-pillar-card">
+              <div class="arch-icon teal">🛒</div>
+              <h3 class="arch-title">Checkout DOM Inspection (Anti-Drip)</h3>
+              <p class="arch-desc">We don't rely on deceptive catalog listings. Saarthi adds the item to a temporary session cart to calculate real packaging charges, convenience fees, and surge delivery pricing before presenting the true cost.</p>
+              <div class="arch-tag">True Landed Cost Engine</div>
+            </div>
+
+            <div class="arch-pillar-card">
+              <div class="arch-icon blue">📸</div>
+              <h3 class="arch-title">Cryptographic Screenshot Proof</h3>
+              <p class="arch-desc">Every price quote captures an immutable full-page screenshot with timestamp and store URL. Click "View proof" on any row to inspect the original webpage exactly as the agent verified it.</p>
+              <div class="arch-tag">Verifiable Audit Artifacts</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 3: SUPPORTED RETAIL ECOSYSTEM -->
+        <div class="price-ecosystem-section">
+          <div class="sec-headline-wrap">
+            <div class="sec-kicker">SUPPORTED RETAIL ECOSYSTEM</div>
+            <h2 class="sec-title">Multi-channel price discovery across all of India</h2>
+            <p class="sec-sub">From hyper-local dark stores in your neighborhood to pan-India e-commerce and certified B2B wholesalers.</p>
+          </div>
+
+          <div class="ecosystem-cards-grid">
+            <div class="eco-card">
+              <div class="eco-head">
+                <span class="eco-icon">⚡</span>
+                <div class="eco-titles">
+                  <h4>Quick-Commerce Dark Stores</h4>
+                  <span>Hyper-local 10–20 minute delivery</span>
+                </div>
+              </div>
+              <p class="eco-desc">Real-time inventory lookup across localized dark store fulfillment centers.</p>
+              <div class="eco-store-pills">
+                <span class="eco-pill zepto">Zepto</span>
+                <span class="eco-pill blinkit">Blinkit</span>
+                <span class="eco-pill instamart">Swiggy Instamart</span>
+                <span class="eco-pill bbnow">BB Now</span>
+              </div>
+            </div>
+
+            <div class="eco-card">
+              <div class="eco-head">
+                <span class="eco-icon">🛒</span>
+                <div class="eco-titles">
+                  <h4>National E-Commerce</h4>
+                  <span>Pan-India fulfillment &amp; Prime</span>
+                </div>
+              </div>
+              <p class="eco-desc">Largest consumer catalogs with automated seller rating verification and return window checks.</p>
+              <div class="eco-store-pills">
+                <span class="eco-pill amazon">Amazon India</span>
+                <span class="eco-pill flipkart">Flipkart</span>
+                <span class="eco-pill jiomart">JioMart</span>
+                <span class="eco-pill meesho">Meesho</span>
+              </div>
+            </div>
+
+            <div class="eco-card">
+              <div class="eco-head">
+                <span class="eco-icon">💻</span>
+                <div class="eco-titles">
+                  <h4>Electronics &amp; Appliances</h4>
+                  <span>Authorized brand warranty guaranteed</span>
+                </div>
+              </div>
+              <p class="eco-desc">Omnichannel retail networks with verified manufacturer warranties and optional store pickup.</p>
+              <div class="eco-store-pills">
+                <span class="eco-pill croma">Croma</span>
+                <span class="eco-pill reliance">Reliance Digital</span>
+                <span class="eco-pill vijaysales">Vijay Sales</span>
+              </div>
+            </div>
+
+            <div class="eco-card">
+              <div class="eco-head">
+                <span class="eco-icon">🏢</span>
+                <div class="eco-titles">
+                  <h4>B2B &amp; Direct Wholesale</h4>
+                  <span>Bulk tiers &amp; GST input credit</span>
+                </div>
+              </div>
+              <p class="eco-desc">Manufacturer-direct quotes with tax invoices for registered business buyers and heavy bulk savings.</p>
+              <div class="eco-store-pills">
+                <span class="eco-pill indiamart">IndiaMART</span>
+                <span class="eco-pill udaan">Udaan</span>
+                <span class="eco-pill tradeindia">TradeIndia</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 4: PRICE DISCOVERY FAQ -->
+        <div class="price-faq-section">
+          <div class="sec-headline-wrap center">
+            <div class="sec-kicker">PRICE DISCOVERY FAQ</div>
+            <h2 class="sec-title">Common questions about live price comparisons</h2>
+            <p class="sec-sub">Everything you need to know about stealth scraping, price guarantees, and algorithmic pricing.</p>
+          </div>
+
+          <div class="faq-accordion-wrap">
+            <details class="faq-item" open>
+              <summary class="faq-question">
+                <span>Why do prices differ so significantly between apps for the exact same item?</span>
+                <span class="faq-chevron">⌄</span>
+              </summary>
+              <div class="faq-answer">
+                Retail apps employ algorithmic pricing driven by proximity to local warehouses, real-time local demand, seller commission rates (e.g. Amazon seller fees vs wholesale direct), and localized subsidies. A consumer buying without checking frequently pays 15% to 25% higher simply due to app inertia.
+              </div>
+            </details>
+
+            <details class="faq-item">
+              <summary class="faq-question">
+                <span>How does Saarthi catch hidden "drip pricing" and checkout surcharges?</span>
+                <span class="faq-chevron">⌄</span>
+              </summary>
+              <div class="faq-answer">
+                Many platforms advertise a low base price on product search pages, then append "packaging charges", "handling fees", and "rain/surge delivery fees" on the checkout page. Saarthi inspects the actual order summary elements in the browser session so you always see the true out-of-pocket total.
+              </div>
+            </details>
+
+            <details class="faq-item">
+              <summary class="faq-question">
+                <span>Can I use Saarthi's verified proof screenshots for price-match claims?</span>
+                <span class="faq-chevron">⌄</span>
+              </summary>
+              <div class="faq-answer">
+                Yes! Every row includes a "View proof" button that opens an immutable screenshot artifact with the exact store name, product title, seller badge, timestamp, and landed price. Many offline retailers (like Croma and Reliance Digital) will match competitor pricing when presented with verified proof.
+              </div>
+            </details>
+
+            <details class="faq-item">
+              <summary class="faq-question">
+                <span>Does searching for a product multiple times trigger surge pricing algorithms?</span>
+                <span class="faq-chevron">⌄</span>
+              </summary>
+              <div class="faq-answer">
+                No. Because Saarthi uses ephemeral headless browser containers with distinct user sessions and rotating IP pools, retailers cannot link searches to your personal identity, device fingerprint, or browsing history. You are completely protected from algorithmic price gouging.
+              </div>
+            </details>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- HISTORY: AGENT AUDIT LOG & MISSION CONTROL -->

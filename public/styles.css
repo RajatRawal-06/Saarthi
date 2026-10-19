@@ -248,29 +248,228 @@ main { overflow-x: clip; }
 #tab-price {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   color: #111827;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
 }
 
 .compare-hero {
-  margin-bottom: 22px;
+  position: relative;
+  background: linear-gradient(135deg, #ffffff 0%, #fffbf8 50%, #fff6ef 100%);
+  border-radius: 20px;
+  padding: 40px clamp(24px, 3vw, 44px);
+  border: 1px solid #eef2f6;
+  margin-bottom: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  min-height: 180px;
+  box-shadow: 0 4px 24px -2px rgba(15, 23, 42, 0.04);
 }
 
-.compare-hero h1 {
-  font-family: 'Inter', -apple-system, sans-serif;
-  font-size: 32px;
+.compare-hero-content {
+  max-width: 720px;
+}
+
+.compare-kicker {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 11px;
   font-weight: 800;
-  color: #111827;
-  letter-spacing: -0.025em;
-  margin: 0 0 6px;
+  letter-spacing: 0.08em;
+  color: #ea580c;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.compare-pulse-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #16a34a;
+  box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.2);
+  animation: pulseGreen 2s infinite;
+}
+
+.compare-headline {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: clamp(26px, 2.5vw, 36px);
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.03em;
+  line-height: 1.18;
+  margin: 0 0 10px;
+}
+
+.compare-subhead {
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  color: #475569;
+  line-height: 1.55;
+  margin: 0;
+  max-width: 660px;
+}
+
+.compare-hero-side {
+  flex-shrink: 0;
+}
+
+.compare-telemetry-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  border-radius: 14px;
+  padding: 12px 18px;
+  box-shadow: 0 4px 16px -2px rgba(15, 23, 42, 0.06);
+}
+
+.pulse-green-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #16a34a;
+  box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.2);
+  flex-shrink: 0;
+}
+
+.compare-telemetry-pill .pill-text-wrap {
+  display: flex;
+  flex-direction: column;
+}
+
+.compare-telemetry-pill .pill-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: #0f172a;
   line-height: 1.2;
 }
 
-.compare-hero .lede {
-  font-family: 'Inter', -apple-system, sans-serif;
-  font-size: 14.5px;
-  color: #4b5563;
-  margin: 0;
-  font-weight: 400;
-  max-width: 820px;
+.compare-telemetry-pill .pill-meta {
+  font-size: 11px;
+  color: #64748b;
+  font-weight: 500;
+}
+
+/* EXECUTIVE MARKET SUMMARY BAR */
+.compare-executive-bar {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.exec-stat-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 18px 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.exec-stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px -2px rgba(15, 23, 42, 0.06);
+}
+
+.exec-stat-card.win {
+  border-color: #86efac;
+  background: linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%);
+}
+
+.exec-stat-card.highlight {
+  border-color: #fdba74;
+  background: linear-gradient(135deg, #ffffff 0%, #fff7ed 100%);
+}
+
+.exec-stat-label {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 11.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #64748b;
+  margin-bottom: 6px;
+}
+
+.exec-stat-val {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 24px;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.exec-stat-val .pct {
+  font-size: 14px;
+  font-weight: 600;
+  color: #16a34a;
+}
+
+.exec-stat-sub {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  color: #64748b;
+  margin-top: 5px;
+}
+
+.exec-stat-sub .store-tag {
+  font-weight: 700;
+  color: #16a34a;
+}
+
+/* Compare Results Table Top Bar */
+.compare-card-top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 20px;
+  background: #f8fafc;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.compare-card-title-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.compare-live-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  color: #16a34a;
+  background: #dcfce7;
+  padding: 3px 9px;
+  border-radius: 999px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.compare-card-query-label {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.compare-card-meta-badge {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  color: #64748b;
+  font-weight: 500;
 }
 
 /* Compare Search Card */
@@ -5236,6 +5435,407 @@ main { overflow-x: clip; }
     grid-template-columns: 1fr;
   }
   .order-telemetry-banner {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================================
+   COMPARE TAB: BELOW-THE-FOLD INTELLIGENCE MODULES
+   ========================================================================== */
+.compare-btf-container {
+  margin-top: 52px;
+  display: flex;
+  flex-direction: column;
+  gap: 52px;
+  width: 100%;
+}
+
+/* SECTION 1: PRICE SPREAD SPECTRUM */
+.spread-spectrum-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 18px;
+  padding: 28px clamp(20px, 3vw, 36px);
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.03);
+}
+
+.spectrum-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 36px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.spectrum-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.spectrum-spread-badge {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  color: #ea580c;
+  background: #fff7ed;
+  border: 1px solid #fed7aa;
+  padding: 5px 12px;
+  border-radius: 999px;
+}
+
+.spectrum-bar-wrap {
+  position: relative;
+  padding: 44px 20px 64px;
+}
+
+.spectrum-track {
+  position: relative;
+  height: 12px;
+  background: linear-gradient(90deg, #10b981 0%, #3b82f6 40%, #f59e0b 75%, #ef4444 100%);
+  border-radius: 999px;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+.spectrum-pin {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.spectrum-pin::after {
+  content: '';
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 3px solid #0f172a;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.spectrum-pin .pin-tag {
+  position: absolute;
+  bottom: 20px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 800;
+  background: #0f172a;
+  color: #ffffff;
+  padding: 3px 8px;
+  border-radius: 6px;
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+}
+
+.spectrum-pin .pin-tag.green {
+  background: #15803d;
+}
+
+.spectrum-pin .pin-tag.blue {
+  background: #1d4ed8;
+}
+
+.spectrum-pin .pin-tag.red {
+  background: #b91c1c;
+}
+
+.spectrum-pin .pin-tag.orange {
+  background: #ea580c;
+}
+
+.spectrum-pin .pin-tag.target {
+  background: #c2410c;
+  box-shadow: 0 0 0 2px #fff, 0 3px 8px rgba(194, 65, 12, 0.4);
+}
+
+.spectrum-pin.target-marker::after {
+  border-color: #ea580c;
+  background: #ea580c;
+}
+
+.spectrum-pin .pin-store {
+  position: absolute;
+  top: 20px;
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  color: #475569;
+  white-space: nowrap;
+}
+
+.spectrum-pin .pin-store.target-label {
+  color: #c2410c;
+  font-weight: 700;
+}
+
+.spectrum-tiers-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-top: 10px;
+}
+
+.tier-card {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.tier-badge {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 6px;
+}
+
+.tier-name {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 4px;
+}
+
+.tier-price {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 18px;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tier-diff {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 999px;
+}
+
+.tier-diff.green {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.tier-diff.blue {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.tier-diff.orange {
+  background: #ffedd5;
+  color: #c2410c;
+}
+
+.tier-desc {
+  font-size: 12.5px;
+  color: #475569;
+  line-height: 1.5;
+  margin: 0 0 16px;
+  flex-grow: 1;
+}
+
+.tier-meta {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 12px;
+  border-top: 1px solid #e2e8f0;
+  font-size: 11.5px;
+  color: #64748b;
+}
+
+/* SECTION 2: PROOF ARCHITECTURE PILLARS */
+.arch-pillars-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.arch-pillar-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 26px 24px;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.arch-pillar-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px -4px rgba(15, 23, 42, 0.06);
+}
+
+.arch-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  margin-bottom: 16px;
+}
+
+.arch-icon.orange {
+  background: #fff7ed;
+}
+
+.arch-icon.teal {
+  background: #f0fdf4;
+}
+
+.arch-icon.blue {
+  background: #eff6ff;
+}
+
+.arch-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 10px;
+}
+
+.arch-desc {
+  font-size: 13px;
+  color: #475569;
+  line-height: 1.55;
+  margin: 0 0 16px;
+  flex-grow: 1;
+}
+
+.arch-tag {
+  display: inline-block;
+  align-self: flex-start;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  color: #64748b;
+  background: #f1f5f9;
+  padding: 3px 9px;
+  border-radius: 6px;
+}
+
+/* SECTION 3: SUPPORTED RETAIL ECOSYSTEM */
+.ecosystem-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+
+.eco-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 22px 20px;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.eco-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px -2px rgba(15, 23, 42, 0.05);
+}
+
+.eco-head {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.eco-icon {
+  font-size: 24px;
+}
+
+.eco-titles h4 {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14.5px;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 2px;
+}
+
+.eco-titles span {
+  font-size: 11px;
+  color: #64748b;
+}
+
+.eco-desc {
+  font-size: 12.5px;
+  color: #475569;
+  line-height: 1.5;
+  margin: 0 0 16px;
+  flex-grow: 1;
+}
+
+.eco-store-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.eco-pill {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: #f1f5f9;
+  color: #334155;
+}
+
+.eco-pill.zepto { background: #fdf2f8; color: #be185d; }
+.eco-pill.blinkit { background: #fefce8; color: #a16207; }
+.eco-pill.instamart { background: #fff7ed; color: #ea580c; }
+.eco-pill.amazon { background: #fffbeb; color: #b45309; }
+.eco-pill.flipkart { background: #eff6ff; color: #1d4ed8; }
+.eco-pill.croma { background: #ecfeff; color: #0e7490; }
+.eco-pill.reliance { background: #fef2f2; color: #b91c1c; }
+.eco-pill.indiamart { background: #f0fdf4; color: #15803d; }
+
+/* COMPARE RESPONSIVE BREAKPOINTS */
+@media (max-width: 1200px) {
+  .compare-executive-bar {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .ecosystem-cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .compare-hero {
+    flex-direction: column;
+    gap: 16px;
+  }
+  .spectrum-tiers-grid {
+    grid-template-columns: 1fr;
+  }
+  .arch-pillars-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .compare-executive-bar {
+    grid-template-columns: 1fr;
+  }
+  .ecosystem-cards-grid {
     grid-template-columns: 1fr;
   }
 }
