@@ -2301,42 +2301,78 @@
 
     <!-- ME: LOCAL VAULT & PROFILE INTELLIGENCE -->
     <section class="panel" id="tab-me">
-      <!-- HERO -->
+      <!-- HERO BANNER -->
       <div class="me-hero">
-        <div class="me-badge">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-          <span>LOCAL DATA VAULT &amp; DELIVERY PROFILE</span>
+        <div class="me-hero-content">
+          <div class="me-kicker">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+            LOCAL DATA VAULT &amp; DELIVERY PROVENANCE · CLIENT-SIDE ENCRYPTED
+          </div>
+          <h1 class="me-headline">Personal Profile &amp; Caretaker Routing</h1>
+          <p class="me-subhead">
+            Stored strictly on this machine in local <code>data/profile.json</code>. Saarthi uses your physical coordinates to calculate real-time dark store delivery slots and autofill checkout forms with zero cloud transmission.
+          </p>
         </div>
-        <h1 class="me-title">Personal Profile &amp; Caretaker Routing</h1>
-        <p class="me-lede">
-          Stored strictly on this machine in local <code>data/profile.json</code>. Saarthi uses your address to unlock hyper-local dark stores, calculate accurate delivery slots, and fill checkout forms without storing passwords, OTPs, or payment cards.
-        </p>
 
-        <!-- IDENTITY PREVIEW CARD -->
-        <div class="me-identity-card" id="meIdentityCard">
-          <div class="me-id-avatar" id="meIdAvatar">RR</div>
-          <div class="me-id-details">
-            <div class="me-id-header">
-              <h2 class="me-id-name" id="meIdName">Rajat Rawal</h2>
-              <span class="me-id-status">
-                <span class="status-dot green"></span>
-                100% Client-Side Local Storage
-              </span>
+        <div class="me-hero-side">
+          <div class="me-telemetry-pill">
+            <span class="pulse-green-dot"></span>
+            <div class="pill-text-wrap">
+              <span class="pill-title">Local Vault Encrypted</span>
+              <span class="pill-meta">Zero Cloud Logging · Air-Gapped</span>
             </div>
-            <div class="me-id-meta-row">
-              <span class="me-id-meta-item" id="meIdLoc">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                <span id="meIdLocText">110001 · Uttam Nagar, New Delhi</span>
-              </span>
-              <span class="me-id-meta-item" id="meIdPhone">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                <span id="meIdPhoneText">+91 97783930</span>
-              </span>
-              <span class="me-id-meta-item" id="meIdEmail">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                <span id="meIdEmailText">rawalrajat044@gmail.com</span>
-              </span>
-            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EXECUTIVE PRIVACY & GEOFENCE STATUS BAR -->
+      <div class="me-executive-bar">
+        <div class="me-stat-card">
+          <div class="me-stat-label">VAULT SOVEREIGNTY</div>
+          <div class="me-stat-value">100% Local Storage</div>
+          <div class="me-stat-sub"><code>data/profile.json</code> on-disk</div>
+        </div>
+        <div class="me-stat-card">
+          <div class="me-stat-label">DARK STORE GEOFENCE</div>
+          <div class="me-stat-value">Active PIN 110001</div>
+          <div class="me-stat-sub">Blinkit, Zepto, Instamart mapped</div>
+        </div>
+        <div class="me-stat-card">
+          <div class="me-stat-label">CARETAKER ROUTING</div>
+          <div class="me-stat-value">Senior Safety Ready</div>
+          <div class="me-stat-sub">PIN-locked default fallback</div>
+        </div>
+        <div class="me-stat-card">
+          <div class="me-stat-label">CREDENTIAL PROTECTION</div>
+          <div class="me-stat-value">Air-Gapped Shield</div>
+          <div class="me-stat-sub">0 Passwords · 0 CVVs · 0 OTPs stored</div>
+        </div>
+      </div>
+
+      <!-- IDENTITY PREVIEW CARD -->
+      <div class="me-identity-card" id="meIdentityCard">
+        <div class="me-id-avatar" id="meIdAvatar">RR</div>
+        <div class="me-id-details">
+          <div class="me-id-header">
+            <h2 class="me-id-name" id="meIdName">Rajat Rawal</h2>
+            <span class="me-id-status">
+              <span class="pulse-green-dot" style="width: 7px; height: 7px;"></span>
+              100% Client-Side Local Storage
+            </span>
+          </div>
+          <div class="me-id-meta-row">
+            <span class="me-id-meta-item" id="meIdLoc">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+              <span id="meIdLocText">110001 · Uttam Nagar, New Delhi</span>
+            </span>
+            <span class="me-id-meta-item" id="meIdPhone">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+              <span id="meIdPhoneText">+91 97783930</span>
+            </span>
+            <span class="me-id-meta-item" id="meIdEmail">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+              <span id="meIdEmailText">rawalrajat044@gmail.com</span>
+            </span>
           </div>
         </div>
       </div>
@@ -2503,6 +2539,289 @@
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
               Save Caretaker Settings
             </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- BELOW THE FOLD MODULES CONTAINER -->
+      <div class="me-btf-container">
+        <!-- MODULE 1: DARK STORE GEOFENCING MESH -->
+        <div class="me-geofence-section">
+          <div class="sec-headline-wrap">
+            <div class="sec-kicker">HYPER-LOCAL FULFILLMENT NETWORK</div>
+            <h2 class="sec-title">Real-Time Dark Store Proximity Mesh</h2>
+            <p class="sec-sub">Saarthi continuously measures road distance and rider availability from fulfillment pods servicing your exact PIN coordinates.</p>
+          </div>
+          <div class="geofence-mesh-grid">
+            <div class="mesh-card">
+              <div class="mesh-top">
+                <div class="mesh-store-tag blinkit">Blinkit</div>
+                <span class="mesh-status-badge opt">Optimum Range</span>
+              </div>
+              <div class="mesh-hub-name">Sector 14 Fulfillment Pod</div>
+              <div class="mesh-metrics-row">
+                <div class="mesh-metric">
+                  <span class="m-val">1.1 km</span>
+                  <span class="m-lbl">Distance</span>
+                </div>
+                <div class="mesh-metric">
+                  <span class="m-val">~9 mins</span>
+                  <span class="m-lbl">Avg Dispatch</span>
+                </div>
+                <div class="mesh-metric">
+                  <span class="m-val">8,400+</span>
+                  <span class="m-lbl">Live SKUs</span>
+                </div>
+              </div>
+              <div class="mesh-footer">Connected via residential node &bull; 0 sec cache lag</div>
+            </div>
+
+            <div class="mesh-card">
+              <div class="mesh-top">
+                <div class="mesh-store-tag zepto">Zepto</div>
+                <span class="mesh-status-badge opt">Optimum Range</span>
+              </div>
+              <div class="mesh-hub-name">Main Metro Hyper-Local Pod</div>
+              <div class="mesh-metrics-row">
+                <div class="mesh-metric">
+                  <span class="m-val">1.8 km</span>
+                  <span class="m-lbl">Distance</span>
+                </div>
+                <div class="mesh-metric">
+                  <span class="m-val">~11 mins</span>
+                  <span class="m-lbl">Avg Dispatch</span>
+                </div>
+                <div class="mesh-metric">
+                  <span class="m-val">7,200+</span>
+                  <span class="m-lbl">Live SKUs</span>
+                </div>
+              </div>
+              <div class="mesh-footer">Connected via residential node &bull; 0 sec cache lag</div>
+            </div>
+
+            <div class="mesh-card">
+              <div class="mesh-top">
+                <div class="mesh-store-tag instamart">Instamart</div>
+                <span class="mesh-status-badge active">Active Radius</span>
+              </div>
+              <div class="mesh-hub-name">Central West Fulfillment Hub</div>
+              <div class="mesh-metrics-row">
+                <div class="mesh-metric">
+                  <span class="m-val">2.4 km</span>
+                  <span class="m-lbl">Distance</span>
+                </div>
+                <div class="mesh-metric">
+                  <span class="m-val">~14 mins</span>
+                  <span class="m-lbl">Avg Dispatch</span>
+                </div>
+                <div class="mesh-metric">
+                  <span class="m-val">6,900+</span>
+                  <span class="m-lbl">Live SKUs</span>
+                </div>
+              </div>
+              <div class="mesh-footer">Connected via residential node &bull; 0 sec cache lag</div>
+            </div>
+
+            <div class="mesh-card">
+              <div class="mesh-top">
+                <div class="mesh-store-tag amazon">Amazon Prime Now</div>
+                <span class="mesh-status-badge extended">Extended Radius</span>
+              </div>
+              <div class="mesh-hub-name">Regional Distribution Center</div>
+              <div class="mesh-metrics-row">
+                <div class="mesh-metric">
+                  <span class="m-val">4.2 km</span>
+                  <span class="m-lbl">Distance</span>
+                </div>
+                <div class="mesh-metric">
+                  <span class="m-val">~35 mins</span>
+                  <span class="m-lbl">Avg Dispatch</span>
+                </div>
+                <div class="mesh-metric">
+                  <span class="m-val">25,000+</span>
+                  <span class="m-lbl">Live SKUs</span>
+                </div>
+              </div>
+              <div class="mesh-footer">Connected via residential node &bull; 0 sec cache lag</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MODULE 2: CARETAKER MODE ARCHITECTURE -->
+        <div class="me-caretaker-section">
+          <div class="sec-headline-wrap">
+            <div class="sec-kicker">ASSISTIVE LIVING &amp; SENIOR SAFETY</div>
+            <h2 class="sec-title">Caretaker Mode Autonomous Safeguards</h2>
+            <p class="sec-sub">Designed for aging parents and seniors. Saarthi turns complicated quick-commerce into a frictionless, worry-free household utility.</p>
+          </div>
+          <div class="caretaker-safeguards-grid">
+            <div class="safeguard-card">
+              <div class="safe-icon-wrap teal">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+              </div>
+              <h3 class="safe-title">Simplified High-Contrast Interface</h3>
+              <p class="safe-desc">Strips away flash sales, gamified popups, banner ads, and confusing store filters. Large high-contrast typography ensures readability with zero visual clutter.</p>
+              <div class="safe-tag">Zero Distractions</div>
+            </div>
+
+            <div class="safeguard-card">
+              <div class="safe-icon-wrap orange">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+              </div>
+              <h3 class="safe-title">Autonomous Routing Fallback</h3>
+              <p class="safe-desc">If a parent types "need atta and mustard oil" without picking an app, Saarthi automatically routes the order to your prioritized household dark store without asking tricky questions.</p>
+              <div class="safe-tag">Zero Decision Fatigue</div>
+            </div>
+
+            <div class="safeguard-card">
+              <div class="safe-icon-wrap blue">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+              </div>
+              <h3 class="safe-title">PIN-Locked Caretaker Authority</h3>
+              <p class="safe-desc">Prevents accidental address edits, accidental deletion of saved stores, or tampering with routing rules through a secure 4-6 digit caretaker master lock.</p>
+              <div class="safe-tag">100% Tamper Resistant</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MODULE 3: NON-CUSTODIAL VAULT PROTOCOL -->
+        <div class="me-vault-section">
+          <div class="sec-headline-wrap">
+            <div class="sec-kicker">DATA SOVEREIGNTY &amp; CLIENT-SIDE ENCRYPTION</div>
+            <h2 class="sec-title">What We Store vs. What We Never Touch</h2>
+            <p class="sec-sub">Your privacy is architecturally guaranteed. It is technically impossible for our servers to compromise or leak your sensitive financial credentials.</p>
+          </div>
+          <div class="vault-comparison-grid">
+            <div class="vault-box stored">
+              <div class="vault-box-head">
+                <div class="vault-indicator-pill green">
+                  <span class="vault-dot"></span>
+                  Stored Safely in Local Vault (data/profile.json)
+                </div>
+                <h3 class="vault-box-title">Client-Side Fulfillment Data</h3>
+              </div>
+              <ul class="vault-list">
+                <li>
+                  <div class="v-icon">✓</div>
+                  <div>
+                    <b>Recipient Full Name &amp; Contact Mobile</b>
+                    <p>Required exclusively for delivery rider call routing and gate security verification.</p>
+                  </div>
+                </li>
+                <li>
+                  <div class="v-icon">✓</div>
+                  <div>
+                    <b>House / Building / Street Address &amp; Landmarks</b>
+                    <p>Enables accurate doorstep delivery navigation by quick-commerce dispatch riders.</p>
+                  </div>
+                </li>
+                <li>
+                  <div class="v-icon">✓</div>
+                  <div>
+                    <b>6-Digit Area PIN Code</b>
+                    <p>Serves as the cryptographic key to unlock hyper-local dark store catalog routing.</p>
+                  </div>
+                </li>
+                <li>
+                  <div class="v-icon">✓</div>
+                  <div>
+                    <b>Custom University / Corporate Form Attributes</b>
+                    <p>Allows Saarthi to autofill repetitive non-sensitive public form fields on demand.</p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+            <div class="vault-box blocked">
+              <div class="vault-box-head">
+                <div class="vault-indicator-pill red">
+                  <span class="vault-dot red"></span>
+                  Strictly Blocked · Never Recorded · Air-Gapped
+                </div>
+                <h3 class="vault-box-title">Excluded Sensitive Credentials</h3>
+              </div>
+              <ul class="vault-list blocked">
+                <li>
+                  <div class="v-icon-blocked">✕</div>
+                  <div>
+                    <b>Credit &amp; Debit Card Numbers, Expiry Dates, CVVs</b>
+                    <p>Regex-intercepted and violently rejected at the input parser level. Never touches disk.</p>
+                  </div>
+                </li>
+                <li>
+                  <div class="v-icon-blocked">✕</div>
+                  <div>
+                    <b>UPI PINs &amp; Net Banking Passwords</b>
+                    <p>Payments always happen directly on the retailer's authenticated gateway via your device.</p>
+                  </div>
+                </li>
+                <li>
+                  <div class="v-icon-blocked">✕</div>
+                  <div>
+                    <b>Two-Factor SMS OTPs</b>
+                    <p>One-Time-Passwords are handled exclusively in live browser memory and instantly cleared.</p>
+                  </div>
+                </li>
+                <li>
+                  <div class="v-icon-blocked">✕</div>
+                  <div>
+                    <b>Govt IDs (Aadhaar, PAN, Passport, Driving License)</b>
+                    <p>Saarthi will refuse to store any sovereign government identification tokens.</p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- MODULE 4: PROFILE & CARETAKER FAQ -->
+        <div class="me-faq-section">
+          <div class="sec-headline-wrap center">
+            <div class="sec-kicker">PROFILE &amp; SECURITY FAQS</div>
+            <h2 class="sec-title">Frequently Asked Questions</h2>
+            <p class="sec-sub">Clear answers on how your profile coordinates, dark store geofencing, and caretaker controls operate.</p>
+          </div>
+
+          <div class="faq-accordion-wrap">
+            <details class="faq-item" open>
+              <summary class="faq-question">
+                <span>How does updating my PIN code affect live prices and store availability?</span>
+                <span class="faq-chevron">⌄</span>
+              </summary>
+              <div class="faq-answer">
+                Quick-commerce platforms like Blinkit, Zepto, and Instamart operate on isolated dark store micro-inventories. Changing your 6-digit PIN code immediately redirects TinyFish browser sessions to the warehouse hub servicing your new neighborhood, reflecting true local pricing, discounts, and item stock.
+              </div>
+            </details>
+
+            <details class="faq-item">
+              <summary class="faq-question">
+                <span>Can my parents or children accidentally alter the delivery address or store routing?</span>
+                <span class="faq-chevron">⌄</span>
+              </summary>
+              <div class="faq-answer">
+                No. When Caretaker Mode is active with a Security Lock PIN, all routing priorities, caretaker contact details, and core configuration settings are locked. An intentional 4-6 digit numeric PIN must be entered to make modifications.
+              </div>
+            </details>
+
+            <details class="faq-item">
+              <summary class="faq-question">
+                <span>What happens if my primary preferred store is closed or out of stock?</span>
+                <span class="faq-chevron">⌄</span>
+              </summary>
+              <div class="faq-answer">
+                Saarthi's autonomous fallback engine evaluates your top 4 selected stores in sequential order. If Store #1 (e.g. Blinkit) is experiencing rain surge or stockouts, Saarthi transparently routes items to Store #2 (e.g. Zepto) while maintaining verified price optimization.
+              </div>
+            </details>
+
+            <details class="faq-item">
+              <summary class="faq-question">
+                <span>How do I backup or permanently delete my profile data?</span>
+                <span class="faq-chevron">⌄</span>
+              </summary>
+              <div class="faq-answer">
+                Your profile is stored locally in <code>data/profile.json</code> within your project directory. Because Saarthi operates with zero centralized cloud databases, you can back up this file anytime, or permanently erase it by deleting the file or clearing your browser's local cache.
+              </div>
+            </details>
           </div>
         </div>
       </div>

@@ -2582,57 +2582,160 @@ main { overflow-x: clip; }
    ME TAB: PERSONAL VAULT & CARETAKER COMMAND CENTER
    ======================================================== */
 #tab-me {
-  max-width: 960px;
-  margin: 0 auto;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
 }
 
 .me-hero {
-  margin-bottom: 24px;
+  position: relative;
+  background: linear-gradient(135deg, #ffffff 0%, #fffbf8 50%, #fff6ef 100%);
+  border-radius: 20px;
+  padding: 40px clamp(24px, 3vw, 44px);
+  border: 1px solid #eef2f6;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  min-height: 180px;
+  box-shadow: 0 4px 24px -2px rgba(15, 23, 42, 0.04);
 }
 
-.me-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: #f1f5f9;
-  border: 1px solid #e2e8f0;
-  border-radius: 999px;
-  padding: 4px 12px;
+.me-hero-content {
+  max-width: 720px;
+}
+
+.me-kicker {
+  font-family: 'Plus Jakarta Sans', sans-serif;
   font-size: 11px;
   font-weight: 800;
-  color: #475569;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  margin-bottom: 12px;
-}
-
-.me-badge svg {
+  letter-spacing: 0.08em;
   color: #ea580c;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
-.me-title {
-  font-size: clamp(26px, 3.5vw, 34px);
+.me-headline {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: clamp(26px, 2.5vw, 36px);
   font-weight: 800;
   color: #0f172a;
-  margin: 0 0 8px;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
+  line-height: 1.18;
+  margin: 0 0 10px;
 }
 
-.me-lede {
-  font-size: 14.5px;
+.me-subhead {
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
   color: #475569;
-  line-height: 1.6;
-  max-width: 760px;
-  margin: 0 0 20px;
+  line-height: 1.55;
+  margin: 0;
+  max-width: 660px;
 }
 
-.me-lede code {
+.me-subhead code {
   background: #f1f5f9;
   color: #0f172a;
   border: 1px solid #e2e8f0;
   padding: 2px 6px;
   border-radius: 4px;
   font-weight: 600;
+}
+
+.me-hero-side {
+  flex-shrink: 0;
+}
+
+.me-telemetry-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  border-radius: 14px;
+  padding: 12px 18px;
+  box-shadow: 0 4px 16px -2px rgba(15, 23, 42, 0.06);
+}
+
+.me-telemetry-pill .pill-text-wrap {
+  display: flex;
+  flex-direction: column;
+}
+
+.me-telemetry-pill .pill-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: #0f172a;
+  line-height: 1.2;
+}
+
+.me-telemetry-pill .pill-meta {
+  font-size: 11px;
+  color: #64748b;
+  font-weight: 500;
+}
+
+/* EXECUTIVE PRIVACY & GEOFENCE STATUS BAR */
+.me-executive-bar {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  width: 100%;
+}
+
+.me-stat-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.me-stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(15, 23, 42, 0.06);
+}
+
+.me-stat-label {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: #64748b;
+  text-transform: uppercase;
+}
+
+.me-stat-value {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 20px;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.02em;
+}
+
+.me-stat-sub {
+  font-size: 11.5px;
+  color: #64748b;
+}
+
+.me-stat-sub code {
+  background: #f1f5f9;
+  color: #0f172a;
+  padding: 1px 4px;
+  border-radius: 4px;
+  font-size: 11px;
 }
 
 /* IDENTITY PREVIEW CARD */
@@ -6353,6 +6456,341 @@ main { overflow-x: clip; }
     grid-template-columns: 1fr;
   }
 }
+
+/* ==========================================================================
+   PROFILE (ME) TAB: BELOW-THE-FOLD ARCHITECTURE & SECURITY MODULES
+   ========================================================================== */
+.me-btf-container {
+  margin-top: 52px;
+  display: flex;
+  flex-direction: column;
+  gap: 52px;
+  width: 100%;
+}
+
+/* SECTION 1: GEOFENCE DARK STORE PROXIMITY MESH */
+.geofence-mesh-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+
+.mesh-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 22px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  box-shadow: 0 4px 16px -2px rgba(15, 23, 42, 0.03);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.mesh-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px -4px rgba(15, 23, 42, 0.06);
+}
+
+.mesh-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.mesh-store-tag {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 800;
+  padding: 3px 9px;
+  border-radius: 6px;
+  letter-spacing: 0.02em;
+}
+
+.mesh-store-tag.blinkit { background: #fefce8; color: #a16207; border: 1px solid #fef08a; }
+.mesh-store-tag.zepto { background: #fdf2f8; color: #be185d; border: 1px solid #fbcfe8; }
+.mesh-store-tag.instamart { background: #fff7ed; color: #ea580c; border: 1px solid #fed7aa; }
+.mesh-store-tag.amazon { background: #fffbeb; color: #b45309; border: 1px solid #fde68a; }
+
+.mesh-status-badge {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 999px;
+}
+
+.mesh-status-badge.opt { background: #dcfce7; color: #15803d; }
+.mesh-status-badge.active { background: #eff6ff; color: #1d4ed8; }
+.mesh-status-badge.extended { background: #fef3c7; color: #b45309; }
+
+.mesh-hub-name {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14.5px;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.mesh-metrics-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  background: #f8fafc;
+  border-radius: 10px;
+  padding: 10px 12px;
+  border: 1px solid #f1f5f9;
+}
+
+.mesh-metric {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.mesh-metric .m-val {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.mesh-metric .m-lbl {
+  font-size: 10.5px;
+  color: #64748b;
+  font-weight: 600;
+}
+
+.mesh-footer {
+  font-size: 11px;
+  color: #94a3b8;
+  border-top: 1px solid #f1f5f9;
+  padding-top: 10px;
+}
+
+/* SECTION 2: CARETAKER MODE SAFEGUARDS */
+.caretaker-safeguards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.safeguard-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 26px 24px;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.safeguard-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px -4px rgba(15, 23, 42, 0.06);
+}
+
+.safe-icon-wrap {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.safe-icon-wrap.teal { background: #f0fdf4; color: #16a34a; }
+.safe-icon-wrap.orange { background: #fff7ed; color: #ea580c; }
+.safe-icon-wrap.blue { background: #eff6ff; color: #2563eb; }
+
+.safe-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 10px;
+}
+
+.safe-desc {
+  font-size: 13px;
+  color: #475569;
+  line-height: 1.55;
+  margin: 0 0 16px;
+  flex-grow: 1;
+}
+
+.safe-tag {
+  display: inline-block;
+  align-self: flex-start;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  color: #64748b;
+  background: #f1f5f9;
+  padding: 3px 9px;
+  border-radius: 6px;
+}
+
+/* SECTION 3: VAULT SOVEREIGNTY COMPARISON */
+.vault-comparison-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.vault-box {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 18px;
+  padding: 28px 24px;
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.03);
+}
+
+.vault-box.stored {
+  border-top: 4px solid #10b981;
+}
+
+.vault-box.blocked {
+  border-top: 4px solid #ef4444;
+}
+
+.vault-box-head {
+  margin-bottom: 20px;
+}
+
+.vault-indicator-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 11.5px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 999px;
+  margin-bottom: 8px;
+}
+
+.vault-indicator-pill.green {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.vault-indicator-pill.red {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.vault-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #10b981;
+}
+
+.vault-dot.red {
+  background: #ef4444;
+}
+
+.vault-box-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 18px;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0;
+}
+
+.vault-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.vault-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.vault-list li b {
+  font-size: 13.5px;
+  color: #0f172a;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.vault-list li p {
+  font-size: 12.5px;
+  color: #64748b;
+  line-height: 1.45;
+  margin: 0;
+}
+
+.v-icon {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  background: #dcfce7;
+  color: #15803d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 800;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.v-icon-blocked {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  background: #fee2e2;
+  color: #b91c1c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 800;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* PROFILE RESPONSIVE BREAKPOINTS */
+@media (max-width: 1200px) {
+  .me-executive-bar {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .geofence-mesh-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .me-hero {
+    flex-direction: column;
+    gap: 16px;
+  }
+  .caretaker-safeguards-grid {
+    grid-template-columns: 1fr;
+  }
+  .vault-comparison-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .me-executive-bar {
+    grid-template-columns: 1fr;
+  }
+  .geofence-mesh-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 
 
 
