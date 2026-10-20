@@ -1256,17 +1256,17 @@ function renderMeIdentityCard() {
   }
   if (avatarEl) avatarEl.textContent = initials;
 
-  // Location summary
-  const pin = profile.pincode ? `PIN ${profile.pincode}` : '';
+  // Location summary (clean without PIN)
   const area = [profile.address_line2, profile.city, profile.state].filter(Boolean).join(', ');
-  const locSummary = [pin, area].filter(Boolean).join(' · ');
-  if (locEl) locEl.textContent = locSummary || 'No delivery coordinates saved';
+  const locSummary = area || profile.address_line1 || 'No delivery coordinates saved';
+  if (locEl) locEl.textContent = locSummary;
 
   if (phoneEl) phoneEl.textContent = profile.phone ? (profile.phone.startsWith('+') ? profile.phone : `+91 ${profile.phone}`) : 'No phone linked';
   if (emailEl) emailEl.textContent = profile.email || 'No email linked';
 }
 
 async function loadMe() {
+  await loadSettings();
   profile = await api('/api/profile');
   PROFILE_KEYS.forEach((k) => { if (meForm[k]) meForm[k].value = profile[k] || ''; });
   const rows = $('#extraRows'); rows.innerHTML = '';
@@ -2563,6 +2563,7 @@ function initAllHeroTypewriters() {
 }
 
 // Initialize all features on startup
+loadSettings();
 initCurvedLoopMarquee();
 initArbitrageCylinderInteraction();
 initReflectiveCard();
