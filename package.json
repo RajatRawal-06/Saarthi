@@ -6,7 +6,8 @@
   "scripts": {
     "test": "node --test test/*.test.js",
     "start": "node server.js",
-    "test:e2e": "node scripts/test-runner-e2e.mjs"
+    "test:e2e": "node scripts/test-runner-e2e.mjs",
+    "test:live": "node scripts/comprehensive-test.mjs"
   },
   "keywords": [],
   "author": "",
