@@ -1973,6 +1973,19 @@ async function loadSetup() {
     };
   }
 
+  // Matrix table real-time search
+  const matrixInput = $('#matrixSearchInput');
+  if (matrixInput && !matrixInput.dataset.bound) {
+    matrixInput.dataset.bound = 'true';
+    matrixInput.addEventListener('input', (e) => {
+      const q = e.target.value.toLowerCase().trim();
+      $$('#matrixTable tbody tr').forEach((tr) => {
+        const txt = tr.innerText.toLowerCase();
+        tr.style.display = txt.includes(q) ? '' : 'none';
+      });
+    });
+  }
+
   renderSetupCards();
 }
 

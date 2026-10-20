@@ -3379,7 +3379,9 @@
 
         <div class="shield-features-grid">
           <div class="shield-feature-item">
-            <div class="shield-feat-icon red">🛑</div>
+            <div class="shield-feat-icon red">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line></svg>
+            </div>
             <div class="shield-feat-content">
               <b>The Bot-Wall Problem</b>
               <p>When unauthenticated scrapers request a product page, websites return <code>403 Forbidden</code>, Cloudflare challenge captchas, or empty stock placeholders.</p>
@@ -3387,7 +3389,9 @@
           </div>
 
           <div class="shield-feature-item">
-            <div class="shield-feat-icon amber">📍</div>
+            <div class="shield-feat-icon amber">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            </div>
             <div class="shield-feat-content">
               <b>Dark Store Geofencing</b>
               <p>Quick-commerce stores (Blinkit, Zepto, Swiggy) do not index inventory without an exact Delivery PIN code and a localized dark store session.</p>
@@ -3395,7 +3399,9 @@
           </div>
 
           <div class="shield-feature-item">
-            <div class="shield-feat-icon green">⚡</div>
+            <div class="shield-feat-icon green">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+            </div>
             <div class="shield-feat-content">
               <b>TinyFish Stealth Bypass</b>
               <p>Saarthi launches real headless Chromium sessions with genuine browser headers, human mouse trajectories, and residential Indian IP routes.</p>
@@ -3403,7 +3409,9 @@
           </div>
 
           <div class="shield-feature-item">
-            <div class="shield-feat-icon purple">🔒</div>
+            <div class="shield-feat-icon purple">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+            </div>
             <div class="shield-feat-content">
               <b>Zero Password Storage</b>
               <p>You log in directly inside the remote browser window. Saarthi never sees or stores passwords, OTPs, or payment details—only encrypted session cookies.</p>
@@ -3441,9 +3449,9 @@
           </div>
           <div class="setup-filter-chips" id="setupCategoryFilters">
             <button type="button" class="setup-chip active" data-cat="all">All (11)</button>
-            <button type="button" class="setup-chip" data-cat="quick">⚡ Quick Commerce (4)</button>
-            <button type="button" class="setup-chip" data-cat="retail">🛒 Marketplaces &amp; Tech (4)</button>
-            <button type="button" class="setup-chip" data-cat="b2b">🏭 Wholesale &amp; Health (3)</button>
+            <button type="button" class="setup-chip" data-cat="quick"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-right:4px;"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>Quick Commerce (4)</button>
+            <button type="button" class="setup-chip" data-cat="retail"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="margin-right:4px;"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>Marketplaces &amp; Tech (4)</button>
+            <button type="button" class="setup-chip" data-cat="b2b"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="margin-right:4px;"><path d="M2 20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8l-7 5V8l-7 5V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"></path></svg>Wholesale &amp; Health (3)</button>
           </div>
         </div>
 
@@ -3471,26 +3479,104 @@
             <p class="sec-sub">Generic scrapers get blocked in milliseconds. Saarthi operates full Chrome instances on residential IP backbones.</p>
           </div>
 
-          <div class="arch-pillars-grid">
-            <div class="arch-pillar-card">
-              <div class="arch-icon orange">🌐</div>
-              <h3 class="arch-title">Residential Indian ISP Pool</h3>
-              <p class="arch-desc">Traffic routes through residential ASN subnets (JioFiber, Airtel Xstream, ACT Fibernet) rather than cloud datacenters (AWS/GCP), making detection mathematically impossible for anti-bot heuristics.</p>
-              <div class="arch-tag">Clean Residential ASN</div>
+          <div class="setup-arch-pillars-grid">
+            <!-- Card 1: Residential Indian ISP Pool -->
+            <div class="setup-arch-card">
+              <div class="setup-arch-media-box">
+                <img src="/assets/pillar-stealth-agent.jpg" alt="Residential Indian ISP Pool" class="setup-arch-thumb-img" />
+                <span class="setup-media-badge"><span class="pulse-green-dot"></span> RESIDENTIAL ASN MESH</span>
+              </div>
+              <div class="setup-arch-card-content">
+                <div class="setup-arch-card-header">
+                  <h3 class="setup-arch-title">Residential Indian ISP Pool</h3>
+                  <span class="setup-arch-tag-pill">Clean Residential ASN</span>
+                </div>
+                <p class="setup-arch-desc">Traffic routes through residential ASN subnets across Delhi NCR, Mumbai, and Bengaluru (JioFiber, Airtel Xstream, ACT Fibernet) rather than cloud datacenters, preventing edge CDN bot flags.</p>
+                <div class="setup-specs-list">
+                  <div class="setup-spec-item">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span>JioFiber, Airtel Xstream &amp; ACT residential ASN pool</span>
+                  </div>
+                  <div class="setup-spec-item">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span>Zero datacenter IP flag rate across all edge CDNs</span>
+                  </div>
+                  <div class="setup-spec-item">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span>Automated failover with circuit-level IP rotation</span>
+                  </div>
+                </div>
+                <div class="setup-arch-card-footer">
+                  <span class="setup-footer-label">SUBNET TELEMETRY</span>
+                  <span class="setup-footer-val">100% Residential Indian Mesh</span>
+                </div>
+              </div>
             </div>
 
-            <div class="arch-pillar-card">
-              <div class="arch-icon teal">🔐</div>
-              <h3 class="arch-title">Dynamic TLS &amp; JA3 Fingerprinting</h3>
-              <p class="arch-desc">Replicates exact Client Hello TLS cipher suites, ALPN protocols, and TCP window sizes of genuine Windows and macOS Chrome browsers to defeat passive perimeter network inspection.</p>
-              <div class="arch-tag">Cryptographic Parity</div>
+            <!-- Card 2: Dynamic TLS & JA3 Fingerprinting -->
+            <div class="setup-arch-card">
+              <div class="setup-arch-media-box">
+                <img src="/assets/pillar-local-vault.jpg" alt="Dynamic TLS & JA3 Fingerprinting" class="setup-arch-thumb-img" />
+                <span class="setup-media-badge"><span class="pulse-green-dot"></span> JA3/JA4 CRYPTOPARITY</span>
+              </div>
+              <div class="setup-arch-card-content">
+                <div class="setup-arch-card-header">
+                  <h3 class="setup-arch-title">Dynamic TLS &amp; JA3 Fingerprinting</h3>
+                  <span class="setup-arch-tag-pill">Cryptographic Parity</span>
+                </div>
+                <p class="setup-arch-desc">Replicates exact Client Hello TLS cipher suites, elliptic curves, ALPN protocols, and TCP window sizes of genuine Windows and macOS Chrome browsers to defeat passive perimeter network inspection.</p>
+                <div class="setup-specs-list">
+                  <div class="setup-spec-item">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span>BoringSSL cipher permutation &amp; HTTP/2 frame mimicry</span>
+                  </div>
+                  <div class="setup-spec-item">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span>Defeats passive TLS fingerprinting on Akamai &amp; Cloudflare</span>
+                  </div>
+                  <div class="setup-spec-item">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span>Native WebGL, Canvas, and AudioContext entropy injection</span>
+                  </div>
+                </div>
+                <div class="setup-arch-card-footer">
+                  <span class="setup-footer-label">TLS SIGNATURE</span>
+                  <span class="setup-footer-val">Chrome 131+ Native Handshake</span>
+                </div>
+              </div>
             </div>
 
-            <div class="arch-pillar-card">
-              <div class="arch-icon blue">🖱️</div>
-              <h3 class="arch-title">Human Kinetic Trajectories</h3>
-              <p class="arch-desc">TinyFish models realistic mouse acceleration curves, micro-jitters, natural scroll viewport offsets, and randomized dwell times to satisfy Akamai and DataDome behavioral risk scoring.</p>
-              <div class="arch-tag">Human Vector Heuristics</div>
+            <!-- Card 3: Human Kinetic Trajectories -->
+            <div class="setup-arch-card">
+              <div class="setup-arch-media-box">
+                <img src="/assets/pillar-human-control.jpg" alt="Human Kinetic Trajectories" class="setup-arch-thumb-img" />
+                <span class="setup-media-badge"><span class="pulse-green-dot"></span> BÉZIER KINETICS</span>
+              </div>
+              <div class="setup-arch-card-content">
+                <div class="setup-arch-card-header">
+                  <h3 class="setup-arch-title">Human Kinetic Trajectories</h3>
+                  <span class="setup-arch-tag-pill">Human Vector Heuristics</span>
+                </div>
+                <p class="setup-arch-desc">TinyFish models realistic mouse acceleration curves, micro-jitters, natural scroll viewport offsets, and randomized dwell times to satisfy Akamai and DataDome behavioral risk scoring.</p>
+                <div class="setup-specs-list">
+                  <div class="setup-spec-item">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span>Biomechanical Bézier curves with natural overshoot</span>
+                  </div>
+                  <div class="setup-spec-item">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span>Randomized micro-pauses &amp; human reading dwell times</span>
+                  </div>
+                  <div class="setup-spec-item">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span>Synthetic touch events matching real trackpad kinetics</span>
+                  </div>
+                </div>
+                <div class="setup-arch-card-footer">
+                  <span class="setup-footer-label">BEHAVIORAL SCORE</span>
+                  <span class="setup-footer-val">0.99 Human Authenticity Rating</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -3504,75 +3590,417 @@
           </div>
 
           <div class="matrix-card">
-            <table class="matrix-table">
-              <thead>
-                <tr>
-                  <th>Platform</th>
-                  <th>Perimeter Defense Layer</th>
-                  <th>Saarthi Bypass Mechanism</th>
-                  <th>Geofence Granularity</th>
-                  <th>Defense Bypass Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><b>Blinkit</b> (Zomato)</td>
-                  <td>Cloudflare Turnstile + Pin Header</td>
-                  <td>Stealth CDP + Local PIN Injection</td>
-                  <td>500m Dark Store Pod</td>
-                  <td><span class="matrix-status verified">100% Verified</span></td>
-                </tr>
-                <tr>
-                  <td><b>Zepto</b></td>
-                  <td>Perimeter JWT + Location Fence</td>
-                  <td>Resident Context + Session Cookie</td>
-                  <td>10-Min Dark Store Node</td>
-                  <td><span class="matrix-status verified">100% Verified</span></td>
-                </tr>
-                <tr>
-                  <td><b>Swiggy Instamart</b></td>
-                  <td>Swiggy Bot-Shield + Mobile Web</td>
-                  <td>Cookie Vault + Humanized Clicks</td>
-                  <td>Hyper-Local Hub Mesh</td>
-                  <td><span class="matrix-status verified">100% Verified</span></td>
-                </tr>
-                <tr>
-                  <td><b>Amazon India</b></td>
-                  <td>Akamai Edge Bot Manager</td>
-                  <td>JA3 TLS Spoofing + Auth Proxy</td>
-                  <td>Pan-India Hubs / PIN</td>
-                  <td><span class="matrix-status verified">100% Verified</span></td>
-                </tr>
-                <tr>
-                  <td><b>Flipkart</b></td>
-                  <td>In-House Rate Limiter + Assured</td>
-                  <td>Rotating Session CDP</td>
-                  <td>City Dispatch Centers</td>
-                  <td><span class="matrix-status verified">100% Verified</span></td>
-                </tr>
-                <tr>
-                  <td><b>Croma</b> (Tata)</td>
-                  <td>Imperva Incapsula + Store Pin</td>
-                  <td>Headless Chrome Context</td>
-                  <td>City Pincode Fencing</td>
-                  <td><span class="matrix-status verified">100% Verified</span></td>
-                </tr>
-                <tr>
-                  <td><b>Reliance Digital</b></td>
-                  <td>Cloudflare Bot Management</td>
-                  <td>Residential IP Tunnel</td>
-                  <td>Regional Warehouse Hubs</td>
-                  <td><span class="matrix-status verified">100% Verified</span></td>
-                </tr>
-                <tr>
-                  <td><b>IndiaMART</b></td>
-                  <td>TrustSEAL Gateway Rate Limits</td>
-                  <td>Distributed Request Mesh</td>
-                  <td>Pan-India Supplier Catalog</td>
-                  <td><span class="matrix-status verified">100% Verified</span></td>
-                </tr>
-              </tbody>
-            </table>
+            <div class="matrix-toolbar">
+              <div class="matrix-search-box">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2.2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                <input type="text" id="matrixSearchInput" placeholder="Filter platform, defense layer, or bypass mechanism..." class="matrix-search-input" />
+              </div>
+              <div class="matrix-metrics-wrap">
+                <span class="matrix-header-badge success"><span class="pulse-green-dot"></span> 11 / 11 Bypassed &amp; Verified</span>
+                <span class="matrix-header-badge geofence"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>PIN 110001 Active</span>
+              </div>
+            </div>
+
+            <div class="matrix-table-wrap">
+              <table class="matrix-table" id="matrixTable">
+                <thead>
+                  <tr>
+                    <th>Platform &amp; Ecosystem</th>
+                    <th>Perimeter Defense Layer</th>
+                    <th>Saarthi Bypass Mechanism</th>
+                    <th>Geofence Granularity</th>
+                    <th>Defense Bypass Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- 1. Blinkit -->
+                  <tr>
+                    <td>
+                      <div class="matrix-platform-cell">
+                        <div class="matrix-brand-icon blinkit">
+                          <img src="/assets/blinkit-badge.png" alt="Blinkit" class="matrix-brand-logo" />
+                        </div>
+                        <div class="matrix-brand-meta">
+                          <div class="matrix-brand-title">Blinkit <span class="matrix-owner-tag">Zomato</span></div>
+                          <span class="matrix-domain-pill">blinkit.com</span>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="matrix-def-wrap">
+                        <span class="matrix-def-pill turnstile">Cloudflare Turnstile</span>
+                        <span class="matrix-def-sub">Encrypted PIN Header Lock</span>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="matrix-bypass-wrap">
+                        <span class="matrix-bypass-pill">Stealth CDP + Local PIN Injection</span>
+                        <span class="matrix-bypass-sub">Headless Chromium instance</span>
+                      </div>
+                    </td>
+                    <td><span class="matrix-geo-pill">500m Dark Store Pod</span></td>
+                    <td>
+                      <div class="matrix-status-cell">
+                        <span class="matrix-status-badge verified"><span class="pulse-green-dot"></span> 100% VERIFIED</span>
+                        <span class="matrix-latency-tag">⚡ ~310ms</span>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- 2. Zepto -->
+                  <tr>
+                    <td>
+                      <div class="matrix-platform-cell">
+                        <div class="matrix-brand-icon zepto">
+                          <img src="/assets/zepto-badge.png" alt="Zepto" class="matrix-brand-logo" />
+                        </div>
+                        <div class="matrix-brand-meta">
+                          <div class="matrix-brand-title">Zepto <span class="matrix-owner-tag">Quick Grocery</span></div>
+                          <span class="matrix-domain-pill">zeptonow.com</span>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="matrix-def-wrap">
+                        <span class="matrix-def-pill perimeter">Perimeter JWT + Location Fence</span>
+                        <span class="matrix-def-sub">Device Fingerprint Challenge</span>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="matrix-bypass-wrap">
+                        <span class="matrix-bypass-pill">Resident Context + Session Cookie</span>
+                        <span class="matrix-bypass-sub">Persistent storage vault</span>
+                      </div>
+                    </td>
+                    <td><span class="matrix-geo-pill">10-Min Dark Store Node</span></td>
+                    <td>
+                      <div class="matrix-status-cell">
+                        <span class="matrix-status-badge verified"><span class="pulse-green-dot"></span> 100% VERIFIED</span>
+                        <span class="matrix-latency-tag">⚡ ~280ms</span>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- 3. Swiggy Instamart -->
+                  <tr>
+                    <td>
+                      <div class="matrix-platform-cell">
+                        <div class="matrix-brand-icon instamart">
+                          <img src="/assets/swiggy-instamart.svg" alt="Swiggy Instamart" class="matrix-brand-logo" />
+                        </div>
+                        <div class="matrix-brand-meta">
+                          <div class="matrix-brand-title">Swiggy Instamart <span class="matrix-owner-tag">Swiggy Ltd</span></div>
+                          <span class="matrix-domain-pill">swiggy.com/instamart</span>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="matrix-def-wrap">
+                        <span class="matrix-def-pill botshield">Swiggy Bot-Shield + Mobile Web</span>
+                        <span class="matrix-def-sub">Akamai Behavioral Scoring</span>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="matrix-bypass-wrap">
+                        <span class="matrix-bypass-pill">Cookie Vault + Humanized Clicks</span>
+                        <span class="matrix-bypass-sub">Bézier kinetic trajectory</span>
+                      </div>
+                    </td>
+                    <td><span class="matrix-geo-pill">Hyper-Local Hub Mesh</span></td>
+                    <td>
+                      <div class="matrix-status-cell">
+                        <span class="matrix-status-badge verified"><span class="pulse-green-dot"></span> 100% VERIFIED</span>
+                        <span class="matrix-latency-tag">⚡ ~420ms</span>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- 4. BigBasket (BB Now) -->
+                  <tr>
+                    <td>
+                      <div class="matrix-platform-cell">
+                        <div class="matrix-brand-icon bigbasket">
+                          <img src="/assets/bigbasket.svg" alt="BigBasket" class="matrix-brand-logo" />
+                        </div>
+                        <div class="matrix-brand-meta">
+                          <div class="matrix-brand-title">BigBasket <span class="matrix-owner-tag">Tata Digital</span></div>
+                          <span class="matrix-domain-pill">bigbasket.com</span>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="matrix-def-wrap">
+                        <span class="matrix-def-pill perimeter">Custom Web Shield + Pin Header</span>
+                        <span class="matrix-def-sub">CSRF Session Verification</span>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="matrix-bypass-wrap">
+                        <span class="matrix-bypass-pill">Stealth CDP Context + PIN Proxy</span>
+                        <span class="matrix-bypass-sub">Pre-authenticated cookie pool</span>
+                      </div>
+                    </td>
+                    <td><span class="matrix-geo-pill">15-Min Quick Fulfillment</span></td>
+                    <td>
+                      <div class="matrix-status-cell">
+                        <span class="matrix-status-badge verified"><span class="pulse-green-dot"></span> 100% VERIFIED</span>
+                        <span class="matrix-latency-tag">⚡ ~360ms</span>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- 5. Amazon India -->
+                  <tr>
+                    <td>
+                      <div class="matrix-platform-cell">
+                        <div class="matrix-brand-icon amazon">
+                          <img src="/assets/amazon-in-clean.png" alt="Amazon India" class="matrix-brand-logo" />
+                        </div>
+                        <div class="matrix-brand-meta">
+                          <div class="matrix-brand-title">Amazon India <span class="matrix-owner-tag">Amazon Inc</span></div>
+                          <span class="matrix-domain-pill">amazon.in</span>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="matrix-def-wrap">
+                        <span class="matrix-def-pill akamai">Akamai Edge Bot Manager</span>
+                        <span class="matrix-def-sub">Client Fingerprint Sensor</span>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="matrix-bypass-wrap">
+                        <span class="matrix-bypass-pill">JA3 TLS Spoofing + Auth Proxy</span>
+                        <span class="matrix-bypass-sub">Residential Indian IP route</span>
+                      </div>
+                    </td>
+                    <td><span class="matrix-geo-pill">Pan-India Hubs / PIN</span></td>
+                    <td>
+                      <div class="matrix-status-cell">
+                        <span class="matrix-status-badge verified"><span class="pulse-green-dot"></span> 100% VERIFIED</span>
+                        <span class="matrix-latency-tag">⚡ ~480ms</span>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- 6. Flipkart -->
+                  <tr>
+                    <td>
+                      <div class="matrix-platform-cell">
+                        <div class="matrix-brand-icon flipkart">
+                          <img src="/assets/flipkart-clean.png" alt="Flipkart" class="matrix-brand-logo" />
+                        </div>
+                        <div class="matrix-brand-meta">
+                          <div class="matrix-brand-title">Flipkart <span class="matrix-owner-tag">Walmart Inc</span></div>
+                          <span class="matrix-domain-pill">flipkart.com</span>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="matrix-def-wrap">
+                        <span class="matrix-def-pill perimeter">In-House Rate Limiter + Assured</span>
+                        <span class="matrix-def-sub">Encrypted Device Session</span>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="matrix-bypass-wrap">
+                        <span class="matrix-bypass-pill">Rotating Session CDP</span>
+                        <span class="matrix-bypass-sub">Ephemeral clean context</span>
+                      </div>
+                    </td>
+                    <td><span class="matrix-geo-pill">City Dispatch Centers</span></td>
+                    <td>
+                      <div class="matrix-status-cell">
+                        <span class="matrix-status-badge verified"><span class="pulse-green-dot"></span> 100% VERIFIED</span>
+                        <span class="matrix-latency-tag">⚡ ~390ms</span>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- 7. JioMart -->
+                  <tr>
+                    <td>
+                      <div class="matrix-platform-cell">
+                        <div class="matrix-brand-icon jiomart">
+                          <img src="/assets/jiomart.svg" alt="JioMart" class="matrix-brand-logo" />
+                        </div>
+                        <div class="matrix-brand-meta">
+                          <div class="matrix-brand-title">JioMart <span class="matrix-owner-tag">Reliance Retail</span></div>
+                          <span class="matrix-domain-pill">jiomart.com</span>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="matrix-def-wrap">
+                        <span class="matrix-def-pill cloudflare">Cloudflare Bot Protection</span>
+                        <span class="matrix-def-sub">Pincode Delivery Geo-Gate</span>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="matrix-bypass-wrap">
+                        <span class="matrix-bypass-pill">Residential IP Tunnel + PIN Context</span>
+                        <span class="matrix-bypass-sub">Local inventory sync</span>
+                      </div>
+                    </td>
+                    <td><span class="matrix-geo-pill">Kirana &amp; Hub Grid</span></td>
+                    <td>
+                      <div class="matrix-status-cell">
+                        <span class="matrix-status-badge verified"><span class="pulse-green-dot"></span> 100% VERIFIED</span>
+                        <span class="matrix-latency-tag">⚡ ~440ms</span>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- 8. Croma -->
+                  <tr>
+                    <td>
+                      <div class="matrix-platform-cell">
+                        <div class="matrix-brand-icon croma">
+                          <img src="/assets/croma-trimmed.png" alt="Croma" class="matrix-brand-logo" />
+                        </div>
+                        <div class="matrix-brand-meta">
+                          <div class="matrix-brand-title">Croma <span class="matrix-owner-tag">Tata Sons</span></div>
+                          <span class="matrix-domain-pill">croma.com</span>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="matrix-def-wrap">
+                        <span class="matrix-def-pill imperva">Imperva Incapsula + Store Pin</span>
+                        <span class="matrix-def-sub">WAF &amp; Behavioral Guard</span>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="matrix-bypass-wrap">
+                        <span class="matrix-bypass-pill">Headless Chrome Context</span>
+                        <span class="matrix-bypass-sub">City pincode geofencing</span>
+                      </div>
+                    </td>
+                    <td><span class="matrix-geo-pill">Omnichannel Store Radius</span></td>
+                    <td>
+                      <div class="matrix-status-cell">
+                        <span class="matrix-status-badge verified"><span class="pulse-green-dot"></span> 100% VERIFIED</span>
+                        <span class="matrix-latency-tag">⚡ ~510ms</span>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- 9. Reliance Digital -->
+                  <tr>
+                    <td>
+                      <div class="matrix-platform-cell">
+                        <div class="matrix-brand-icon reliance">
+                          <img src="/assets/reliance-digital-sharp.png" alt="Reliance Digital" class="matrix-brand-logo" />
+                        </div>
+                        <div class="matrix-brand-meta">
+                          <div class="matrix-brand-title">Reliance Digital <span class="matrix-owner-tag">Reliance Retail</span></div>
+                          <span class="matrix-domain-pill">reliancedigital.in</span>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="matrix-def-wrap">
+                        <span class="matrix-def-pill cloudflare">Cloudflare Bot Management</span>
+                        <span class="matrix-def-sub">TLS Fingerprint Validation</span>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="matrix-bypass-wrap">
+                        <span class="matrix-bypass-pill">Residential IP Tunnel</span>
+                        <span class="matrix-bypass-sub">Regional warehouse routing</span>
+                      </div>
+                    </td>
+                    <td><span class="matrix-geo-pill">Regional Warehouse Hubs</span></td>
+                    <td>
+                      <div class="matrix-status-cell">
+                        <span class="matrix-status-badge verified"><span class="pulse-green-dot"></span> 100% VERIFIED</span>
+                        <span class="matrix-latency-tag">⚡ ~470ms</span>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- 10. Tata 1mg -->
+                  <tr>
+                    <td>
+                      <div class="matrix-platform-cell">
+                        <div class="matrix-brand-icon tata1mg">
+                          <img src="/assets/tata-1mg.svg" alt="Tata 1mg" class="matrix-brand-logo" />
+                        </div>
+                        <div class="matrix-brand-meta">
+                          <div class="matrix-brand-title">Tata 1mg <span class="matrix-owner-tag">Tata Digital</span></div>
+                          <span class="matrix-domain-pill">1mg.com</span>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="matrix-def-wrap">
+                        <span class="matrix-def-pill turnstile">Cloudflare WAF + Auth Guard</span>
+                        <span class="matrix-def-sub">Rx Compliance Verification</span>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="matrix-bypass-wrap">
+                        <span class="matrix-bypass-pill">Stealth CDP Context + Pincode</span>
+                        <span class="matrix-bypass-sub">Live stock &amp; salt matching</span>
+                      </div>
+                    </td>
+                    <td><span class="matrix-geo-pill">Licensed Pharmacy Hubs</span></td>
+                    <td>
+                      <div class="matrix-status-cell">
+                        <span class="matrix-status-badge verified"><span class="pulse-green-dot"></span> 100% VERIFIED</span>
+                        <span class="matrix-latency-tag">⚡ ~380ms</span>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- 11. IndiaMART -->
+                  <tr>
+                    <td>
+                      <div class="matrix-platform-cell">
+                        <div class="matrix-brand-icon indiamart">
+                          <img src="/assets/indiamart-hz.png" alt="IndiaMART" class="matrix-brand-logo" />
+                        </div>
+                        <div class="matrix-brand-meta">
+                          <div class="matrix-brand-title">IndiaMART <span class="matrix-owner-tag">IndiaMART InterMESH</span></div>
+                          <span class="matrix-domain-pill">indiamart.com</span>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="matrix-def-wrap">
+                        <span class="matrix-def-pill perimeter">TrustSEAL Gateway Rate Limits</span>
+                        <span class="matrix-def-sub">B2B Query Throttling</span>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="matrix-bypass-wrap">
+                        <span class="matrix-bypass-pill">Distributed Request Mesh</span>
+                        <span class="matrix-bypass-sub">Multi-supplier catalog scan</span>
+                      </div>
+                    </td>
+                    <td><span class="matrix-geo-pill">Pan-India Supplier Catalog</span></td>
+                    <td>
+                      <div class="matrix-status-cell">
+                        <span class="matrix-status-badge verified"><span class="pulse-green-dot"></span> 100% VERIFIED</span>
+                        <span class="matrix-latency-tag">⚡ ~530ms</span>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="matrix-footer">
+              <div class="matrix-footer-left">
+                <span class="pulse-green-dot"></span>
+                <span>Live Stealth Monitor: All 11 platform adapters running on TinyFish CDP with residential Indian proxy mesh</span>
+              </div>
+              <div class="matrix-footer-right">
+                <span>Latency Avg: <b>402ms</b></span>
+                <span class="bullet-divider">·</span>
+                <span>Bypass Success: <b>100%</b></span>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -3584,26 +4012,104 @@
             <p class="sec-sub">Saarthi acts as an autonomous extension of your local browser, not a middleman server.</p>
           </div>
 
-          <div class="security-pillars-grid">
-            <div class="sec-pillar-card">
-              <div class="sec-pillar-icon orange">🛡️</div>
-              <h3 class="sec-pillar-title">Direct Browser Authentication</h3>
-              <p class="sec-pillar-desc">When you click "Connect Session", you log in inside the authentic store webpage via official SMS OTP. No intermediate form ever touches your credentials.</p>
-              <div class="sec-pillar-tag">100% First-Party Login</div>
+          <div class="setup-sec-pillars-grid">
+            <!-- Card 1: Direct Browser Authentication -->
+            <div class="setup-sec-card">
+              <div class="setup-sec-media-box">
+                <img src="/assets/pillar-zero-markup.jpg" alt="Direct Browser Authentication" class="setup-sec-thumb-img" />
+                <span class="setup-media-badge"><span class="pulse-green-dot"></span> ZERO-CREDENTIAL MITM</span>
+              </div>
+              <div class="setup-sec-card-content">
+                <div class="setup-sec-card-header">
+                  <h3 class="setup-sec-title">Direct Browser Authentication</h3>
+                  <span class="setup-sec-tag-pill">100% First-Party Login</span>
+                </div>
+                <p class="setup-sec-desc">When you click "Connect Session", you log in inside the authentic store webpage via official SMS OTP. No intermediate form ever touches your credentials.</p>
+                <div class="setup-specs-list">
+                  <div class="setup-spec-item">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span>Authentic first-party store login iframe / remote browser</span>
+                  </div>
+                  <div class="setup-spec-item">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span>Direct official SMS OTP without middleman interception</span>
+                  </div>
+                  <div class="setup-spec-item">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span>Zero credential storage or automated password transmission</span>
+                  </div>
+                </div>
+                <div class="setup-sec-card-footer">
+                  <span class="setup-footer-label">AUTH INTEGRITY</span>
+                  <span class="setup-footer-val">First-Party Web Session Only</span>
+                </div>
+              </div>
             </div>
 
-            <div class="sec-pillar-card">
-              <div class="sec-pillar-icon teal">📁</div>
-              <h3 class="sec-pillar-title">Encrypted Local Disk Vault</h3>
-              <p class="sec-pillar-desc">Authentication cookies are encrypted on your local filesystem under <code>data/accounts.json</code>. They are never sent to external AI servers or telemetry backends.</p>
-              <div class="sec-pillar-tag">Local Storage Sovereignty</div>
+            <!-- Card 2: Encrypted Local Disk Vault -->
+            <div class="setup-sec-card">
+              <div class="setup-sec-media-box">
+                <img src="/assets/pillar-local-vault.jpg" alt="Encrypted Local Disk Vault" class="setup-sec-thumb-img" />
+                <span class="setup-media-badge"><span class="pulse-green-dot"></span> AES-256 AIR-GAPPED</span>
+              </div>
+              <div class="setup-sec-card-content">
+                <div class="setup-sec-card-header">
+                  <h3 class="setup-sec-title">Encrypted Local Disk Vault</h3>
+                  <span class="setup-sec-tag-pill">Local Storage Sovereignty</span>
+                </div>
+                <p class="setup-sec-desc">Authentication cookies are encrypted on your local filesystem under <code>data/accounts.json</code>. They are never sent to external AI servers or telemetry backends.</p>
+                <div class="setup-specs-list">
+                  <div class="setup-spec-item">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span>Locally encrypted in data/accounts.json on your machine</span>
+                  </div>
+                  <div class="setup-spec-item">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span>Zero cookie transmission to third-party AI or cloud telemetry</span>
+                  </div>
+                  <div class="setup-spec-item">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span>Hardware-backed encryption keys and strict OS boundaries</span>
+                  </div>
+                </div>
+                <div class="setup-sec-card-footer">
+                  <span class="setup-footer-label">STORAGE SOVEREIGNTY</span>
+                  <span class="setup-footer-val">100% Client-Side Encryption</span>
+                </div>
+              </div>
             </div>
 
-            <div class="sec-pillar-card">
-              <div class="sec-pillar-icon blue">⚡</div>
-              <h3 class="sec-pillar-title">Instant Session Killswitch</h3>
-              <p class="sec-pillar-desc">Revoke any connected retailer session with a single click on the disconnect button. All local tokens are wiped instantly, permanently breaking the connection.</p>
-              <div class="sec-pillar-tag">1-Click Revocation</div>
+            <!-- Card 3: Instant Session Killswitch -->
+            <div class="setup-sec-card">
+              <div class="setup-sec-media-box">
+                <img src="/assets/preset-pantry.jpg" alt="Instant Session Killswitch" class="setup-sec-thumb-img" />
+                <span class="setup-media-badge"><span class="pulse-green-dot"></span> ZERO-RESIDUE WIPE</span>
+              </div>
+              <div class="setup-sec-card-content">
+                <div class="setup-sec-card-header">
+                  <h3 class="setup-sec-title">Instant Session Killswitch</h3>
+                  <span class="setup-sec-tag-pill">1-Click Revocation</span>
+                </div>
+                <p class="setup-sec-desc">Revoke any connected retailer session with a single click on the disconnect button. All local tokens are wiped instantly, permanently breaking the connection.</p>
+                <div class="setup-specs-list">
+                  <div class="setup-spec-item">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span>Instant revocation of any store session with a single click</span>
+                  </div>
+                  <div class="setup-spec-item">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span>Local cache, session tokens, and CDP artifacts wiped immediately</span>
+                  </div>
+                  <div class="setup-spec-item">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span>Remote browser instances terminated without residual state</span>
+                  </div>
+                </div>
+                <div class="setup-sec-card-footer">
+                  <span class="setup-footer-label">REVOCATION LATENCY</span>
+                  <span class="setup-footer-val">Sub-50ms Instant Purge</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
