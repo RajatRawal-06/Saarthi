@@ -265,9 +265,15 @@ main { overflow-x: clip; }
 
 .compare-hero {
   position: relative;
-  background: linear-gradient(135deg, #ffffff 0%, #fffbf8 50%, #fff6ef 100%);
+  background-color: #fcfbfa;
+  background-image:
+    linear-gradient(to right, #ffffff 0%, #ffffff 34%, rgba(255, 255, 255, 0.94) 48%, rgba(255, 255, 255, 0.15) 70%, rgba(255, 255, 255, 0) 100%),
+    url('/assets/compare-hero.jpg');
+  background-position: right 36%;
+  background-size: cover;
+  background-repeat: no-repeat;
   border-radius: 20px;
-  padding: 40px clamp(24px, 3vw, 44px);
+  padding: 42px 38px;
   border: 1px solid #eef2f6;
   margin-bottom: 24px;
   display: flex;
@@ -1151,9 +1157,15 @@ main { overflow-x: clip; }
 
 .setup-hero {
   position: relative;
-  background: linear-gradient(135deg, #ffffff 0%, #fffbf8 50%, #fff6ef 100%);
+  background-color: #fcfbfa;
+  background-image:
+    linear-gradient(to right, #ffffff 0%, #ffffff 34%, rgba(255, 255, 255, 0.94) 48%, rgba(255, 255, 255, 0.15) 70%, rgba(255, 255, 255, 0) 100%),
+    url('/assets/setup-hero.jpg');
+  background-position: right 36%;
+  background-size: cover;
+  background-repeat: no-repeat;
   border-radius: 20px;
-  padding: 40px clamp(24px, 3vw, 44px);
+  padding: 42px 38px;
   border: 1px solid #eef2f6;
   margin-bottom: 24px;
   display: flex;
@@ -1772,9 +1784,15 @@ main { overflow-x: clip; }
 
 .history-hero {
   position: relative;
-  background: linear-gradient(135deg, #ffffff 0%, #fffbf8 50%, #fff6ef 100%);
+  background-color: #fcfbfa;
+  background-image:
+    linear-gradient(to right, #ffffff 0%, #ffffff 34%, rgba(255, 255, 255, 0.94) 48%, rgba(255, 255, 255, 0.15) 70%, rgba(255, 255, 255, 0) 100%),
+    url('/assets/history-hero.jpg');
+  background-position: right 36%;
+  background-size: cover;
+  background-repeat: no-repeat;
   border-radius: 20px;
-  padding: 40px clamp(24px, 3vw, 44px);
+  padding: 42px 38px;
   border: 1px solid #eef2f6;
   margin-bottom: 24px;
   display: flex;
@@ -2604,10 +2622,17 @@ main { overflow-x: clip; }
 
 .me-hero {
   position: relative;
-  background: linear-gradient(135deg, #ffffff 0%, #fffbf8 50%, #fff6ef 100%);
+  background-color: #fcfbfa;
+  background-image:
+    linear-gradient(to right, #ffffff 0%, #ffffff 34%, rgba(255, 255, 255, 0.94) 48%, rgba(255, 255, 255, 0.15) 70%, rgba(255, 255, 255, 0) 100%),
+    url('/assets/me-hero.jpg');
+  background-position: right 36%;
+  background-size: cover;
+  background-repeat: no-repeat;
   border-radius: 20px;
-  padding: 40px clamp(24px, 3vw, 44px);
+  padding: 42px 38px;
   border: 1px solid #eef2f6;
+  margin-bottom: 24px;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
@@ -5202,9 +5227,15 @@ main { overflow-x: clip; }
 /* HERO BANNER */
 .order-hero {
   position: relative;
-  background: linear-gradient(135deg, #ffffff 0%, #fffbf8 50%, #fff6ef 100%);
+  background-color: #fcfbfa;
+  background-image:
+    linear-gradient(to right, #ffffff 0%, #ffffff 34%, rgba(255, 255, 255, 0.94) 48%, rgba(255, 255, 255, 0.15) 70%, rgba(255, 255, 255, 0) 100%),
+    url('/assets/order-hero.jpg');
+  background-position: right 36%;
+  background-size: cover;
+  background-repeat: no-repeat;
   border-radius: 20px;
-  padding: 40px clamp(24px, 3vw, 44px);
+  padding: 42px 38px;
   border: 1px solid #eef2f6;
   margin-bottom: 24px;
   display: flex;
@@ -7396,3 +7427,43 @@ main { overflow-x: clip; }
 
 
 
+
+
+/* UNIFIED SECTION HERO MASKED HEADLINES (MATCHING HOME) */
+.basket-masked-headline,
+.order-masked-headline,
+.compare-masked-headline,
+.history-masked-headline,
+.setup-masked-headline,
+.me-masked-headline {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif !important;
+  font-size: clamp(28px, 4.2vw, 44px);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 1.08;
+  color: #0f172a;
+  margin: 0 0 14px;
+  text-transform: uppercase;
+}
+
+.order-hero-content,
+.compare-hero-content,
+.history-hero-content,
+.setup-hero-content,
+.me-hero-content {
+  max-width: 600px;
+  position: relative;
+  z-index: 2;
+}
+
+.order-subhead,
+.compare-subhead,
+.history-subhead,
+.setup-subhead,
+.me-subhead {
+  font-size: 16px;
+  color: #475569;
+  line-height: 1.55;
+  margin: 0;
+  max-width: 560px;
+}
