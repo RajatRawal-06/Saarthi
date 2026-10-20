@@ -25,6 +25,7 @@ const { jhola, saarthi = jhola, knownFees } = await import('./lib/basket/jhola.j
 const { parseList } = await import('./lib/basket/parse.js');
 const accounts = await import('./lib/accounts.js');
 const { APPS, APP_NAMES } = await import('./public/lib/basket.js');
+const { findDuplicatePriceHunt } = await import('./lib/priceHuntDedupe.js');
 
 const app = express();
 app.use(express.json({ limit: '1mb' }));
@@ -64,6 +65,8 @@ app.get('/api/status', wrap(async (_req, res) => {
 // ---- chores ----
 app.post('/api/price-hunt', wrap((req, res) => {
   if (!req.body.product?.trim()) return res.status(400).json({ error: 'Product is required' });
+  const duplicate = findDuplicatePriceHunt(req.body, jobs.listJobs());
+  if (duplicate) return res.json({ id: duplicate.id, reused: true });
   res.json(startChore('price_hunt', req.body));
 }));
 app.post('/api/form-fill', wrap((req, res) => {
@@ -75,6 +78,7 @@ app.post('/api/form-fill', wrap((req, res) => {
 const parseHandler = (req, res) => res.json({ items: parseList(String(req.body.text || '').slice(0, 2000)) });
 app.post('/api/saarthi/parse', parseHandler);
 app.post('/api/jhola/parse', parseHandler);
+app.post('/api/basket/parse', parseHandler);
 
 const saarthiChoreHandler = wrap((req, res) => {
   const items = (Array.isArray(req.body.items) ? req.body.items : []).slice(0, 25).map((i) => ({
@@ -88,16 +92,20 @@ const saarthiChoreHandler = wrap((req, res) => {
   if (!items.length) return res.status(400).json({ error: 'Add at least one item.' });
   const apps = (req.body.apps || APPS).filter((a) => APPS.includes(a));
   if (!apps.length) return res.status(400).json({ error: 'Pick at least one app.' });
-  const pincode = readJSON('profile.json', {}).pincode || '';
+  const requestedPin = String(req.body?.pincode || '').trim();
+  const savedPin = String(readJSON('profile.json', {}).pincode || '');
+  const pincode = /^\d{6}$/.test(requestedPin) ? requestedPin : savedPin;
   const job = jobs.runChore('saarthi', { items, apps, pincode }, CHORES.saarthi.title({ items }), jhola);
   res.json({ id: job.id });
 });
 app.post('/api/saarthi', saarthiChoreHandler);
 app.post('/api/jhola', saarthiChoreHandler);
+app.post('/api/basket', saarthiChoreHandler);
 
 const feesHandler = (_req, res) => res.json(knownFees());
 app.get('/api/saarthi/fees', feesHandler);
 app.get('/api/jhola/fees', feesHandler);
+app.get('/api/basket/fees', feesHandler);
 
 // ---- Setup: connected apps (log in once, India-proxy profiles) ----
 app.get('/api/accounts', (_req, res) => {
@@ -122,20 +130,43 @@ app.post('/api/accounts/:app/open', wrap(async (req, res) => {
   res.json(await accounts.openWindow(req.params.app, { purpose: req.body.purpose === 'pay' ? 'pay' : 'login' }));
 }));
 app.post('/api/accounts/:app/ping', wrap(async (req, res) => {
-  const app = req.params.app;
+  const appId = req.params.app;
+  const appName = accounts.APP_NAMES?.[appId] || appId;
+  const url = accounts.APP_HOME?.[appId];
+  if (!url) return res.status(404).json({ error: `No retailer connection is configured for ${appName}.` });
   const acc = accounts.listAccounts();
   const pincode = req.body?.pincode || (readJSON('profile.json', {}) || {}).pincode || '110001';
-  res.json({
-    ok: true,
-    app,
-    name: accounts.APP_NAMES?.[app] || app,
-    status: 'active',
-    pincode,
-    residentialProxy: 'India (IN)',
-    bypass: 'Cloudflare Stealth Verified · 200 OK',
-    connected: !!acc[app]?.connectedAt,
-    timestamp: Date.now(),
-  });
+  const connected = !!acc[appId]?.connectedAt && !acc[appId]?.expired;
+  try {
+    const result = await tf.fetchPages([url], { timeoutMs: 30000, retries: 0 });
+    const page = (result?.results || []).find((entry) => {
+      try { return new URL(entry.url).hostname.endsWith(new URL(url).hostname); } catch { return false; }
+    });
+    const fetchError = (result?.errors || []).find((entry) => {
+      try { return new URL(entry.url).hostname.endsWith(new URL(url).hostname); } catch { return false; }
+    })?.error || '';
+    const content = String(page?.text || '');
+    const blocked = /bot[_ -]?blocked|access denied|captcha|verify (that )?you are human|403 forbidden/i.test(`${fetchError} ${content}`);
+    const reachable = !blocked && content.trim().length > 40;
+    const status = blocked ? 'blocked' : reachable ? 'reachable' : 'unavailable';
+    const message = blocked
+      ? `${appName} is blocking Saarthi’s page check. Connecting an account may not remove this site-level block.`
+      : reachable
+        ? `${appName} is reachable through the live page check. Login session ${connected ? 'is saved' : 'is not connected'}.`
+        : `${appName} did not return enough page content to confirm access.`;
+    res.json({ ok: reachable, app: appId, name: appName, status, pincode, connected, message, checkedAt: Date.now() });
+  } catch (error) {
+    res.json({
+      ok: false,
+      app: appId,
+      name: appName,
+      status: 'check_error',
+      pincode,
+      connected,
+      message: `${appName} check failed: ${error.message || 'provider unavailable'}`,
+      checkedAt: Date.now(),
+    });
+  }
 }));
 app.post('/api/pincode/sync', wrap(async (req, res) => {
   const pin = String(req.body.pincode || '').trim();

@@ -4231,6 +4231,11 @@ main { overflow-x: clip; }
   border-color: #fb923c;
 }
 
+.basket-store-card.apptog[data-app="amazon"].on {
+  background: #fffaf0;
+  border-color: #f59e0b;
+}
+
 .store-card-left {
   display: flex;
   align-items: center;
@@ -4264,6 +4269,13 @@ main { overflow-x: clip; }
 .store-box-icon.instamart-s {
   background: #ea580c;
   color: #ffffff;
+}
+
+.store-box-icon.amazon-a {
+  background: #fff7ed;
+  color: #232f3e;
+  border: 1px solid #f59e0b;
+  font-family: Arial, sans-serif;
 }
 
 .store-card-info {

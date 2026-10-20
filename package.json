@@ -4,8 +4,9 @@
   "description": "Saarthi — Your personal web agent powered by TinyFish",
   "main": "index.js",
   "scripts": {
-    "test": "node --test",
-    "start": "node server.js"
+    "test": "node --test test/*.test.js",
+    "start": "node server.js",
+    "test:e2e": "node scripts/test-runner-e2e.mjs"
   },
   "keywords": [],
   "author": "",

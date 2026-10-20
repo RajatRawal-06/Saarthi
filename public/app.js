@@ -1412,10 +1412,10 @@ const STORE_CARD_METAS = {
     eta: '10–30 mins',
     iconHtml: `<div class="store-box-icon zepto-z">Z</div>`,
   },
-  instamart: {
-    name: 'Instamart',
-    eta: '10–30 mins',
-    iconHtml: `<div class="store-box-icon instamart-s"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" fill="#ffffff"/></svg></div>`,
+  amazon: {
+    name: 'Amazon Fresh',
+    eta: 'Grocery · PIN dependent',
+    iconHtml: `<div class="store-box-icon amazon-a">a</div>`,
   },
 };
 
@@ -1836,7 +1836,7 @@ function renderSetupCards() {
 
     let statusClass = 'ready';
     let dotClass = 'blue';
-    let statusText = 'Stealth PIN Bypass Active';
+    let statusText = 'Login session not connected';
     let timeText = `PIN: ${esc(currentPin)}`;
 
     if (isConnected) {
@@ -1921,11 +1921,17 @@ function renderSetupCards() {
       const dot = $(`#statusDot-${app}`);
       const text = $(`#statusText-${app}`);
       if (pill && dot && text) {
-        pill.className = 'status-indicator-pill connected';
-        dot.className = 'status-dot green';
-        text.textContent = 'Stealth Verified · 200 OK';
+        if (r.ok) {
+          pill.className = `status-indicator-pill ${r.connected ? 'connected' : 'ready'}`;
+          dot.className = `status-dot ${r.connected ? 'green' : 'blue'}`;
+          text.textContent = r.connected ? 'Site reachable · session saved' : 'Site reachable · login not connected';
+        } else {
+          pill.className = 'status-indicator-pill expired';
+          dot.className = 'status-dot amber';
+          text.textContent = r.status === 'blocked' ? 'Site blocked automated check' : 'Site check incomplete';
+        }
       }
-      toast(`✅ ${appName}: Cloudflare stealth bypass verified! Status 200 OK for PIN ${pin}.`);
+      toast(`${r.ok ? '✅' : '⚠️'} ${r.message || `${appName} live page check did not complete.`}`);
     } catch (err) {
       toast(`⚠️ ${appName}: Ping responded with: ${err.message}`);
     } finally {
@@ -1990,30 +1996,76 @@ async function loadSetup() {
 }
 
 let win = null;
+let winOpenGeneration = 0;
 async function openWindow(app, purpose) {
+  const generation = ++winOpenGeneration;
   const d = $('#win');
   const appName = getAppName(app);
   $('#winTitle').textContent = purpose === 'pay' ? `Pay on ${appName} (you pay, not Saarthi)` : `Log in to ${appName}`;
   $('#winHint').textContent = purpose === 'pay' ? 'Open the cart and pay with your own UPI. Saarthi does not click anything here.' : 'Tap Login, enter your phone number and OTP, and check your delivery address. Then Save & close.';
   $('#winImg').removeAttribute('src');
+  $('#winImg').alt = 'Connecting to the retailer’s secure browser…';
+  $('#winUrl').textContent = 'Connecting to the retailer…';
   d.showModal();
   try {
     const s = await api(`/api/accounts/${app}/open`, { method: 'POST', body: { purpose } });
-    win = { ...s, app, alive: true };
+    if (!d.open || generation !== winOpenGeneration) {
+      api(`/api/accounts/window/${s.sessionId}/close`, { method: 'POST', body: { save: false } }).catch(() => {});
+      return;
+    }
+    win = { ...s, app, alive: true, frameUrl: null };
+    let retryDelay = 1000;
     const loop = async () => {
       if (!win?.alive) return;
+      let nextDelay = 750;
       try {
         const res = await fetch(`/api/accounts/window/${win.sessionId}/frame`);
         if (res.ok) {
-          const url = URL.createObjectURL(await res.blob());
-          const img = $('#winImg'); const old = img.src; img.src = url; if (old.startsWith('blob:')) URL.revokeObjectURL(old);
-          $('#winUrl').textContent = decodeURI(res.headers.get('X-Page-Url') || '');
-        } else if (res.status === 410) { win.alive = false; toast('The window expired.'); d.close(); return; }
-      } catch {}
-      setTimeout(loop, 700);
+          const blob = await res.blob();
+          if (!blob.size || !blob.type.startsWith('image/')) throw new Error('The remote browser returned an empty frame.');
+          const url = URL.createObjectURL(blob);
+          const preview = new Image();
+          preview.src = url;
+          try { await preview.decode(); } catch (error) { URL.revokeObjectURL(url); throw error; }
+          if (!win?.alive) { URL.revokeObjectURL(url); return; }
+          const img = $('#winImg');
+          const old = win.frameUrl;
+          img.src = url;
+          img.alt = 'Remote browser — click and type here';
+          win.frameUrl = url;
+          if (old?.startsWith('blob:')) URL.revokeObjectURL(old);
+          const pageUrl = res.headers.get('X-Page-Url') || '';
+          try { $('#winUrl').textContent = decodeURI(pageUrl); } catch { $('#winUrl').textContent = pageUrl; }
+          retryDelay = 1000;
+        } else if (res.status === 410) {
+          win.alive = false;
+          if (win.frameUrl?.startsWith('blob:')) URL.revokeObjectURL(win.frameUrl);
+          win = null;
+          winOpenGeneration++;
+          toast('The remote browser session expired. Reconnect and try again.');
+          d.close();
+          return;
+        } else {
+          $('#winUrl').textContent = `Remote browser frame unavailable (${res.status}); retrying…`;
+          $('#winImg').alt = 'The remote browser frame is unavailable. Saarthi is retrying.';
+          nextDelay = retryDelay;
+          retryDelay = Math.min(retryDelay * 2, 8000);
+        }
+      } catch (error) {
+        if (!win?.alive) return;
+        $('#winUrl').textContent = 'Remote browser connection interrupted; retrying…';
+        $('#winImg').alt = 'The remote browser connection is interrupted. Saarthi is retrying.';
+        nextDelay = retryDelay;
+        retryDelay = Math.min(retryDelay * 2, 8000);
+      }
+      if (win?.alive) setTimeout(loop, nextDelay);
     };
     loop();
-  } catch (e) { toast(e.message); d.close(); }
+  } catch (e) {
+    if (generation !== winOpenGeneration) return;
+    toast(e.message);
+    d.close();
+  }
 }
 const send = (ev) => win?.alive && api(`/api/accounts/window/${win.sessionId}/input`, { method: 'POST', body: ev }).catch(() => {});
 $('#winImg').addEventListener('click', (e) => {
@@ -2033,8 +2085,9 @@ $$('#win [data-scroll]').forEach((b) => b.onclick = () => send({ type: 'scroll',
 $('#win [data-back]').onclick = () => send({ type: 'back' });
 async function closeWin(save) {
   const d = $('#win');
-  if (!win) return d.close();
+  if (!win) { winOpenGeneration++; return d.close(); }
   const w = win; win = { ...w, alive: false };
+  if (w.frameUrl?.startsWith('blob:')) URL.revokeObjectURL(w.frameUrl);
   const appName = getAppName(w.app);
   try { const r = await api(`/api/accounts/window/${w.sessionId}/close`, { method: 'POST', body: { save } }); if (save) toast(`${appName} saved${r.cookies ? ` (${r.cookies} cookies)` : ''} 🧡`); } catch (e) { toast(e.message); }
   win = null; d.close(); loadSetup(); loadAccounts().then(renderAppToggles);
