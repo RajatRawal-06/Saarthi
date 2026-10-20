@@ -2309,46 +2309,9 @@ function initReflectiveCard() {
   });
 }
 
-// ---------- MULTI-SECTION DISTINCT TEXT ANIMATION VARIANTS ----------
-
-// Variant 1: Cyber Decrypted / Scramble Reveal (Home)
-function createDecryptedText(elementId, phrases) {
-  const el = document.getElementById(elementId);
-  if (!el || !phrases || !phrases.length) return null;
-  const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ!#*&%@';
-  let phraseIdx = 0;
-
-  function runCycle() {
-    const target = phrases[phraseIdx % phrases.length];
-    let step = 0;
-    const maxSteps = target.length + 10;
-    const interval = setInterval(() => {
-      let result = '';
-      for (let i = 0; i < target.length; i++) {
-        if (target[i] === ' ' || target[i] === '.' || target[i] === ',') {
-          result += target[i];
-        } else if (i < step - 4) {
-          result += target[i];
-        } else {
-          result += chars[Math.floor(Math.random() * chars.length)];
-        }
-      }
-      el.textContent = result;
-      step++;
-      if (step > maxSteps) {
-        clearInterval(interval);
-        el.textContent = target;
-        phraseIdx = (phraseIdx + 1) % phrases.length;
-        setTimeout(runCycle, 2800);
-      }
-    }, 45);
-  }
-
-  setTimeout(runCycle, 2400);
-}
-
-// Variant 2: Smooth TextType (Order)
+// ---------- MULTI-SECTION TYPEWRITER ANIMATION (CHAR BY CHAR ONE BY ONE) ----------
 let orderTypewriterInstance = null;
+
 function createTypewriter(elementId, phrases) {
   const el = document.getElementById(elementId);
   if (!el || !phrases || !phrases.length) return null;
@@ -2356,9 +2319,9 @@ function createTypewriter(elementId, phrases) {
   let phraseIdx = 0;
   let charIdx = phrases[0].length;
   let isDeleting = false;
-  const typingSpeed = 65;
+  const typingSpeed = 70;
   const pauseDuration = 2200;
-  const deletingSpeed = 38;
+  const deletingSpeed = 40;
 
   function tick() {
     const phrase = phrases[phraseIdx % phrases.length];
@@ -2380,7 +2343,7 @@ function createTypewriter(elementId, phrases) {
       } else {
         isDeleting = false;
         phraseIdx = (phraseIdx + 1) % phrases.length;
-        setTimeout(tick, 220);
+        setTimeout(tick, 250);
       }
     }
   }
@@ -2397,129 +2360,16 @@ function createTypewriter(elementId, phrases) {
   };
 }
 
-// Variant 3: 3D FlipWords / Velocity Slide (Compare)
-function createFlipWordsText(elementId, phrases) {
-  const el = document.getElementById(elementId);
-  if (!el || !phrases || !phrases.length) return null;
-  let idx = 0;
-
-  function flip() {
-    el.style.transition = 'transform 0.35s ease, opacity 0.35s ease, filter 0.35s ease';
-    el.style.transform = 'translateY(-14px) scale(0.97)';
-    el.style.opacity = '0';
-    el.style.filter = 'blur(4px)';
-
-    setTimeout(() => {
-      idx = (idx + 1) % phrases.length;
-      el.textContent = phrases[idx];
-      el.style.transform = 'translateY(14px) scale(0.97)';
-
-      requestAnimationFrame(() => {
-        el.style.transition = 'transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.45s ease, filter 0.45s ease';
-        el.style.transform = 'translateY(0) scale(1)';
-        el.style.opacity = '1';
-        el.style.filter = 'blur(0)';
-      });
-    }, 360);
-
-    setTimeout(flip, 3200);
-  }
-
-  setTimeout(flip, 2600);
-}
-
-// Variant 4: Audit Terminal Matrix Reveal (History)
-function createTerminalMatrixText(elementId, phrases) {
-  const el = document.getElementById(elementId);
-  if (!el || !phrases || !phrases.length) return null;
-  let idx = 0;
-
-  function stream() {
-    idx = (idx + 1) % phrases.length;
-    const target = phrases[idx];
-    let curr = 0;
-    el.textContent = '';
-    const timer = setInterval(() => {
-      if (curr <= target.length) {
-        el.textContent = target.slice(0, curr) + (curr < target.length ? '█' : '');
-        curr += 2;
-      } else {
-        clearInterval(timer);
-        el.textContent = target;
-        setTimeout(stream, 3000);
-      }
-    }, 50);
-  }
-
-  setTimeout(stream, 2800);
-}
-
-// Variant 5: Blur-To-Sharp Focus Expansion (Setup)
-function createBlurFocusText(elementId, phrases) {
-  const el = document.getElementById(elementId);
-  if (!el || !phrases || !phrases.length) return null;
-  let idx = 0;
-
-  function focus() {
-    el.style.transition = 'filter 0.4s ease, opacity 0.4s ease, letter-spacing 0.4s ease';
-    el.style.filter = 'blur(8px)';
-    el.style.opacity = '0';
-    el.style.letterSpacing = '0.08em';
-
-    setTimeout(() => {
-      idx = (idx + 1) % phrases.length;
-      el.textContent = phrases[idx];
-      requestAnimationFrame(() => {
-        el.style.transition = 'filter 0.5s ease-out, opacity 0.5s ease-out, letter-spacing 0.5s ease-out';
-        el.style.filter = 'blur(0px)';
-        el.style.opacity = '1';
-        el.style.letterSpacing = '-0.035em';
-      });
-    }, 420);
-
-    setTimeout(focus, 3400);
-  }
-
-  setTimeout(focus, 3000);
-}
-
-// Variant 6: Specular Shimmer Sweep (Profile)
-function createShimmerSweepText(elementId, phrases) {
-  const el = document.getElementById(elementId);
-  if (!el || !phrases || !phrases.length) return null;
-  let idx = 0;
-
-  function sweep() {
-    el.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
-    el.style.opacity = '0.1';
-    el.style.transform = 'scale(0.98)';
-
-    setTimeout(() => {
-      idx = (idx + 1) % phrases.length;
-      el.textContent = phrases[idx];
-      requestAnimationFrame(() => {
-        el.style.transition = 'opacity 0.5s ease, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
-        el.style.opacity = '1';
-        el.style.transform = 'scale(1)';
-      });
-    }, 400);
-
-    setTimeout(sweep, 3600);
-  }
-
-  setTimeout(sweep, 3200);
-}
-
 function initAllHeroTypewriters() {
-  // 1. Home / Saarthi: Decrypted Cyber Morph Variant
-  createDecryptedText('heroTypewriterText', [
+  // 1. Home / Saarthi
+  createTypewriter('heroTypewriterText', [
     'ONE BASKET. EVERY STORE. LOWEST TOTAL.',
     'ONE LIST. THREE STORES. MAXIMUM SAVINGS.',
     'REAL-TIME ARBITRAGE ACROSS ALL DARK STORES.',
     'ZEPTO, BLINKIT & INSTAMART COMPARED LIVE.'
   ]);
 
-  // 2. Order: Smooth Dynamic TextType Variant
+  // 2. Order
   const first = (profile.full_name || '').split(' ')[0];
   const orderGreeting = first ? `HI ${first.toUpperCase()}, WHAT DO YOU NEED TODAY?` : 'WHAT DO YOU NEED TODAY?';
   orderTypewriterInstance = createTypewriter('orderTypewriterText', [
@@ -2529,32 +2379,32 @@ function initAllHeroTypewriters() {
     'AUTONOMOUS AI CONCIERGE AT YOUR SERVICE.'
   ]);
 
-  // 3. Compare / Price: 3D FlipWords Velocity Variant
-  createFlipWordsText('compareTypewriterText', [
+  // 3. Compare / Price
+  createTypewriter('compareTypewriterText', [
     'EVERY STORE. LIVE QUOTES. ZERO BIAS.',
     'AUDIT CHECKOUT TOTALS IN REAL TIME.',
     'FIND THE CHEAPEST ELECTRONICS & TECH.',
     'UNCOVER HIDDEN SURGES & DELIVERY FEES.'
   ]);
 
-  // 4. History: Audit Terminal Matrix Stream Variant
-  createTerminalMatrixText('historyTypewriterText', [
+  // 4. History
+  createTypewriter('historyTypewriterText', [
     'EVERY CHORE. REAL TELEMETRY. FULL AUDIT.',
     'TRACK EVERY BROWSER RUN IN REAL TIME.',
     '100% CRYPTOGRAPHIC PROOFS RECORDED.',
     'ZERO UNVERIFIED SPEND. TOTAL VISIBILITY.'
   ]);
 
-  // 5. Setup: Cinematic Blur-to-Sharp Focus Variant
-  createBlurFocusText('setupTypewriterText', [
+  // 5. Setup
+  createTypewriter('setupTypewriterText', [
     'STEALTH BROWSERS. 11 NETWORKS. ZERO BOT WALLS.',
     'RESIDENTIAL IP PROXIES ACROSS INDIA.',
     'CLOUDFLARE TURNSTILE BYPASS ACTIVE.',
     'LOCAL SESSION COOKIE VAULT PROTECTED.'
   ]);
 
-  // 6. Profile / Me: Specular Shimmer Sweep Variant
-  createShimmerSweepText('meTypewriterText', [
+  // 6. Profile / Me
+  createTypewriter('meTypewriterText', [
     'YOUR DATA. YOUR MACHINE. 100% PRIVATE.',
     'AIR-GAPPED LOCAL VAULT ON-DISK.',
     'NEVER SENDS CVVS, PASSWORDS OR PINS.',
@@ -2562,12 +2412,11 @@ function initAllHeroTypewriters() {
   ]);
 }
 
-// Initialize all features on startup
+initAllHeroTypewriters();
 loadSettings();
 initCurvedLoopMarquee();
 initArbitrageCylinderInteraction();
 initReflectiveCard();
-initAllHeroTypewriters();
 
 show((location.hash || '#saarthi').slice(1) || 'saarthi');
 window.addEventListener('hashchange', () => show(location.hash.slice(1) || 'saarthi'));
