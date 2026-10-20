@@ -266,9 +266,13 @@ app.put('/api/profile', (req, res) => {
   res.json(clean);
 });
 
-const PORT = Number(process.env.PORT) || 4321;
-const HOST = process.env.HOST || '0.0.0.0';
-app.listen(PORT, HOST, () => {
-  console.log(`\n  🤖 Saarthi is running → http://localhost:${PORT}\n`);
-  if (!process.env.TINYFISH_API_KEY) console.log('  ⚠  TINYFISH_API_KEY is not set — add it to .env\n');
-});
+if (!process.env.VERCEL) {
+  const PORT = Number(process.env.PORT) || 4321;
+  const HOST = process.env.HOST || '0.0.0.0';
+  app.listen(PORT, HOST, () => {
+    console.log(`\n  🤖 Saarthi is running → http://${HOST === "0.0.0.0" ? "localhost" : HOST}:${PORT}\n`);
+    if (!process.env.TINYFISH_API_KEY) console.log('  ⚠️  TINYFISH_API_KEY is not set — add it to .env\n');
+  });
+}
+
+export default app;

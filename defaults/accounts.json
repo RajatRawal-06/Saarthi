@@ -1,0 +1,50 @@
+{
+  "blinkit": {
+    "profileId": "prof_2172e5ae40aa4cca",
+    "connectedAt": null,
+    "expired": false,
+    "cookies": null
+  },
+  "zepto": {
+    "profileId": "prof_737135b6bd0e4706",
+    "connectedAt": 1792503956673,
+    "expired": false,
+    "cookies": 26
+  },
+  "instamart": {
+    "profileId": "prof_4a24e41e0a2d41ad",
+    "connectedAt": 1792504168690,
+    "expired": false,
+    "cookies": 32
+  },
+  "amazon": {
+    "profileId": "prof_e95ce8dade2c4c6a",
+    "connectedAt": 1792504323372,
+    "expired": false,
+    "cookies": 39
+  },
+  "bigbasket": {
+    "profileId": "prof_1369a069d33c465b",
+    "connectedAt": null
+  },
+  "flipkart": {
+    "profileId": "prof_6a5446e9eef84523",
+    "connectedAt": 1792504413660,
+    "expired": false,
+    "cookies": 18
+  },
+  "jiomart": {
+    "profileId": "prof_72cbf6b70a594e08",
+    "connectedAt": null
+  },
+  "tata1mg": {
+    "profileId": "prof_e9152e5403ac4896",
+    "connectedAt": 1792504619531,
+    "expired": false,
+    "cookies": 27
+  },
+  "croma": {
+    "profileId": "prof_d9407d44db094a2e",
+    "connectedAt": null
+  }
+}
