@@ -2105,11 +2105,15 @@ function initCurvedLoopMarquee() {
   const measureText = document.getElementById('curveHomeMeasure');
   if (!jacket || !svg || !textPath) return;
 
-  let spacing = 0;
+  let spacing = 1150; // safe default so it starts moving immediately!
   function measure() {
     if (measureText) {
-      const len = measureText.getComputedTextLength();
-      if (len > 0) spacing = len;
+      try {
+        const len = measureText.getComputedTextLength();
+        if (len > 0) spacing = len;
+      } catch (e) {
+        spacing = 1150;
+      }
     }
   }
   measure();
@@ -2141,7 +2145,7 @@ function initCurvedLoopMarquee() {
     velocity = 0;
     jacket.style.cursor = 'grabbing';
     if (jacket.setPointerCapture) {
-      jacket.setPointerCapture(e.pointerId);
+      try { jacket.setPointerCapture(e.pointerId); } catch(err) {}
     }
   });
 
@@ -2194,9 +2198,157 @@ function initCurvedLoopMarquee() {
   requestAnimationFrame(tick);
 }
 
-// ---------- Multi-Section Hero Headline Typewriter Effect ----------
-let orderTypewriterInstance = null;
+// ---------- 15-Item Arbitrage Cylinder Drag & Movable Track ----------
+function initArbitrageCylinderInteraction() {
+  const stage = document.querySelector('.arb-cylinder-stage');
+  const track = document.querySelector('.arb-cylinder-track');
+  if (!stage || !track) return;
 
+  let isDragging = false;
+  let startX = 0;
+  let currentTranslate = 0;
+  let prevTranslate = 0;
+  let hasMoved = false;
+
+  stage.addEventListener('pointerdown', (e) => {
+    isDragging = true;
+    hasMoved = false;
+    startX = e.clientX;
+    stage.classList.add('is-dragging');
+    const style = window.getComputedStyle(track);
+    const matrix = new DOMMatrixReadOnly(style.transform);
+    currentTranslate = matrix.m41;
+    prevTranslate = currentTranslate;
+    track.style.animation = 'none';
+    track.style.transform = `translateX(${currentTranslate}px)`;
+  });
+
+  window.addEventListener('pointermove', (e) => {
+    if (!isDragging) return;
+    const deltaX = e.clientX - startX;
+    if (Math.abs(deltaX) > 6) {
+      hasMoved = true;
+    }
+    currentTranslate = prevTranslate + deltaX;
+    track.style.transform = `translateX(${currentTranslate}px)`;
+  });
+
+  function stopDrag() {
+    if (!isDragging) return;
+    isDragging = false;
+    stage.classList.remove('is-dragging');
+    setTimeout(() => {
+      if (!isDragging) {
+        track.style.animation = 'arbCylinderScroll 55s linear infinite';
+      }
+    }, 1200);
+  }
+
+  window.addEventListener('pointerup', stopDrag);
+  window.addEventListener('pointercancel', stopDrag);
+
+  track.addEventListener('click', (e) => {
+    if (hasMoved) {
+      e.preventDefault();
+      e.stopPropagation();
+      return;
+    }
+    const pill = e.target.closest('.arb-store-pill');
+    if (pill) {
+      const store = pill.getAttribute('data-store') || 'store';
+      const prod = pill.getAttribute('data-prod') || 'product';
+      const price = pill.getAttribute('data-price') || '';
+      toast(`Opening live quote on ${store}: ${prod} (${price})`);
+    }
+  });
+
+  stage.addEventListener('wheel', (e) => {
+    if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+      e.preventDefault();
+      const style = window.getComputedStyle(track);
+      const matrix = new DOMMatrixReadOnly(style.transform);
+      const cur = matrix.m41 - e.deltaY * 1.5;
+      track.style.animation = 'none';
+      track.style.transform = `translateX(${cur}px)`;
+      clearTimeout(stage._wheelTimeout);
+      stage._wheelTimeout = setTimeout(() => {
+        track.style.animation = 'arbCylinderScroll 55s linear infinite';
+      }, 1500);
+    }
+  }, { passive: false });
+}
+
+// ---------- ReflectiveCard: Light Luxury 3D Tilt & Specular Shine ----------
+function initReflectiveCard() {
+  const card = document.querySelector('.architecture-card-banner');
+  if (!card) return;
+
+  card.addEventListener('pointermove', (e) => {
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const px = x / rect.width;
+    const py = y / rect.height;
+
+    const rx = ((py - 0.5) * -10).toFixed(2);
+    const ry = ((px - 0.5) * 12).toFixed(2);
+    const angle = ((px - 0.5) * 40).toFixed(1);
+
+    card.style.setProperty('--card-glare-x', `${x}px`);
+    card.style.setProperty('--card-glare-y', `${y}px`);
+    card.style.setProperty('--card-glare-opacity', '0.7');
+    card.style.setProperty('--card-shine-opacity', '0.55');
+    card.style.setProperty('--card-shine-angle', `${angle}deg`);
+    card.style.transform = `perspective(1200px) rotateX(${rx}deg) rotateY(${ry}deg) scale3d(1.008, 1.008, 1.008)`;
+  });
+
+  card.addEventListener('pointerleave', () => {
+    card.style.setProperty('--card-glare-opacity', '0.35');
+    card.style.setProperty('--card-shine-opacity', '0.25');
+    card.style.transform = 'perspective(1200px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+  });
+}
+
+// ---------- MULTI-SECTION DISTINCT TEXT ANIMATION VARIANTS ----------
+
+// Variant 1: Cyber Decrypted / Scramble Reveal (Home)
+function createDecryptedText(elementId, phrases) {
+  const el = document.getElementById(elementId);
+  if (!el || !phrases || !phrases.length) return null;
+  const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ!#*&%@';
+  let phraseIdx = 0;
+
+  function runCycle() {
+    const target = phrases[phraseIdx % phrases.length];
+    let step = 0;
+    const maxSteps = target.length + 10;
+    const interval = setInterval(() => {
+      let result = '';
+      for (let i = 0; i < target.length; i++) {
+        if (target[i] === ' ' || target[i] === '.' || target[i] === ',') {
+          result += target[i];
+        } else if (i < step - 4) {
+          result += target[i];
+        } else {
+          result += chars[Math.floor(Math.random() * chars.length)];
+        }
+      }
+      el.textContent = result;
+      step++;
+      if (step > maxSteps) {
+        clearInterval(interval);
+        el.textContent = target;
+        phraseIdx = (phraseIdx + 1) % phrases.length;
+        setTimeout(runCycle, 2800);
+      }
+    }, 45);
+  }
+
+  setTimeout(runCycle, 2400);
+}
+
+// Variant 2: Smooth TextType (Order)
+let orderTypewriterInstance = null;
 function createTypewriter(elementId, phrases) {
   const el = document.getElementById(elementId);
   if (!el || !phrases || !phrases.length) return null;
@@ -2204,9 +2356,9 @@ function createTypewriter(elementId, phrases) {
   let phraseIdx = 0;
   let charIdx = phrases[0].length;
   let isDeleting = false;
-  const typingSpeed = 70;
+  const typingSpeed = 65;
   const pauseDuration = 2200;
-  const deletingSpeed = 40;
+  const deletingSpeed = 38;
 
   function tick() {
     const phrase = phrases[phraseIdx % phrases.length];
@@ -2228,7 +2380,7 @@ function createTypewriter(elementId, phrases) {
       } else {
         isDeleting = false;
         phraseIdx = (phraseIdx + 1) % phrases.length;
-        setTimeout(tick, 250);
+        setTimeout(tick, 220);
       }
     }
   }
@@ -2240,23 +2392,134 @@ function createTypewriter(elementId, phrases) {
 
   return {
     setPhrases(newPhrases) {
-      if (newPhrases && newPhrases.length) {
-        phrases = newPhrases;
-      }
+      if (newPhrases && newPhrases.length) phrases = newPhrases;
     }
   };
 }
 
+// Variant 3: 3D FlipWords / Velocity Slide (Compare)
+function createFlipWordsText(elementId, phrases) {
+  const el = document.getElementById(elementId);
+  if (!el || !phrases || !phrases.length) return null;
+  let idx = 0;
+
+  function flip() {
+    el.style.transition = 'transform 0.35s ease, opacity 0.35s ease, filter 0.35s ease';
+    el.style.transform = 'translateY(-14px) scale(0.97)';
+    el.style.opacity = '0';
+    el.style.filter = 'blur(4px)';
+
+    setTimeout(() => {
+      idx = (idx + 1) % phrases.length;
+      el.textContent = phrases[idx];
+      el.style.transform = 'translateY(14px) scale(0.97)';
+
+      requestAnimationFrame(() => {
+        el.style.transition = 'transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.45s ease, filter 0.45s ease';
+        el.style.transform = 'translateY(0) scale(1)';
+        el.style.opacity = '1';
+        el.style.filter = 'blur(0)';
+      });
+    }, 360);
+
+    setTimeout(flip, 3200);
+  }
+
+  setTimeout(flip, 2600);
+}
+
+// Variant 4: Audit Terminal Matrix Reveal (History)
+function createTerminalMatrixText(elementId, phrases) {
+  const el = document.getElementById(elementId);
+  if (!el || !phrases || !phrases.length) return null;
+  let idx = 0;
+
+  function stream() {
+    idx = (idx + 1) % phrases.length;
+    const target = phrases[idx];
+    let curr = 0;
+    el.textContent = '';
+    const timer = setInterval(() => {
+      if (curr <= target.length) {
+        el.textContent = target.slice(0, curr) + (curr < target.length ? '█' : '');
+        curr += 2;
+      } else {
+        clearInterval(timer);
+        el.textContent = target;
+        setTimeout(stream, 3000);
+      }
+    }, 50);
+  }
+
+  setTimeout(stream, 2800);
+}
+
+// Variant 5: Blur-To-Sharp Focus Expansion (Setup)
+function createBlurFocusText(elementId, phrases) {
+  const el = document.getElementById(elementId);
+  if (!el || !phrases || !phrases.length) return null;
+  let idx = 0;
+
+  function focus() {
+    el.style.transition = 'filter 0.4s ease, opacity 0.4s ease, letter-spacing 0.4s ease';
+    el.style.filter = 'blur(8px)';
+    el.style.opacity = '0';
+    el.style.letterSpacing = '0.08em';
+
+    setTimeout(() => {
+      idx = (idx + 1) % phrases.length;
+      el.textContent = phrases[idx];
+      requestAnimationFrame(() => {
+        el.style.transition = 'filter 0.5s ease-out, opacity 0.5s ease-out, letter-spacing 0.5s ease-out';
+        el.style.filter = 'blur(0px)';
+        el.style.opacity = '1';
+        el.style.letterSpacing = '-0.035em';
+      });
+    }, 420);
+
+    setTimeout(focus, 3400);
+  }
+
+  setTimeout(focus, 3000);
+}
+
+// Variant 6: Specular Shimmer Sweep (Profile)
+function createShimmerSweepText(elementId, phrases) {
+  const el = document.getElementById(elementId);
+  if (!el || !phrases || !phrases.length) return null;
+  let idx = 0;
+
+  function sweep() {
+    el.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+    el.style.opacity = '0.1';
+    el.style.transform = 'scale(0.98)';
+
+    setTimeout(() => {
+      idx = (idx + 1) % phrases.length;
+      el.textContent = phrases[idx];
+      requestAnimationFrame(() => {
+        el.style.transition = 'opacity 0.5s ease, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
+        el.style.opacity = '1';
+        el.style.transform = 'scale(1)';
+      });
+    }, 400);
+
+    setTimeout(sweep, 3600);
+  }
+
+  setTimeout(sweep, 3200);
+}
+
 function initAllHeroTypewriters() {
-  // 1. Home / Saarthi
-  createTypewriter('heroTypewriterText', [
+  // 1. Home / Saarthi: Decrypted Cyber Morph Variant
+  createDecryptedText('heroTypewriterText', [
     'ONE BASKET. EVERY STORE. LOWEST TOTAL.',
     'ONE LIST. THREE STORES. MAXIMUM SAVINGS.',
     'REAL-TIME ARBITRAGE ACROSS ALL DARK STORES.',
     'ZEPTO, BLINKIT & INSTAMART COMPARED LIVE.'
   ]);
 
-  // 2. Order
+  // 2. Order: Smooth Dynamic TextType Variant
   const first = (profile.full_name || '').split(' ')[0];
   const orderGreeting = first ? `HI ${first.toUpperCase()}, WHAT DO YOU NEED TODAY?` : 'WHAT DO YOU NEED TODAY?';
   orderTypewriterInstance = createTypewriter('orderTypewriterText', [
@@ -2266,32 +2529,32 @@ function initAllHeroTypewriters() {
     'AUTONOMOUS AI CONCIERGE AT YOUR SERVICE.'
   ]);
 
-  // 3. Compare / Price
-  createTypewriter('compareTypewriterText', [
+  // 3. Compare / Price: 3D FlipWords Velocity Variant
+  createFlipWordsText('compareTypewriterText', [
     'EVERY STORE. LIVE QUOTES. ZERO BIAS.',
     'AUDIT CHECKOUT TOTALS IN REAL TIME.',
     'FIND THE CHEAPEST ELECTRONICS & TECH.',
     'UNCOVER HIDDEN SURGES & DELIVERY FEES.'
   ]);
 
-  // 4. History
-  createTypewriter('historyTypewriterText', [
+  // 4. History: Audit Terminal Matrix Stream Variant
+  createTerminalMatrixText('historyTypewriterText', [
     'EVERY CHORE. REAL TELEMETRY. FULL AUDIT.',
     'TRACK EVERY BROWSER RUN IN REAL TIME.',
     '100% CRYPTOGRAPHIC PROOFS RECORDED.',
     'ZERO UNVERIFIED SPEND. TOTAL VISIBILITY.'
   ]);
 
-  // 5. Setup
-  createTypewriter('setupTypewriterText', [
+  // 5. Setup: Cinematic Blur-to-Sharp Focus Variant
+  createBlurFocusText('setupTypewriterText', [
     'STEALTH BROWSERS. 11 NETWORKS. ZERO BOT WALLS.',
     'RESIDENTIAL IP PROXIES ACROSS INDIA.',
     'CLOUDFLARE TURNSTILE BYPASS ACTIVE.',
     'LOCAL SESSION COOKIE VAULT PROTECTED.'
   ]);
 
-  // 6. Profile / Me
-  createTypewriter('meTypewriterText', [
+  // 6. Profile / Me: Specular Shimmer Sweep Variant
+  createShimmerSweepText('meTypewriterText', [
     'YOUR DATA. YOUR MACHINE. 100% PRIVATE.',
     'AIR-GAPPED LOCAL VAULT ON-DISK.',
     'NEVER SENDS CVVS, PASSWORDS OR PINS.',
@@ -2299,8 +2562,12 @@ function initAllHeroTypewriters() {
   ]);
 }
 
+// Initialize all features on startup
+initCurvedLoopMarquee();
+initArbitrageCylinderInteraction();
+initReflectiveCard();
 initAllHeroTypewriters();
+
 show((location.hash || '#saarthi').slice(1) || 'saarthi');
 window.addEventListener('hashchange', () => show(location.hash.slice(1) || 'saarthi'));
 resumeSaarthi();
-
