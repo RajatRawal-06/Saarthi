@@ -2194,24 +2194,19 @@ function initCurvedLoopMarquee() {
   requestAnimationFrame(tick);
 }
 
-// ---------- Hero Headline Typewriter Effect (TextType) ----------
-function initHeroTypewriter() {
-  const el = document.getElementById('heroTypewriterText');
-  if (!el) return;
+// ---------- Multi-Section Hero Headline Typewriter Effect ----------
+let orderTypewriterInstance = null;
 
-  const phrases = [
-    'ONE BASKET. EVERY STORE. LOWEST TOTAL.',
-    'ONE LIST. THREE STORES. MAXIMUM SAVINGS.',
-    'REAL-TIME ARBITRAGE ACROSS ALL DARK STORES.',
-    'ZEPTO, BLINKIT & INSTAMART COMPARED LIVE.'
-  ];
+function createTypewriter(elementId, phrases) {
+  const el = document.getElementById(elementId);
+  if (!el || !phrases || !phrases.length) return null;
 
   let phraseIdx = 0;
   let charIdx = phrases[0].length;
   let isDeleting = false;
-  const typingSpeed = 75;
-  const pauseDuration = 1800;
-  const deletingSpeed = 45;
+  const typingSpeed = 70;
+  const pauseDuration = 2200;
+  const deletingSpeed = 40;
 
   function tick() {
     const phrase = phrases[phraseIdx % phrases.length];
@@ -2242,20 +2237,69 @@ function initHeroTypewriter() {
     isDeleting = true;
     tick();
   }, pauseDuration);
+
+  return {
+    setPhrases(newPhrases) {
+      if (newPhrases && newPhrases.length) {
+        phrases = newPhrases;
+      }
+    }
+  };
 }
 
-// ---------- boot ----------
-loadStatus();
-await loadSettings().catch(() => {});
-await loadMe().catch(() => {});
-await loadAccounts(); renderAppToggles();
-updateDynamicSavingsSnapshot();
-updateBasketDeliveryLoc();
-updateTopProfileBadge();
-updateCharCounter();
-initStoreCylinderAnimation();
-initCurvedLoopMarquee();
-initHeroTypewriter();
+function initAllHeroTypewriters() {
+  // 1. Home / Saarthi
+  createTypewriter('heroTypewriterText', [
+    'ONE BASKET. EVERY STORE. LOWEST TOTAL.',
+    'ONE LIST. THREE STORES. MAXIMUM SAVINGS.',
+    'REAL-TIME ARBITRAGE ACROSS ALL DARK STORES.',
+    'ZEPTO, BLINKIT & INSTAMART COMPARED LIVE.'
+  ]);
+
+  // 2. Order
+  const first = (profile.full_name || '').split(' ')[0];
+  const orderGreeting = first ? `HI ${first.toUpperCase()}, WHAT DO YOU NEED TODAY?` : 'WHAT DO YOU NEED TODAY?';
+  orderTypewriterInstance = createTypewriter('orderTypewriterText', [
+    orderGreeting,
+    'YOU NAME IT. WE HUNT IT. CART READY.',
+    'TYPE YOUR LIST. DISPATCH IN SECONDS.',
+    'AUTONOMOUS AI CONCIERGE AT YOUR SERVICE.'
+  ]);
+
+  // 3. Compare / Price
+  createTypewriter('compareTypewriterText', [
+    'EVERY STORE. LIVE QUOTES. ZERO BIAS.',
+    'AUDIT CHECKOUT TOTALS IN REAL TIME.',
+    'FIND THE CHEAPEST ELECTRONICS & TECH.',
+    'UNCOVER HIDDEN SURGES & DELIVERY FEES.'
+  ]);
+
+  // 4. History
+  createTypewriter('historyTypewriterText', [
+    'EVERY CHORE. REAL TELEMETRY. FULL AUDIT.',
+    'TRACK EVERY BROWSER RUN IN REAL TIME.',
+    '100% CRYPTOGRAPHIC PROOFS RECORDED.',
+    'ZERO UNVERIFIED SPEND. TOTAL VISIBILITY.'
+  ]);
+
+  // 5. Setup
+  createTypewriter('setupTypewriterText', [
+    'STEALTH BROWSERS. 11 NETWORKS. ZERO BOT WALLS.',
+    'RESIDENTIAL IP PROXIES ACROSS INDIA.',
+    'CLOUDFLARE TURNSTILE BYPASS ACTIVE.',
+    'LOCAL SESSION COOKIE VAULT PROTECTED.'
+  ]);
+
+  // 6. Profile / Me
+  createTypewriter('meTypewriterText', [
+    'YOUR DATA. YOUR MACHINE. 100% PRIVATE.',
+    'AIR-GAPPED LOCAL VAULT ON-DISK.',
+    'NEVER SENDS CVVS, PASSWORDS OR PINS.',
+    'HOUSEHOLD CARETAKER AUTHORITY LOCKED.'
+  ]);
+}
+
+initAllHeroTypewriters();
 show((location.hash || '#saarthi').slice(1) || 'saarthi');
 window.addEventListener('hashchange', () => show(location.hash.slice(1) || 'saarthi'));
 resumeSaarthi();

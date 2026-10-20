@@ -7569,3 +7569,96 @@ button.big,
 .basket-delivery-pill {
   font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif !important;
 }
+
+
+/* ==========================================================================
+   EXECUTIVE HERO MASKED HEADLINES & PROMINENT KICKER BADGES
+   ========================================================================== */
+
+/* PROMINENT KICKER BADGES (Big change in font, color, and style replacing bare red line) */
+.basket-kicker,
+.order-kicker,
+.compare-kicker,
+.history-kicker,
+.setup-kicker,
+.me-kicker {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  padding: 8px 18px !important;
+  border-radius: 9999px !important;
+  background: #0f172a !important;
+  color: #f8fafc !important;
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif !important;
+  font-size: 13.5px !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+  border: 1.5px solid rgba(234, 88, 12, 0.45) !important;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.12), 0 0 14px rgba(234, 88, 12, 0.2) !important;
+  margin-bottom: 16px !important;
+}
+
+/* Explicitly eliminate all dots/pseudo-element dots from all section headings and kickers */
+.basket-kicker::before,
+.order-kicker::before,
+.compare-kicker::before,
+.history-kicker::before,
+.setup-kicker::before,
+.me-kicker::before,
+.basket-kicker::after,
+.order-kicker::after,
+.compare-kicker::after,
+.history-kicker::after,
+.setup-kicker::after,
+.me-kicker::after,
+.panel h1::before,
+.panel h2::before,
+.panel h3::before,
+.panel h4::before,
+.sec-kicker::before,
+.sec-title::before,
+.side-card-head .status-indicator-dot {
+  content: none !important;
+  display: none !important;
+}
+
+/* GRADIENT TEXT MASKING ACROSS ALL HERO HEADLINES (MATCHING HOME) */
+.basket-masked-headline,
+.order-masked-headline,
+.compare-masked-headline,
+.history-masked-headline,
+.setup-masked-headline,
+.me-masked-headline {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif !important;
+  font-size: clamp(26px, 3.6vw, 42px) !important;
+  font-weight: 900 !important;
+  letter-spacing: -0.035em !important;
+  line-height: 1.12 !important;
+  text-transform: uppercase !important;
+  margin: 0 !important;
+  display: inline-block !important;
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 35%, #ea580c 75%, #f59e0b 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  color: transparent !important;
+  filter: drop-shadow(0 2px 8px rgba(234, 88, 12, 0.08)) !important;
+}
+
+/* BLINKING CURSOR ON ALL SECTION HEADLINES */
+.hero-type-cursor {
+  display: inline-block !important;
+  margin-left: 3px !important;
+  font-weight: 900 !important;
+  color: #ea580c !important;
+  -webkit-text-fill-color: #ea580c !important;
+  background: none !important;
+  animation: heroCursorBlink 0.5s infinite alternate ease-in-out !important;
+  vertical-align: baseline !important;
+}
+
+@keyframes heroCursorBlink {
+  0% { opacity: 1; }
+  100% { opacity: 0; }
+}
