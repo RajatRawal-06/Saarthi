@@ -2186,57 +2186,6 @@
             <div class="t-sub">No autonomous unauthorized checkout</div>
           </div>
         </div>
-
-        <!-- SECTION 3: FAQ ACCORDION -->
-        <div class="order-faq-section">
-          <div class="sec-headline-wrap center">
-            <div class="sec-kicker">ORDERING FAQ</div>
-            <h2 class="sec-title">Common questions about automated orders</h2>
-            <p class="sec-sub">Clear details on how Saarthi prepares orders and protects your payment information.</p>
-          </div>
-
-          <div class="faq-accordion-wrap">
-            <details class="faq-item" open>
-              <summary class="faq-question">
-                <span>How does Saarthi find the right product without my store password?</span>
-                <span class="faq-chevron">⌄</span>
-              </summary>
-              <div class="faq-answer">
-                Saarthi uses headless browser agents powered by TinyFish to search the public catalog of stores servicing your PIN code. When you approve the proposed match, Saarthi opens the official product listing with your prepared cart so you can log in securely via your own OTP.
-              </div>
-            </details>
-
-            <details class="faq-item">
-              <summary class="faq-question">
-                <span>What happens if an exact pack size is out of stock?</span>
-                <span class="faq-chevron">⌄</span>
-              </summary>
-              <div class="faq-answer">
-                Saarthi looks for the closest available unit match (e.g. two 250ml bottles instead of one 500ml bottle) and explicitly highlights this in the match confirmation card with an attention badge before anything is finalized.
-              </div>
-            </details>
-
-            <details class="faq-item">
-              <summary class="faq-question">
-                <span>Can I order from multiple stores in a single natural language sentence?</span>
-                <span class="faq-chevron">⌄</span>
-              </summary>
-              <div class="faq-answer">
-                Yes! If you mention multiple stores (e.g. <code>"2 amul butter from blinkit and dolo 650 from tata 1mg"</code>), Saarthi parses each item with its target store into an organized multi-store plan.
-              </div>
-            </details>
-
-            <details class="faq-item">
-              <summary class="faq-question">
-                <span>Does Saarthi save my payment cards or UPI credentials?</span>
-                <span class="faq-chevron">⌄</span>
-              </summary>
-              <div class="faq-answer">
-                No. Saarthi is strictly non-custodial. We never request, store, or process credit cards, debit cards, or UPI PINs. You make all payments directly on the official merchant gateway.
-              </div>
-            </details>
-          </div>
-        </div>
       </div>
     </section>
 
@@ -2885,57 +2834,6 @@
             </div>
           </div>
         </div>
-
-        <!-- SECTION 4: PRICE DISCOVERY FAQ -->
-        <div class="price-faq-section">
-          <div class="sec-headline-wrap center">
-            <div class="sec-kicker">PRICE DISCOVERY FAQ</div>
-            <h2 class="sec-title">Common questions about live price comparisons</h2>
-            <p class="sec-sub">Everything you need to know about stealth scraping, price guarantees, and algorithmic pricing.</p>
-          </div>
-
-          <div class="faq-accordion-wrap">
-            <details class="faq-item" open>
-              <summary class="faq-question">
-                <span>Why do prices differ so significantly between apps for the exact same item?</span>
-                <span class="faq-chevron">⌄</span>
-              </summary>
-              <div class="faq-answer">
-                Retail apps employ algorithmic pricing driven by proximity to local warehouses, real-time local demand, seller commission rates (e.g. Amazon seller fees vs wholesale direct), and localized subsidies. A consumer buying without checking frequently pays 15% to 25% higher simply due to app inertia.
-              </div>
-            </details>
-
-            <details class="faq-item">
-              <summary class="faq-question">
-                <span>How does Saarthi catch hidden "drip pricing" and checkout surcharges?</span>
-                <span class="faq-chevron">⌄</span>
-              </summary>
-              <div class="faq-answer">
-                Many platforms advertise a low base price on product search pages, then append "packaging charges", "handling fees", and "rain/surge delivery fees" on the checkout page. Saarthi inspects the actual order summary elements in the browser session so you always see the true out-of-pocket total.
-              </div>
-            </details>
-
-            <details class="faq-item">
-              <summary class="faq-question">
-                <span>Can I use Saarthi's verified proof screenshots for price-match claims?</span>
-                <span class="faq-chevron">⌄</span>
-              </summary>
-              <div class="faq-answer">
-                Yes! Every row includes a "View proof" button that opens an immutable screenshot artifact with the exact store name, product title, seller badge, timestamp, and landed price. Many offline retailers (like Croma and Reliance Digital) will match competitor pricing when presented with verified proof.
-              </div>
-            </details>
-
-            <details class="faq-item">
-              <summary class="faq-question">
-                <span>Does searching for a product multiple times trigger surge pricing algorithms?</span>
-                <span class="faq-chevron">⌄</span>
-              </summary>
-              <div class="faq-answer">
-                No. Because Saarthi uses ephemeral headless browser containers with distinct user sessions and rotating IP pools, retailers cannot link searches to your personal identity, device fingerprint, or browsing history. You are completely protected from algorithmic price gouging.
-              </div>
-            </details>
-          </div>
-        </div>
       </div>
     </section>
 
@@ -3131,57 +3029,6 @@
               <p class="sec-pillar-desc">Every price quote generates a verifiable full-page screenshot with timestamp and seller metadata. Use it to claim price matches or dispute surges.</p>
               <div class="sec-pillar-tag">Auditable Evidence</div>
             </div>
-          </div>
-        </div>
-
-        <!-- SECTION 4: LEDGER FAQ ACCORDION -->
-        <div class="history-faq-section">
-          <div class="sec-headline-wrap center">
-            <div class="sec-kicker">ACTIVITY LEDGER FAQ</div>
-            <h2 class="sec-title">Common questions about agent runs and logs</h2>
-            <p class="sec-sub">Transparency on compute costs, rerun mechanics, and data privacy.</p>
-          </div>
-
-          <div class="faq-accordion-wrap">
-            <details class="faq-item" open>
-              <summary class="faq-question">
-                <span>How long are audit screenshots and session recordings preserved?</span>
-                <span class="faq-chevron">⌄</span>
-              </summary>
-              <div class="faq-answer">
-                Session screenshots and telemetry logs are saved locally in your active workspace directory. They remain accessible indefinitely until you explicitly delete an item using the delete (✕) button or purge the jobs file.
-              </div>
-            </details>
-
-            <details class="faq-item">
-              <summary class="faq-question">
-                <span>How does Saarthi calculate TinyFish agent compute costs?</span>
-                <span class="faq-chevron">⌄</span>
-              </summary>
-              <div class="faq-answer">
-                TinyFish charges per headless browser session duration (typically $0.06 to $0.20 per store sweep). Saarthi calculates exact execution milliseconds and logs the accurate dollar amount directly from the API response into your activity ledger.
-              </div>
-            </details>
-
-            <details class="faq-item">
-              <summary class="faq-question">
-                <span>What happens when I click the "Re-run" button on an old job?</span>
-                <span class="faq-chevron">⌄</span>
-              </summary>
-              <div class="faq-answer">
-                Clicking "Re-run" immediately creates a fresh autonomous task with the exact same parameters (product name, store targets, PIN code) and spins up live browser agents to check current prices right now, displaying the live execution stream.
-              </div>
-            </details>
-
-            <details class="faq-item">
-              <summary class="faq-question">
-                <span>What does an "Interrupted" or "Partial Results" status mean?</span>
-                <span class="faq-chevron">⌄</span>
-              </summary>
-              <div class="faq-answer">
-                An "Interrupted" status occurs if a retailer dark store was temporarily offline (e.g. late night closed hours), or if an aggressive CAPTCHA required human verification. "Partial Results" indicates that several stores succeeded while one timed out.
-              </div>
-            </details>
           </div>
         </div>
       </div>
@@ -3475,57 +3322,6 @@
               <p class="sec-pillar-desc">Revoke any connected retailer session with a single click on the disconnect button. All local tokens are wiped instantly, permanently breaking the connection.</p>
               <div class="sec-pillar-tag">1-Click Revocation</div>
             </div>
-          </div>
-        </div>
-
-        <!-- SECTION 4: SETUP & BOT BYPASS FAQ -->
-        <div class="setup-faq-section">
-          <div class="sec-headline-wrap center">
-            <div class="sec-kicker">ANTI-BOT FAQ</div>
-            <h2 class="sec-title">Frequently asked questions about stealth sessions</h2>
-            <p class="sec-sub">How we keep your store accounts safe, private, and unblocked.</p>
-          </div>
-
-          <div class="faq-accordion-wrap">
-            <details class="faq-item" open>
-              <summary class="faq-question">
-                <span>Can my store account get banned or flagged for automated price checks?</span>
-                <span class="faq-chevron">⌄</span>
-              </summary>
-              <div class="faq-answer">
-                No. Because Saarthi uses authentic residential Indian IP pools, genuine Chrome browser sessions, and human kinetic movements, retailer traffic analyzers perceive requests as standard organic browsing by an Indian household.
-              </div>
-            </details>
-
-            <details class="faq-item">
-              <summary class="faq-question">
-                <span>Why is connecting an account optional for price comparison?</span>
-                <span class="faq-chevron">⌄</span>
-              </summary>
-              <div class="faq-answer">
-                Most platforms (Amazon, Flipkart, IndiaMART, Croma) allow public price discovery without any login. You only need to connect an account if you want Saarthi to access exclusive subscriber pricing (e.g. Swiggy One free delivery or Zepto Pass discounts).
-              </div>
-            </details>
-
-            <details class="faq-item">
-              <summary class="faq-question">
-                <span>What happens when I change my delivery PIN code?</span>
-                <span class="faq-chevron">⌄</span>
-              </summary>
-              <div class="faq-answer">
-                Updating your PIN code automatically signals all connected quick-commerce dark stores (Blinkit, Zepto, Instamart) to refresh their localized catalog caches, ensuring you receive true pricing and availability for your exact neighborhood.
-              </div>
-            </details>
-
-            <details class="faq-item">
-              <summary class="faq-question">
-                <span>Does Saarthi ever store my debit card, credit card, or UPI details?</span>
-                <span class="faq-chevron">⌄</span>
-              </summary>
-              <div class="faq-answer">
-                Never. Saarthi is strictly non-custodial. We prepare carts and audit final totals, but payment authorization always requires your personal human confirmation on the retailer's official gateway.
-              </div>
-            </details>
           </div>
         </div>
       </div>
