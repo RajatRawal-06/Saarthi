@@ -6514,155 +6514,371 @@ main { overflow-x: clip; }
 }
 
 /* SECTION 2: PROOF ARCHITECTURE PILLARS */
+.price-architecture-section {
+  margin-top: 56px;
+  margin-bottom: 56px;
+}
+
 .arch-pillars-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+  gap: 24px;
 }
 
 .arch-pillar-card {
   background: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 16px;
-  padding: 26px 24px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 22px;
+  padding: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
   display: flex;
   flex-direction: column;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
 }
 
 .arch-pillar-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 24px -4px rgba(15, 23, 42, 0.06);
+  transform: translateY(-5px);
+  border-color: #ea580c;
+  box-shadow: 0 18px 40px rgba(234, 88, 12, 0.12), 0 4px 14px rgba(0, 0, 0, 0.04);
 }
 
-.arch-icon {
-  width: 44px;
-  height: 44px;
-  border-radius: 12px;
-  display: flex;
+.arch-media-box {
+  width: 100%;
+  height: 165px;
+  border-radius: 14px;
+  overflow: hidden;
+  position: relative;
+  margin-bottom: 18px;
+  background: #f1f5f9;
+  border: 1px solid rgba(226, 232, 240, 0.9);
+}
+
+.arch-thumb-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.arch-pillar-card:hover .arch-thumb-img {
+  transform: scale(1.06);
+}
+
+.arch-media-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #ffffff;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  padding: 4px 10px;
+  border-radius: 20px;
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  font-size: 22px;
-  margin-bottom: 16px;
+  gap: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-.arch-icon.orange {
-  background: #fff7ed;
+.arch-card-content {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  padding: 0 6px 6px;
 }
 
-.arch-icon.teal {
-  background: #f0fdf4;
-}
-
-.arch-icon.blue {
-  background: #eff6ff;
+.arch-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 10px;
 }
 
 .arch-title {
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 800;
   color: #0f172a;
-  margin: 0 0 10px;
+  margin: 0;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+}
+
+.arch-tag-pill {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #ea580c;
+  background: #fff7ed;
+  padding: 3px 9px;
+  border-radius: 6px;
+  white-space: nowrap;
+  border: 1px solid #ffedd5;
 }
 
 .arch-desc {
-  font-size: 15px;
+  font-size: 14.5px;
   color: #475569;
   line-height: 1.55;
   margin: 0 0 16px;
   flex-grow: 1;
 }
 
-.arch-tag {
-  display: inline-block;
-  align-self: flex-start;
-  font-family: 'Plus Jakarta Sans', sans-serif;
+.arch-specs-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 18px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.arch-spec-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   font-size: 13px;
+  font-weight: 600;
+  color: #334155;
+}
+
+.arch-spec-item svg {
+  flex-shrink: 0;
+}
+
+.arch-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  padding-top: 4px;
+}
+
+.arch-footer-label {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: #94a3b8;
+  font-size: 11px;
+}
+
+.arch-footer-val {
+  font-family: 'Plus Jakarta Sans', sans-serif;
   font-weight: 700;
-  color: #64748b;
-  background: #f1f5f9;
-  padding: 3px 9px;
-  border-radius: 6px;
+  color: #0f172a;
 }
 
 /* SECTION 3: SUPPORTED RETAIL ECOSYSTEM */
+.price-ecosystem-section {
+  margin-top: 56px;
+  margin-bottom: 56px;
+}
+
 .ecosystem-cards-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 18px;
+  gap: 20px;
 }
 
 .eco-card {
   background: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 16px;
-  padding: 22px 20px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 22px;
+  padding: 14px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.03);
   display: flex;
   flex-direction: column;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
 }
 
 .eco-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px -2px rgba(15, 23, 42, 0.05);
+  transform: translateY(-5px);
+  border-color: #ea580c;
+  box-shadow: 0 16px 36px rgba(234, 88, 12, 0.12), 0 4px 14px rgba(0, 0, 0, 0.04);
 }
 
-.eco-head {
+.eco-media-box {
+  width: 100%;
+  height: 136px;
+  border-radius: 14px;
+  overflow: hidden;
+  position: relative;
+  margin-bottom: 14px;
+  background: #f1f5f9;
+  border: 1px solid rgba(226, 232, 240, 0.9);
+}
+
+.eco-thumb-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.eco-card:hover .eco-thumb-img {
+  transform: scale(1.06);
+}
+
+.eco-media-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #ffffff;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  padding: 3px 9px;
+  border-radius: 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.eco-card-content {
   display: flex;
-  gap: 12px;
-  align-items: flex-start;
-  margin-bottom: 12px;
-}
-
-.eco-icon {
-  font-size: 24px;
+  flex-direction: column;
+  flex-grow: 1;
+  padding: 0 4px 4px;
 }
 
 .eco-titles h4 {
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 14.5px;
+  font-size: 16px;
   font-weight: 800;
   color: #0f172a;
   margin: 0 0 2px;
+  line-height: 1.3;
 }
 
-.eco-titles span {
-  font-size: 13px;
-  color: #64748b;
+.eco-subtitle {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #ea580c;
+  display: block;
+  margin-bottom: 8px;
 }
 
 .eco-desc {
-  font-size: 14.5px;
-  color: #475569;
+  font-size: 13.5px;
+  color: #64748b;
   line-height: 1.5;
-  margin: 0 0 16px;
+  margin: 0 0 14px;
   flex-grow: 1;
 }
 
-.eco-store-pills {
+.eco-brands-wrap {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: 8px;
+  margin-bottom: 14px;
+  padding: 10px;
+  background: #f8fafc;
+  border-radius: 12px;
+  border: 1px solid #f1f5f9;
+  align-items: center;
 }
 
-.eco-pill {
+.eco-brand-badge {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 4px 10px;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+  transition: transform 0.15s, border-color 0.15s;
+}
+
+.eco-brand-badge:hover {
+  transform: translateY(-1px);
+  border-color: #cbd5e1;
+}
+
+.eco-logo-img {
+  max-height: 22px;
+  max-width: 70px;
+  object-fit: contain;
+  display: block;
+}
+
+.eco-text-brand {
+  font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+  line-height: 1;
+  display: inline-block;
+}
+
+.meesho-text {
+  font-weight: 800;
   font-size: 13px;
-  font-weight: 600;
-  padding: 3px 8px;
-  border-radius: 6px;
-  background: #f1f5f9;
-  color: #334155;
+  color: #e11d48;
+  letter-spacing: -0.02em;
 }
 
-.eco-pill.zepto { background: #fdf2f8; color: #be185d; }
-.eco-pill.blinkit { background: #fefce8; color: #a16207; }
-.eco-pill.instamart { background: #fff7ed; color: #ea580c; }
-.eco-pill.amazon { background: #fffbeb; color: #b45309; }
-.eco-pill.flipkart { background: #eff6ff; color: #1d4ed8; }
-.eco-pill.croma { background: #ecfeff; color: #0e7490; }
-.eco-pill.reliance { background: #fef2f2; color: #b91c1c; }
-.eco-pill.indiamart { background: #f0fdf4; color: #15803d; }
+.vijay-text {
+  font-weight: 900;
+  font-size: 11px;
+  color: #dc2626;
+  letter-spacing: 0.04em;
+}
+
+.udaan-text {
+  font-weight: 900;
+  font-size: 13px;
+  color: #ea580c;
+}
+
+.tradeindia-text {
+  font-weight: 800;
+  font-size: 12px;
+  color: #0284c7;
+}
+
+.eco-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 10px;
+  border-top: 1px solid #f1f5f9;
+  font-size: 12px;
+}
+
+.eco-metric-tag {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 700;
+  color: #0f172a;
+  font-size: 12px;
+}
+
+.eco-speed-tag {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 600;
+  color: #16a34a;
+  background: #f0fdf4;
+  border: 1px solid #dcfce7;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 11.5px;
+}
 
 /* COMPARE RESPONSIVE BREAKPOINTS */
 @media (max-width: 1200px) {
