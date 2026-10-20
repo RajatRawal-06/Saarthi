@@ -22,7 +22,7 @@
 }
 body.simple { --fs: 21px; }
 * { box-sizing: border-box; }
-html, body { margin: 0; background: var(--bg); color: var(--ink); font: var(--fs)/1.55 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+html, body { margin: 0; background: var(--bg); color: var(--ink); font: var(--fs)/1.55 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
 h1, h2, h3, .name, .price, button.big { font-family: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif; letter-spacing: -0.025em; }
 a { color: var(--orange-ink); }
 code { background: var(--cream); padding: 2px 7px; border-radius: 6px; font-size: .92em; }
@@ -7466,4 +7466,106 @@ main { overflow-x: clip; }
   line-height: 1.55;
   margin: 0;
   max-width: 560px;
+}
+
+
+/* ==========================================================================
+   GLOBAL SECTION FONT HARMONIZATION (MATCHING HOME)
+   ========================================================================== */
+
+/* Apply Plus Jakarta Sans across all panels, cards, titles, and interactive elements */
+body,
+button,
+input,
+select,
+textarea,
+.panel,
+.panel * {
+  font-family: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Headings in all sections */
+.panel h1,
+.panel h2,
+.panel h3,
+.panel h4,
+.panel h5,
+.panel h6,
+.panel [class*="-headline"],
+.panel [class*="-title"],
+.sec-title {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif !important;
+  letter-spacing: -0.025em;
+}
+
+/* Section Kickers in all sections */
+.panel .basket-kicker,
+.panel .order-kicker,
+.panel .compare-kicker,
+.panel .history-kicker,
+.panel .setup-kicker,
+.panel .me-kicker,
+.panel .sec-kicker,
+.panel [class*="-kicker"] {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif !important;
+  font-size: 13.5px !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+}
+
+/* Card Titles across all sections */
+.order-card-title,
+.compare-search-card h3,
+.history-stat-card .hist-stat-label,
+.setup-exec-card .setup-exec-label,
+.me-stat-card .me-stat-label,
+.how-card-title,
+.how-step-body b,
+.preset-card-title,
+.preset-title,
+.store-session-card h3,
+.security-pillar-card h3,
+.arch-card h3,
+.mesh-card h3 {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.02em !important;
+}
+
+/* Primary Numbers and Stats across all sections */
+.hist-stat-val,
+.setup-exec-val,
+.me-stat-value,
+.savings-num,
+.arb-store-price,
+.cylinder-store-name {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.02em !important;
+}
+
+/* CTA and Action Buttons across all sections */
+.primary,
+button.primary,
+button.big,
+.btn-find-order,
+.btn-find-basket,
+.compare-submit-btn,
+.btn-save-profile,
+.btn-save-caretaker,
+.btn-use-example-link {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.01em !important;
+}
+
+/* Telemetry Pills and Status Tags across all sections */
+.order-delivery-pill,
+.compare-telemetry-pill,
+.history-telemetry-pill,
+.setup-telemetry-pill,
+.me-telemetry-pill,
+.basket-delivery-pill {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif !important;
 }
