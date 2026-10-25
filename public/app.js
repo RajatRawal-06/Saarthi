@@ -2047,15 +2047,19 @@ async function openWindow(app, purpose) {
           d.close();
           return;
         } else {
-          $('#winUrl').textContent = `Remote browser frame unavailable (${res.status}); retrying…`;
-          $('#winImg').alt = 'The remote browser frame is unavailable. Saarthi is retrying.';
+          if (!win.frameUrl) {
+            $('#winUrl').textContent = `Connecting to ${appName} remote session…`;
+            $('#winImg').alt = `Connecting to ${appName}…`;
+          }
           nextDelay = retryDelay;
           retryDelay = Math.min(retryDelay * 2, 8000);
         }
       } catch (error) {
         if (!win?.alive) return;
-        $('#winUrl').textContent = 'Remote browser connection interrupted; retrying…';
-        $('#winImg').alt = 'The remote browser connection is interrupted. Saarthi is retrying.';
+        if (!win.frameUrl) {
+          $('#winUrl').textContent = `Connecting to ${appName} remote browser…`;
+          $('#winImg').alt = `Connecting to ${appName}…`;
+        }
         nextDelay = retryDelay;
         retryDelay = Math.min(retryDelay * 2, 8000);
       }
