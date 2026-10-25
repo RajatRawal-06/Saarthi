@@ -23,11 +23,21 @@
       <button data-tab="saarthi" class="active">Saarthi</button>
       <button data-tab="order">Order</button>
       <button data-tab="price" class="adv">Compare</button>
+      <button data-tab="vault" class="web3-tab-pill">⚡ Web3 Vault</button>
       <button data-tab="history">History</button>
       <button data-tab="setup">Setup</button>
       <button data-tab="me">Profile</button>
     </nav>
     <div class="top-nav-right">
+      <div class="web3-network-pill" id="web3NetworkPill">
+        <span class="network-dot pulse-purple"></span>
+        <span class="network-name">Polygon Amoy</span>
+        <span class="token-cashback-badge" id="topTokenBadge" title="$SAARTHI Cashback Balance">12 $SAARTHI</span>
+      </div>
+      <button type="button" class="btn-connect-wallet" id="btnConnectWallet">
+        <span class="wallet-icon">🦊</span>
+        <span class="wallet-label" id="walletLabel">Connect Wallet</span>
+      </button>
       <div class="status ok" id="status" title="TinyFish connection">
         <span class="status-label">TinyFish connected</span>
       </div>
@@ -4398,6 +4408,201 @@
       </div>
 
       </section>
+  
+    <!-- WEB3 PROTOCOL VAULT: SMART CONTRACT ESCROW & ON-CHAIN PROOFS -->
+    <section class="panel" id="tab-vault">
+      <div class="vault-hero">
+        <div class="vault-kicker">⚡ SAARTHI AGENTIC WEB3 PROTOCOL</div>
+        <h1 class="vault-title">Smart Escrow Vault &amp; On-Chain Ledger</h1>
+        <p class="vault-desc">
+          Autonomous commerce on verifiable financial rails. Saarthi AI operates with delegated ERC-4337 session keys inside your non-custodial smart contract vault. Every price optimization is anchored permanently to Polygon Amoy with IPFS receipts and $SAARTHI cashback rewards.
+        </p>
+
+        <div class="vault-metrics-row">
+          <div class="vault-metric-box">
+            <div class="vault-metric-label">On-Chain Proofs</div>
+            <div class="vault-metric-val" id="vaultTotalProofs">1</div>
+            <div class="vault-metric-sub">Verified on Polygon Amoy</div>
+          </div>
+          <div class="vault-metric-box">
+            <div class="vault-metric-label">Arbitrage Savings</div>
+            <div class="vault-metric-val" id="vaultTotalSavings">₹120.00</div>
+            <div class="vault-metric-sub">Net consumer savings</div>
+          </div>
+          <div class="vault-metric-box">
+            <div class="vault-metric-label">$SAARTHI Minted</div>
+            <div class="vault-metric-val" id="vaultTokenSupply">12.0 SAARTHI</div>
+            <div class="vault-metric-sub">ERC-20 loyalty cashbacks</div>
+          </div>
+          <div class="vault-metric-box">
+            <div class="vault-metric-label">Network Status</div>
+            <div class="vault-metric-val" style="color: #4ade80;">Polygon Amoy</div>
+            <div class="vault-metric-sub">Chain ID: 80002 • Block <span id="vaultBlockHeight">51093441</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="vault-cards-grid">
+        <!-- CARD 1: SMART CONTRACT ESCROW VAULT (ERC-4337) -->
+        <div class="web3-card">
+          <div class="web3-card-header">
+            <div class="web3-card-title-group">
+              <div class="web3-card-icon">🔐</div>
+              <h3 class="web3-card-title">Smart Escrow Vault</h3>
+            </div>
+            <span class="web3-badge purple">ERC-4337</span>
+          </div>
+
+          <div class="web3-field">
+            <div class="web3-field-label">Connected Wallet</div>
+            <div class="web3-field-val">
+              <span id="vaultWalletAddress">0x6e80f8C23518f3dfD0A7681797cf9Ec1bE1A0afC</span>
+              <button class="web3-copy-btn" id="btnCopyWallet">Copy</button>
+            </div>
+          </div>
+
+          <div class="web3-field">
+            <div class="web3-field-label">Vault Balance</div>
+            <div class="web3-field-val">
+              <span id="vaultBalanceVal">0.1000 POL</span>
+              <span style="color:#10b981; font-weight:700;">● Active</span>
+            </div>
+          </div>
+
+          <div class="web3-field">
+            <div class="web3-field-label">Autonomous Session Key</div>
+            <div class="web3-field-val">
+              <span>Delegated to Saarthi AI Agent</span>
+              <span class="web3-badge green">Permitted</span>
+            </div>
+          </div>
+
+          <div class="web3-field">
+            <div class="web3-field-label">Daily Spending Cap</div>
+            <div class="web3-field-val">
+              <span>$50.00 / day</span>
+              <span style="color:#64748b;">(Max limit per 24h)</span>
+            </div>
+          </div>
+
+          <button type="button" class="web3-action-btn purple-grad" id="btnDepositVault">
+            <span>⚡ Deposit Allowance to Vault</span>
+          </button>
+        </div>
+
+        <!-- CARD 2: $SAARTHI ERC-20 REWARD VAULT -->
+        <div class="web3-card">
+          <div class="web3-card-header">
+            <div class="web3-card-title-group">
+              <div class="web3-card-icon">🪙</div>
+              <h3 class="web3-card-title">$SAARTHI Cashback Token</h3>
+            </div>
+            <span class="web3-badge green">ERC-20</span>
+          </div>
+
+          <div class="web3-field">
+            <div class="web3-field-label">Your Token Balance</div>
+            <div class="web3-field-val" style="font-size:18px; font-weight:900; color:#7c3aed;">
+              <span id="cardTokenBalance">12.0 SAARTHI</span>
+              <span style="font-size:12px; color:#10b981;">(₹120 Arbitrage Saved)</span>
+            </div>
+          </div>
+
+          <div class="web3-field">
+            <div class="web3-field-label">Token Smart Contract</div>
+            <div class="web3-field-val">
+              <span>0x0aD0...3a0b</span>
+              <a href="https://amoy.polygonscan.com/address/0x0aD0228786e2FDd78946B91664da78FD4AED3a0b" target="_blank" class="web3-tx-link">View ↗</a>
+            </div>
+          </div>
+
+          <div class="web3-field">
+            <div class="web3-field-label">Reward Mechanism</div>
+            <p style="font-size:13px; color:#64748b; margin:6px 0 0 0; line-height:1.5;">
+              Saarthi's smart contract mints 1 $SAARTHI token for every ₹10 saved by splitting carts across quick-commerce dark stores. Tokens are owned 100% by your wallet.
+            </p>
+          </div>
+
+          <button type="button" class="web3-action-btn secondary" id="btnAddTokenToMetaMask">
+            <span>🦊 Add $SAARTHI to MetaMask</span>
+          </button>
+        </div>
+
+        <!-- CARD 3: IMMUTABLE AUDIT PROOF ON POLYGON -->
+        <div class="web3-card">
+          <div class="web3-card-header">
+            <div class="web3-card-title-group">
+              <div class="web3-card-icon">⛓️</div>
+              <h3 class="web3-card-title">Proof-of-Arbitrage Registry</h3>
+            </div>
+            <span class="web3-badge purple">On-Chain</span>
+          </div>
+
+          <div class="web3-field">
+            <div class="web3-field-label">Registry Contract</div>
+            <div class="web3-field-val">
+              <span>0xC697...FA7F</span>
+              <a href="https://amoy.polygonscan.com/address/0xC6979a0557a0E889cf150463ACbDea5CB024FA7F" target="_blank" class="web3-tx-link">View ↗</a>
+            </div>
+          </div>
+
+          <div class="web3-field">
+            <div class="web3-field-label">Latest Verified Proof TX</div>
+            <div class="web3-field-val">
+              <span>0x1ea34...203e</span>
+              <a href="https://amoy.polygonscan.com/tx/0x1ea34fbf45d71c98d2a95eb789e8bad0fac6b97032e90aae882735119761203e" target="_blank" class="web3-tx-link">Polygonscan ↗</a>
+            </div>
+          </div>
+
+          <div class="web3-field">
+            <div class="web3-field-label">IPFS Decentralized Receipt</div>
+            <div class="web3-field-val">
+              <span>bafkreigg...oby</span>
+              <a href="https://gateway.pinata.cloud/ipfs/bafkreiggcuyuom6ibne7jhifjxcwuer4gddrgd2cyjrb66swmssev2woby" target="_blank" class="web3-tx-link">IPFS Gateway ↗</a>
+            </div>
+          </div>
+
+          <a href="https://amoy.polygonscan.com/address/0xC6979a0557a0E889cf150463ACbDea5CB024FA7F#events" target="_blank" class="web3-action-btn secondary" style="text-decoration:none;">
+            <span>🔍 View On-Chain Event Stream ↗</span>
+          </a>
+        </div>
+
+        <!-- CARD 4: SIWE & ZERO-KNOWLEDGE PROOF -->
+        <div class="web3-card">
+          <div class="web3-card-header">
+            <div class="web3-card-title-group">
+              <div class="web3-card-icon">🪪</div>
+              <h3 class="web3-card-title">Decentralized ID &amp; ZK</h3>
+            </div>
+            <span class="web3-badge green">EIP-4361</span>
+          </div>
+
+          <div class="web3-field">
+            <div class="web3-field-label">Sign-In with Ethereum (SIWE)</div>
+            <div class="web3-field-val">
+              <span id="siweStatusVal">Cryptographic Key Active</span>
+              <span style="color:#10b981; font-weight:700;">Verified</span>
+            </div>
+          </div>
+
+          <div class="web3-field">
+            <div class="web3-field-label">ZK Pincode Delivery Proof</div>
+            <div class="web3-field-val">
+              <span>Delhi NCR Zone (110042)</span>
+              <span class="web3-badge green">ZK-Merkle Valid</span>
+            </div>
+            <p style="font-size:12px; color:#64748b; margin:6px 0 0 0;">
+              Proves you reside in an eligible dark-store delivery radius without revealing your street address to retailers.
+            </p>
+          </div>
+
+          <button type="button" class="web3-action-btn" id="btnSignSiwe">
+            <span>✍️ Sign Cryptographic Handshake</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
   </main>
 
   <footer>Saarthi · your personal web agent · made with 🧡 on <a href="https://tinyfish.ai" target="_blank" rel="noopener">TinyFish</a> · I always ask before anything is bought, booked or sent.</footer>

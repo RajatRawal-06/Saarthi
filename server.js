@@ -26,6 +26,8 @@ const { parseList } = await import('./lib/basket/parse.js');
 const accounts = await import('./lib/accounts.js');
 const { APPS, APP_NAMES } = await import('./public/lib/basket.js');
 const { findDuplicatePriceHunt } = await import('./lib/priceHuntDedupe.js');
+const web3 = await import('./lib/web3/chain.js');
+const ipfs = await import('./lib/web3/ipfs.js');
 
 const app = express();
 app.use(express.json({ limit: '1mb' }));
@@ -259,6 +261,40 @@ app.post('/api/jobs/:id/rerun', wrap((req, res) => {
   res.json(startChore(job.type, input));
 }));
 app.delete('/api/jobs/:id', (req, res) => res.json({ ok: jobs.deleteJob(req.params.id) }));
+
+
+// ---- Web3 Protocol Routes (Polygon Amoy & IPFS) ----
+app.get('/api/web3/status', wrap(async (_req, res) => res.json(await web3.web3Status())));
+app.get('/api/web3/stats', wrap(async (_req, res) => res.json(await web3.getChainStats())));
+app.get('/api/web3/user/:address', wrap(async (req, res) => res.json(await web3.getUserChainStats(req.params.address))));
+app.post('/api/web3/verify-sig', wrap(async (req, res) => {
+  const { address, message, signature } = req.body || {};
+  if (!address || !message || !signature) return res.status(400).json({ error: 'Missing address, message or signature' });
+  const { ethers } = await import('ethers');
+  const recovered = ethers.verifyMessage(message, signature);
+  const ok = recovered.toLowerCase() === address.toLowerCase();
+  res.json({ ok, recovered, address });
+}));
+app.post('/api/web3/vault/state', wrap(async (req, res) => {
+  const { address } = req.body || {};
+  const cur = readJSON('vault.json', {});
+  res.json(cur[address] || {
+    address: address || '0x6e80f8C23518f3dfD0A7681797cf9Ec1bE1A0afC',
+    vaultBalancePol: '0.05',
+    dailyLimitUsd: 50,
+    sessionKeyEnabled: true,
+    totalSpentUsd: 0,
+    allowedMerchants: ['blinkit.com', 'zepto.co.in', 'amazon.in']
+  });
+}));
+app.post('/api/web3/dao/vote', wrap(async (req, res) => {
+  const { product, store, price, voter, signature } = req.body || {};
+  const votes = readJSON('dao_votes.json', []);
+  const newVote = { product, store, price, voter, signature, timestamp: Date.now() };
+  votes.push(newVote);
+  writeJSON('dao_votes.json', votes);
+  res.json({ ok: true, totalVotes: votes.filter(v => v.product === product).length });
+}));
 
 // ---- profile (used only by Form Fill, stored locally) ----
 app.get('/api/profile', (_req, res) => res.json(readJSON('profile.json', {})));
